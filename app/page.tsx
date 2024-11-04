@@ -91,7 +91,7 @@ export default function HomePage() {
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.5 }}
                 className="flex justify-center">
-                <Badge className="rounded-full px-6 py-2 text-sm bg-primary/10 text-primary-foreground">
+                <Badge className="rounded-full px-6 py-2 text-sm bg-primary text-primary-foreground">
                   ✨ Transform Images into Stories with AI
                 </Badge>
               </motion.div>
@@ -150,9 +150,9 @@ export default function HomePage() {
           {/* Features Section */}
           <section className="mb-32">
             <FadeIn className="text-center mb-16">
-              <Badge className="rounded-full px-6 py-2 text-sm bg-primary/10 text-primary-foreground mb-6">
+              {/* <Badge className="rounded-full px-6 py-2 text-sm bg-primary text-primary-foreground mb-6">
                 Features
-              </Badge>
+              </Badge> */}
               <h2 className="text-3xl font-bold mb-4">
                 Why Choose Our Platform?
               </h2>
@@ -185,9 +185,9 @@ export default function HomePage() {
           {/* How It Works Section */}
           <section className="mb-32">
             <FadeIn className="text-center mb-16">
-              <Badge className="rounded-full px-6 py-2 text-sm bg-primary/10 text-primary-foreground mb-6">
+              {/* <Badge className="rounded-full px-6 py-2 text-sm bg-primary text-primary-foreground mb-6">
                 Process
-              </Badge>
+              </Badge> */}
               <h2 className="text-3xl font-bold mb-4">How It Works</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 Three simple steps to transform your images into engaging
@@ -220,9 +220,9 @@ export default function HomePage() {
           {/* Testimonials Section */}
           <section className="mb-32">
             <FadeIn className="text-center mb-16">
-              <Badge className="rounded-full px-6 py-2 text-sm bg-primary/10 text-primary-foreground mb-6">
+              {/* <Badge className="rounded-full px-6 py-2 text-sm bg-primary text-primary-foreground mb-6">
                 Testimonials
-              </Badge>
+              </Badge> */}
               <h2 className="text-3xl font-bold mb-4">What Our Users Say</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 Join thousands of satisfied users who are already using our

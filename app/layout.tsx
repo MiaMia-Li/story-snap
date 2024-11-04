@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
-import { AI } from "./ai";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Header from "@/components/header/Header";
 import SessionWrapper from "@/components/shared/session-wrapper";
@@ -62,13 +61,11 @@ export default function RootLayout({
         </head>
         <body className={inter.className}>
           <ThemeProvider attribute="class">
-            <AI>
-              <TooltipProvider>
-                <Header />
-                {children}
-                <Toaster />
-              </TooltipProvider>
-            </AI>
+            <TooltipProvider>
+              <Header />
+              {children}
+              <Toaster />
+            </TooltipProvider>
           </ThemeProvider>
         </body>
       </html>
