@@ -1,86 +1,97 @@
+// app/api/webhooks/stripe/route.ts
+import { prisma } from "@/lib/prisma";
 import { headers } from "next/headers";
+import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
-// import { env } from "@/env.mjs";
-// import { prisma } from "@/lib/db";
-import { stripe } from "@/lib/stripe";
-import { sql } from "@vercel/postgres";
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+
+// 定义价格和credits的映射关系
+const PRICE_CREDIT_MAP = {
+  price_1QHp0UP4SDLjMGpMGREmPNlN: 30, // 基础套餐
+  // price_2xxxxxxxxxxxxx: 500, // 进阶套餐
+  // price_3xxxxxxxxxxxxx: 1000, // 专业套餐
+};
 
 export async function POST(req: Request) {
+  console.log("webhook received");
   const body = await req.text();
-  const signature = headers().get("Stripe-Signature") as string;
+  const signature = headers().get("stripe-signature")!;
 
-  console.log("signature", signature);
   let event: Stripe.Event;
 
   try {
-    event = stripe.webhooks.constructEvent(
-      body,
-      signature,
-      process.env.STRIPE_WEBHOOK_SECRET as string
-    );
+    // 验证 webhook 签名
+    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
   } catch (error: any) {
-    return new Response(`Webhook Error: ${error.message}`, { status: 400 });
-  }
-
-  if (event.type === "checkout.session.completed") {
-    console.log("event", event);
-    const session = event.data.object as Stripe.Checkout.Session;
-
-    console.log("session", session);
-
-    // Retrieve the subscription details from Stripe.
-    const subscription = await stripe.subscriptions.retrieve(
-      session.subscription as string
+    console.error("Webhook signature verification failed:", error.message);
+    return NextResponse.json(
+      { error: "Webhook signature verification failed" },
+      { status: 400 }
     );
-
-    // Update the user stripe into in our database.
-    // Since this is the initial subscription, we need to update
-    // the subscription id and customer id.
-    await sql`
-  UPDATE users 
-  SET 
-    stripe_subscription_id   = ${String(subscription.id)},
-    stripe_customer_id = ${String(subscription.customer)},
-    stripe_price_id = ${String(subscription.items.data[0].price.id)},
-    stripe_current_period_end = to_timestamp(${subscription.current_period_end})
-  WHERE id = ${session?.metadata?.userId}
-`;
   }
 
-  if (event.type === "invoice.payment_succeeded") {
-    const session = event.data.object as Stripe.Invoice;
+  const session = event.data.object as Stripe.Checkout.Session;
 
-    // If the billing reason is not subscription_create, it means the customer has updated their subscription.
-    // If it is subscription_create, we don't need to update the subscription id and it will handle by the checkout.session.completed event.
-    if (session.billing_reason != "subscription_create") {
-      // Retrieve the subscription details from Stripe.
-      const subscription = await stripe.subscriptions.retrieve(
-        session.subscription as string
+  // 处理支付成功事件
+  if (event.type === "checkout.session.completed") {
+    try {
+      // 获取价格ID
+      const lineItems = await stripe.checkout.sessions.listLineItems(
+        session.id
       );
+      const priceId = lineItems.data[0]?.price?.id;
 
-      // // Update the price id and set the new period end.
-      // await prisma.user.update({
-      //   where: {
-      //     stripeSubscriptionId: subscription.id,
-      //   },
-      //   data: {
-      //     stripePriceId: subscription.items.data[0].price.id,
-      //     stripeCurrentPeriodEnd: new Date(
-      //       subscription.current_period_end * 1000
-      //     ),
-      //   },
-      // });
+      if (!priceId) {
+        throw new Error("Price ID not found");
+      }
 
-      await sql`
-  UPDATE users 
-  SET 
-    stripe_price_id = ${String(subscription.items.data[0].price.id)},
-    stripe_current_period_end = ${subscription.current_period_end * 1000}
-  WHERE stripeSubscriptionId = ${subscription.id}
-  `;
+      // 获取对应的 credits
+      const creditsToAdd =
+        PRICE_CREDIT_MAP[priceId as keyof typeof PRICE_CREDIT_MAP];
+
+      if (!creditsToAdd) {
+        throw new Error("Invalid price ID");
+      }
+
+      // 获取用户ID (从session的metadata中)
+      const userId = session.metadata?.userId;
+
+      if (!userId) {
+        throw new Error("User ID not found in session metadata");
+      }
+
+      // 更新数据库
+      await prisma.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          credits: {
+            increment: creditsToAdd,
+          },
+        },
+      });
+
+      console.log(
+        `Successfully added ${creditsToAdd} credits to user ${userId}`
+      );
+    } catch (error) {
+      console.error("Error processing webhook:", error);
+      return NextResponse.json(
+        { error: "Error processing webhook" },
+        { status: 500 }
+      );
     }
   }
 
-  return new Response(null, { status: 200 });
+  return NextResponse.json({ received: true });
 }
+
+// 配置 config 以禁用 body parsing
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};

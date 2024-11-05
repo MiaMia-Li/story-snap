@@ -17,6 +17,11 @@ model User {
   accounts      Account[]
   sessions      Session[]
   credits             Int      @default(5) // 新增字段，默认值为 5
+  level             String?
+  stripeCustomerId String?
+  stripePriceId    String?
+  stripeCurrentPeriodEnd DateTime?
+  stripeSubscriptionId String?
   // Optional for WebAuthn support
   Authenticator Authenticator[]
  

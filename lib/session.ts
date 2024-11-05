@@ -12,7 +12,7 @@ export const getCurrentUser = cache(async () => {
   return session.user;
 });
 
-export const getUser = async (id: string) => {
+export const getUserById = async (id: string) => {
   const { rows } = await sql`
           SELECT *
           FROM users
@@ -24,5 +24,8 @@ export const getUser = async (id: string) => {
     emailVerified: rows[0].email_verified,
     email: rows[0].email,
     image: rows[0].image,
+    level: rows[0].level,
+    stripePriceId: rows[0].stripe_price_id,
+    stripeCurrentPeriodEnd: rows[0].stripe_current_period_end,
   };
 };

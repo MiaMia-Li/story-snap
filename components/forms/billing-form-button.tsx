@@ -21,7 +21,7 @@ export function BillingFormButton({
   let [isPending, startTransition] = useTransition();
   const generateUserStripeSession = generateUserStripe.bind(
     null,
-    offer.stripeIds[year ? "yearly" : "monthly"],
+    offer.stripeIds[year ? "yearly" : "monthly"]!
   );
 
   const stripeSessionAction = () =>
@@ -34,11 +34,9 @@ export function BillingFormButton({
   return (
     <Button
       variant={userOffer ? "default" : "outline"}
-      rounded="full"
       className="w-full"
       disabled={isPending}
-      onClick={stripeSessionAction}
-    >
+      onClick={stripeSessionAction}>
       {isPending ? (
         <>
           <Icons.spinner className="mr-2 size-4 animate-spin" /> Loading...

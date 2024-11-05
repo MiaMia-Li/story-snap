@@ -12,6 +12,8 @@ import { HeaderSection } from "@/components/shared/header-section";
 import { Icons } from "@/components/shared/icons";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 import { ToggleGroup, ToggleGroupItem } from "@radix-ui/react-toggle-group";
+import Link from "next/link";
+import { Button, buttonVariants } from "../ui/button";
 
 interface PricingCardsProps {
   userId?: string;
@@ -101,7 +103,7 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
             />
           )}
 
-          {/* {userId && subscriptionPlan ? (
+          {userId && subscriptionPlan ? (
             offer.title === "Starter" ? (
               <Link
                 href="/dashboard"
@@ -122,17 +124,10 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
               />
             )
           ) : (
-            <Button
-              variant={
-                offer.title.toLocaleLowerCase() === "pro"
-                  ? "default"
-                  : "outline"
-              }
-              rounded="full"
-              onClick={() => setShowSignInModal(true)}>
-              Sign in
-            </Button>
-          )} */}
+            <Link href={`/login?callbackUrl=pricing`}>
+              <Button>Sign in</Button>
+            </Link>
+          )}
         </div>
       </div>
     );

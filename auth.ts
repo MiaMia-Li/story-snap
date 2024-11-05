@@ -1,8 +1,25 @@
-import NextAuth from "next-auth";
+import NextAuth, { DefaultSession } from "next-auth";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import { prisma } from "./lib/prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import { getUserById } from "./lib/session";
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+      stripePriceId?: string;
+      stripeCurrentPeriodEnd?: Date;
+      level?: number;
+    } & DefaultSession["user"];
+  }
+
+  interface User {
+    stripePriceId?: string;
+    stripeCurrentPeriodEnd?: Date;
+    level?: number;
+  }
+}
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   providers: [GitHub, Google],
@@ -26,12 +43,14 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
             data: { credits: 5 },
           });
         }
-        // const user = await getUserById(session.user.id);
-        // if (user) {
-        //   session.user.level = user.level;
-        //   session.user.stripePriceId = user.stripePriceId;
-        //   session.user.stripeCurrentPeriodEnd = user.stripeCurrentPeriodEnd;
-        // }
+        console.log("--currentUser", currentUser);
+
+        if (currentUser) {
+          session.user.level = currentUser.level;
+          session.user.stripePriceId = currentUser.stripePriceId;
+          session.user.stripeCurrentPeriodEnd =
+            currentUser.stripeCurrentPeriodEnd;
+        }
       }
       return session;
     },
