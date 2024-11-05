@@ -20,6 +20,7 @@ import {
   TestimonialCard,
   FeatureCard,
 } from "@/components/story/Card";
+import Link from "next/link";
 
 const features = [
   {
@@ -119,9 +120,11 @@ export default function HomePage() {
                     <motion.div
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}>
-                      <Button size="lg" className="rounded-full px-8">
-                        Get Started <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
+                      <Link href="/generate">
+                        <Button size="lg" className="rounded-full px-8">
+                          Get Started <ArrowRight className="ml-2 h-4 w-4" />
+                        </Button>
+                      </Link>
                     </motion.div>
                     <motion.div
                       whileHover={{ scale: 1.05 }}
@@ -139,9 +142,6 @@ export default function HomePage() {
             </FadeIn>
           </section>
 
-          {/* Upload Section */}
-          {/* <UploadSection /> */}
-          {/* Features Section */}
           <section className="mb-32">
             <FadeIn className="text-center mb-16">
               {/* <Badge className="rounded-full px-6 py-2 text-sm bg-primary text-primary-foreground mb-6">

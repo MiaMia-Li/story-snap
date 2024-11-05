@@ -18,12 +18,13 @@ const Header = async () => {
           href="/"
           className="flex items-center gap-2 transition-opacity hover:opacity-90">
           <Image
-            src="/pengiun-logo.png"
+            src="/penguin.png"
             alt="Logo"
-            width={150}
-            height={60}
-            className="h-auto w-auto object-contain"
+            width={50}
+            height={50}
+            className="object-contain"
           />
+          <span className="text-2xl font-bold font-mono">StorySnap</span>
         </Link>
 
         {/* Right Section */}
