@@ -48,21 +48,21 @@ const testimonials = [
       "This tool has revolutionized how I create content for my blog. The stories it generates are incredibly engaging.",
     author: "Sarah Johnson",
     role: "Content Creator",
-    avatar: "/avatars/avatar-1.jpg",
+    // avatar: "/avatars/avatar-1.jpg",
   },
   {
     quote:
       "As an educator, I use this daily to create engaging materials for my students. It's been a game-changer.",
     author: "Michael Chen",
     role: "Education Professional",
-    avatar: "/avatars/avatar-2.jpg",
+    // avatar: "/avatars/avatar-2.jpg",
   },
   {
     quote:
       "The quality of the generated stories is consistently high. It saves me hours of work every week.",
     author: "Emma Davis",
     role: "Marketing Manager",
-    avatar: "/avatars/avatar-3.jpg",
+    // avatar: "/avatars/avatar-3.jpg",
   },
 ];
 

@@ -2,8 +2,15 @@
 import { UploadSection } from "@/components/story/UploadSection";
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 export default function Page() {
+  const { data: session } = useSession();
+  console.log("--session", session);
+  if (!session?.user.id) {
+    redirect("/login");
+  }
   return (
     <main className="min-h-screen bg-gradient-to-b from-primary/5 via-background to-background p-6">
       {/* 欢迎标题 */}

@@ -1,10 +1,7 @@
 import { streamText } from "ai";
 import { z } from "zod";
 import { openai } from "@ai-sdk/openai";
-// import { authOptions } from "../auth/[...nextauth]/route";
-// import { getServerSession } from "next-auth";
 import { generatePrompt } from "@/utils/promot";
-import { auth } from "@/auth";
 
 const requestSchema = z.object({
   prompt: z.union([
@@ -27,12 +24,6 @@ const requestSchema = z.object({
 
 export async function POST(request: Request) {
   try {
-    // 验证会话
-    const session = await auth();
-    if (!session) {
-      return new Response("Unauthorized", { status: 401 });
-    }
-
     // 解析并验证请求数据
     const rawBody = await request.json();
     console.log("Raw body received:", JSON.stringify(rawBody, null, 2));

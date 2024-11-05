@@ -25,9 +25,9 @@ export default function LoginPage({
 
   const handleSignIn = async (provider: "google" | "github") => {
     try {
-      console.log("searchParams.callbackUrl", searchParams.callbackUrl);
+      console.log("searchParams.callbackUrl", searchParams.callbackUrl || "/");
       setIsLoading(provider);
-      await signIn(provider, { callbackUrl: searchParams.callbackUrl });
+      await signIn(provider, { callbackUrl: searchParams.callbackUrl || "/" });
     } catch (error) {
       console.error("Sign in error:", error);
     } finally {
@@ -36,7 +36,7 @@ export default function LoginPage({
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-950 dark:to-blue-950 flex items-center justify-center p-4">
+    <div className="min-h-[calc(100vh-64px)] w-full bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-950 dark:to-blue-950 flex items-center justify-center p-4">
       <div className="w-full max-w-[1000px] grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         {/* Left Side - Brief Introduction */}
         <div className="space-y-6">
@@ -45,18 +45,18 @@ export default function LoginPage({
               <RiAtLine className="w-6 h-6 text-white" />
             </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              AI Resume Pro
+              StoryVerse AI
             </span>
           </div>
 
           <div className="space-y-4">
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
-              Transform Your Resume with AI
+              Create Stunning Stories with AI
             </h1>
             <p className="text-lg text-gray-600 dark:text-gray-300">
-              Intelligent resume analysis and interview question generation
-              powered by AI. Enhance your job application process with our
-              advanced tools.
+              Transform your ideas into captivating stories and illustrations.
+              Our AI-powered platform helps you craft unique narratives with
+              matching visuals in seconds.
             </p>
           </div>
         </div>

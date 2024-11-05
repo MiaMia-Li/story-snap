@@ -19,11 +19,13 @@ import { StoryConfig } from "@/types";
 import { StoryStyleConfig } from "./PersetSection";
 import ImageUpload from "./ImageUpload";
 import { PRESETS } from "@/config/lang";
+import { useRouter } from "next/navigation";
 export function UploadSection() {
   const [isConfigExpanded, setIsConfigExpanded] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const storyRef = useRef<HTMLDivElement>(null);
   const [randomPresetLabel, setRandomPresetLabel] = useState("Create a story");
+  const router = useRouter();
 
   const [storyConfig, setStoryConfig] = useState<StoryConfig>({
     type: "story",
@@ -72,7 +74,9 @@ export function UploadSection() {
   } = useCompletion({
     api: "/api/image",
     onError: (error) => {
-      console.error("Completion error:", error);
+      if (error.message === "Unauthorized") {
+        router.push(`/login?callbackUrl=${window.location.href}`);
+      }
     },
     onFinish: () => {
       storyRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -98,7 +102,6 @@ export function UploadSection() {
 
   const handleGenerate = async () => {
     if (!previewImage) return;
-
     try {
       // 在开始生成时就滚动到生成区域
       setTimeout(() => {
