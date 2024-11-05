@@ -5,7 +5,7 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Header from "@/components/header/Header";
-import SessionWrapper from "@/components/shared/session-wrapper";
+import SessionWrapper from "@/components/header/SessionWrapper";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

@@ -3,23 +3,6 @@ import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import { prisma } from "./lib/prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { getUserById } from "./lib/session";
-
-declare module "next-auth" {
-  interface Session {
-    user: {
-      stripePriceId?: string;
-      stripeCurrentPeriodEnd?: Date;
-      level?: number;
-    } & DefaultSession["user"];
-  }
-
-  interface User {
-    stripePriceId?: string;
-    stripeCurrentPeriodEnd?: Date;
-    level?: number;
-  }
-}
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   providers: [GitHub, Google],
@@ -46,7 +29,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         console.log("--currentUser", currentUser);
 
         if (currentUser) {
-          session.user.level = currentUser.level;
+          session.user.level = currentUser.level ?? undefined;
           session.user.stripePriceId = currentUser.stripePriceId;
           session.user.stripeCurrentPeriodEnd =
             currentUser.stripeCurrentPeriodEnd;

@@ -4,6 +4,11 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
+// 配置
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const preferredRegion = "auto";
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
@@ -88,10 +93,3 @@ export async function POST(req: Request) {
 
   return NextResponse.json({ received: true });
 }
-
-// 配置 config 以禁用 body parsing
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};

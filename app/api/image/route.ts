@@ -103,7 +103,7 @@ export async function POST(request: Request) {
     return new Response(
       JSON.stringify({
         error: "Internal Server Error",
-        message: error.message,
+        // message: error.message,
       }),
       {
         status: 500,

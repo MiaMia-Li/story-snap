@@ -1,7 +1,6 @@
 // components/pricing.tsx
 import { Check, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -11,10 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { UserSubscriptionPlan } from "@/types";
-import { generateUserStripe } from "@/actions/generate-user-stripe";
-import Link from "next/link";
 import CheckoutButton from "./CheckoutButton";
-// import { startTransition } from "react";
 
 const plans = [
   {
@@ -63,7 +59,7 @@ export function PricingCards({
   subscriptionPlan,
 }: {
   userId: string | undefined;
-  subscriptionPlan: UserSubscriptionPlan | undefined;
+  subscriptionPlan?: UserSubscriptionPlan | null;
 }) {
   const getButtonConfig = (planId: string) => {
     if (!userId) {

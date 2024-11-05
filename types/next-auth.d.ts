@@ -4,6 +4,10 @@ import { JWT } from "next-auth/jwt";
 
 export type ExtendedUser = User & {
   role: UserRole;
+  stripePriceId?: string | null;
+  stripeCurrentPeriodEnd?: Date | null;
+  level?: string | null;
+  credits?: number;
 };
 
 declare module "next-auth/jwt" {
@@ -15,18 +19,5 @@ declare module "next-auth/jwt" {
 declare module "next-auth" {
   interface Session {
     user: ExtendedUser;
-  }
-}
-
-import type { DefaultUser } from "next-auth";
-
-declare module "next-auth" {
-  interface Session {
-    user?: DefaultUser & {
-      id: string;
-      level: number;
-      isCanceled: boolean;
-      currentPeriodEnd: Date;
-    };
   }
 }

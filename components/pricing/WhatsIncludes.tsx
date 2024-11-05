@@ -96,7 +96,7 @@ export function WhatsIncludes() {
             <div className="p-2 rounded-full bg-primary/5">
               <MessageSquare className="h-5 w-5 text-primary" />
             </div>
-            <p className="text-sm">Need help choosing? We're here to help</p>
+            <p className="text-sm">Need help choosing? We are here to help</p>
           </div>
           <button className="px-4 py-2 rounded-full bg-primary/5 hover:bg-primary/10 transition-colors duration-200 text-sm font-medium">
             Contact Sales Team

@@ -7,7 +7,7 @@ export const getCredits = async () => {
     where: { id: session?.user?.id },
     select: { credits: true },
   });
-  return user?.credits;
+  return user?.credits ?? 0;
 };
 
 export const updateCredits = async (credits: number) => {

@@ -63,8 +63,14 @@ export type UserSubscriptionPlan = SubscriptionPlan &
   Pick<User, "stripeCustomerId" | "stripeSubscriptionId" | "stripePriceId"> & {
     stripeCurrentPeriodEnd: number;
     isPaid: boolean;
+    isPro: boolean;
     interval: "month" | "year" | null;
     isCanceled?: boolean;
+    credits?: number;
+    level?: string;
+    planId?: string;
+    stripePriceId?: string;
+    stripeCurrentPeriodEnd?: Date;
   };
 
 // compare plans

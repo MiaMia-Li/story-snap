@@ -75,7 +75,7 @@ export function TestimonialCard({
   quote: string;
   author: string;
   role: string;
-  avatar: string;
+  avatar?: string;
 }) {
   return (
     <FadeIn>
@@ -88,13 +88,13 @@ export function TestimonialCard({
             <p className="text-lg">{quote}</p>
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full overflow-hidden">
-                <Image
+                {/* <Image
                   width={50}
                   height={50}
                   src={avatar}
                   alt={author}
                   className="w-full h-full object-cover"
-                />
+                /> */}
               </div>
               <div>
                 <p className="font-semibold">{author}</p>

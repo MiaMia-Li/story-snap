@@ -2,14 +2,13 @@
 import { auth } from "@/auth";
 import { PricingCards } from "@/components/pricing/PricingCards";
 import { WhatsIncludes } from "@/components/pricing/WhatsIncludes";
-import { getUserSubscriptionPlan } from "@/lib/subscription";
 import React, { useEffect } from "react";
 
 export default async function PricingPage() {
   const session = await auth();
-  const subscriptionPlan = session?.user?.id
-    ? await getUserSubscriptionPlan(session.user.id)
-    : null;
+  // const subscriptionPlan = session?.user?.id
+  //   ? await getUserSubscriptionPlan(session.user.id)
+  //   : null;
 
   // useEffect(() => {
   //   // Check to see if this is a redirect back from Checkout
@@ -48,7 +47,7 @@ export default async function PricingPage() {
             <div className="pb-10 max-w-6xl mx-auto">
               <PricingCards
                 userId={session?.user?.id}
-                subscriptionPlan={subscriptionPlan}
+                subscriptionPlan={null}
               />
             </div>
           </div>
