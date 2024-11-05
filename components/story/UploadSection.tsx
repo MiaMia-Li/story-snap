@@ -20,6 +20,8 @@ import { StoryStyleConfig } from "./PersetSection";
 import ImageUpload from "./ImageUpload";
 import { PRESETS } from "@/config/lang";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+
 export function UploadSection() {
   const [isConfigExpanded, setIsConfigExpanded] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -38,6 +40,7 @@ export function UploadSection() {
   const [isUploading, setIsUploading] = useState(false);
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
+    console.log("--acceptedFiles", acceptedFiles);
     const file = acceptedFiles[0];
     if (file) {
       setIsUploading(true);
@@ -70,13 +73,15 @@ export function UploadSection() {
     completion,
     complete,
     isLoading: isGenerating,
-    error: completionError,
+    error,
   } = useCompletion({
     api: "/api/image",
     onError: (error) => {
+      console.log("--error", error.message);
       if (error.message === "Unauthorized") {
         router.push(`/login?callbackUrl=${window.location.href}`);
       }
+      toast(error.message);
     },
     onFinish: () => {
       storyRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -88,6 +93,13 @@ export function UploadSection() {
     accept: { "image/*": [".png", ".jpg", ".jpeg", ".webp"] },
     maxSize: 10485760,
     multiple: false,
+    onError: (error) => {
+      toast(error.message);
+    },
+    onDropRejected: (fileRejections) => {
+      console.log("--fileRejections", fileRejections);
+      toast(fileRejections[0].errors[0].message);
+    },
   });
 
   const handleRandomPreset = () => {
@@ -294,19 +306,6 @@ export function UploadSection() {
               </Card>
             </motion.div>
           ) : null}
-        </AnimatePresence>
-
-        {/* 错误提示 */}
-        <AnimatePresence>
-          {completionError && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="p-4 bg-destructive/10 text-destructive rounded-lg">
-              Error: {completionError.message}
-            </motion.div>
-          )}
         </AnimatePresence>
       </div>
     </div>

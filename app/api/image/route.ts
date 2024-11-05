@@ -2,6 +2,8 @@ import { streamText } from "ai";
 import { z } from "zod";
 import { openai } from "@ai-sdk/openai";
 import { generatePrompt } from "@/utils/promot";
+import { prisma } from "@/lib/prisma";
+import { auth } from "@/auth";
 
 const requestSchema = z.object({
   prompt: z.union([
@@ -23,6 +25,10 @@ const requestSchema = z.object({
 });
 
 export async function POST(request: Request) {
+  const session = await auth();
+  if (!session?.user.id) {
+    return new Response("Unauthorized", { status: 401 });
+  }
   try {
     // 解析并验证请求数据
     const rawBody = await request.json();
@@ -69,6 +75,11 @@ export async function POST(request: Request) {
         },
       ],
       temperature: 0.7,
+    });
+
+    await prisma.user.update({
+      where: { id: session?.user?.id },
+      data: { credits: { decrement: 1 } },
     });
 
     // 返回生成的文本
