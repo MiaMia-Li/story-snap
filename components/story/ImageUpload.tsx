@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { AnimatePresence } from "framer-motion";
 import { RefreshCcw, Upload, Loader2 } from "lucide-react";
 import { Button } from "../ui/button";
-import { Progress } from "../ui/progress"; // 确保你有这个组件
+import { Progress } from "../ui/progress";
+import Image from "next/image";
 
 interface ImageUploadProps {
   previewImage: string | null;
@@ -30,7 +31,9 @@ export default function ImageUpload({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         className="h-full">
-        <img
+        <Image
+          width={100}
+          height={100}
           src={previewImage}
           alt="Preview"
           className="w-full h-full object-contain"

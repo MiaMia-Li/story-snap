@@ -73,14 +73,8 @@ export default function HomePage() {
     <main className="min-h-screen relative bg-gradient-to-b from-primary/5 via-background to-background">
       <div className="relative">
         {/* Floating Decorative Elements */}
-        <FloatingElement
-          className="absolute top-20 left-[10%] w-24 h-24 bg-primary/10 rounded-full blur-xl"
-          children={undefined}
-        />
-        <FloatingElement
-          className="absolute top-40 right-[15%] w-32 h-32 bg-primary/10 rounded-full blur-xl"
-          children={undefined}
-        />
+        <FloatingElement className="absolute top-20 left-[10%] w-24 h-24 bg-primary/10 rounded-full blur-xl" />
+        <FloatingElement className="absolute top-40 right-[15%] w-32 h-32 bg-primary/10 rounded-full blur-xl" />
 
         <div className="container mx-auto px-4 py-12">
           {/* Hero Section */}

@@ -3,18 +3,15 @@ import Link from "next/link";
 
 // import { getCurrentUser } from "@/lib/session";
 import { getUserSubscriptionPlan } from "@/lib/subscription";
-import { constructMetadata } from "@/lib/utils";
 import { ComparePlans } from "@/components/pricing/compare-plans";
 import { PricingCards } from "@/components/pricing/pricing-cards";
 import { PricingFaq } from "@/components/pricing/pricing-faq";
-import { useSession } from "next-auth/react";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { auth } from "@/auth";
 
 export default async function PricingPage() {
   // const { data: session } = useSession();
   // console.log("--session", session);
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   if (session?.user?.role === "ADMIN") {
     return (

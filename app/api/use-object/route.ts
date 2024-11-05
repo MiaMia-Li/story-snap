@@ -1,8 +1,7 @@
 import { streamObject } from "ai";
 import { z } from "zod";
 import { openai } from "@ai-sdk/openai";
-import { authOptions } from "../auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
+import { auth } from "@/auth";
 
 // Schema 定义
 export const resumeAnalysisSchema = z.object({
@@ -49,7 +48,7 @@ export async function POST(request: Request) {
   try {
     const context = await request.json();
 
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     if (!session) {
       return new Response("Unauthorized", { status: 401 });
     }

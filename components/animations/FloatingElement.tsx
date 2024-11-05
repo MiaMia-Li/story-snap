@@ -1,7 +1,7 @@
 import { motion, HTMLMotionProps } from "framer-motion";
 
 interface FloatingElementProps extends HTMLMotionProps<"div"> {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
 }
 

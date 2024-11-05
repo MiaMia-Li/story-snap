@@ -1,9 +1,10 @@
-import { streamObject, generateText, streamText } from "ai";
+import { streamText } from "ai";
 import { z } from "zod";
 import { openai } from "@ai-sdk/openai";
-import { authOptions } from "../auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
+// import { authOptions } from "../auth/[...nextauth]/route";
+// import { getServerSession } from "next-auth";
 import { generatePrompt } from "@/utils/promot";
+import { auth } from "@/auth";
 
 const requestSchema = z.object({
   prompt: z.union([
@@ -27,7 +28,7 @@ const requestSchema = z.object({
 export async function POST(request: Request) {
   try {
     // 验证会话
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     if (!session) {
       return new Response("Unauthorized", { status: 401 });
     }

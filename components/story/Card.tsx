@@ -1,10 +1,8 @@
-// app/page.tsx
-// ... 其他 imports 保持不变
-
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { FadeIn } from "../animations/FadeIn";
 import { Card, CardContent } from "../ui/card";
+import Image from "next/image";
 
 export function FeatureCard({
   icon,
@@ -90,7 +88,9 @@ export function TestimonialCard({
             <p className="text-lg">{quote}</p>
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full overflow-hidden">
-                <img
+                <Image
+                  width={50}
+                  height={50}
                   src={avatar}
                   alt={author}
                   className="w-full h-full object-cover"

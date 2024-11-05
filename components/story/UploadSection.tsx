@@ -1,24 +1,21 @@
 "use client";
 
-import React, { useCallback, useState, useRef, useEffect } from "react";
+import React, { useCallback, useState, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles,
   Loader2,
-  Upload,
   ChevronDown,
   ChevronUp,
   Settings2,
   Wand2,
-  RefreshCcw,
   Shuffle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useCompletion } from "ai/react";
 import { StoryConfig } from "@/types";
-import { ConfigBadges } from "./ConfigBadges";
 import { StoryStyleConfig } from "./PersetSection";
 import ImageUpload from "./ImageUpload";
 import { PRESETS } from "@/config/lang";

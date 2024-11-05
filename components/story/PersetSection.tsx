@@ -1,16 +1,7 @@
 // components/StoryStyleConfig/index.tsx
 import { useState } from "react";
-import { motion } from "framer-motion";
-import {
-  Sparkles,
-  Wand2,
-  Shuffle,
-  Briefcase,
-  Crown,
-  Lock,
-  Star,
-} from "lucide-react";
-import { Language, StoryConfig, StoryType, Length, Style, Tone } from "@/types";
+import { Shuffle, Crown, Lock, Star } from "lucide-react";
+import { StoryConfig } from "@/types";
 import {
   LANGUAGES,
   LENGTHS,

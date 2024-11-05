@@ -1,12 +1,13 @@
 "use server";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 // import { auth } from "@/auth";
 import { stripe } from "@/lib/stripe";
 import { getUserSubscriptionPlan } from "@/lib/subscription";
-import { absoluteUrl } from "@/lib/utils";
-import { getServerSession } from "next-auth";
+// import { absoluteUrl } from "@/lib/utils";
+// import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import { auth } from "@/auth";
 
 export type responseAction = {
   status: "success" | "error";
@@ -22,7 +23,7 @@ export async function generateUserStripe(
   let redirectUrl: string = "";
 
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     const user = session?.user;
 
     if (!user || !user.email || !user.id) {

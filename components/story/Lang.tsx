@@ -1,5 +1,15 @@
+import { LANGUAGES } from "@/config/lang";
+import { Button } from "@/components/ui/button";
+import { Language, StoryConfig } from "@/types";
+
 // 添加语言选择组件
-const LanguageSelector = () => (
+export const LanguageSelector = ({
+  storyConfig,
+  handleLanguageChange,
+}: {
+  storyConfig: StoryConfig;
+  handleLanguageChange: (language: Language) => void;
+}) => (
   <div className="flex items-center gap-2">
     <span className="text-sm font-medium">Language:</span>
     <div className="flex gap-2">

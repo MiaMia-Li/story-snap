@@ -1,9 +1,8 @@
-// @ts-nocheck
 // TODO: Fix this when we turn strict mode on.
 import { pricingData } from "@/config/subscriptions";
 // import { prisma } from "@/lib/db";
 import { stripe } from "@/lib/stripe";
-import { UserSubscriptionPlan } from "types";
+import { UserSubscriptionPlan } from "@/types";
 import { sql } from "@vercel/postgres";
 
 export async function getUserSubscriptionPlan(
@@ -22,6 +21,10 @@ export async function getUserSubscriptionPlan(
       id: rows[0].id.toString(),
       emailVerified: rows[0].email_verified,
       email: rows[0].email,
+      stripeCustomerId: rows[0].stripeCustomerId,
+      stripePriceId: rows[0].stripePriceId,
+      stripeCurrentPeriodEnd: rows[0].stripeCurrentPeriodEnd,
+      stripeSubscriptionId: rows[0].stripeSubscriptionId,
     };
   };
 

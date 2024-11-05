@@ -1,13 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import ThemeButton from "./ThemeButton";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
+
 import UserLogin from "./UserLogin";
 import UserMenu from "./UserMenu";
+import { auth } from "@/auth";
 
 const Header = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
+  console.log("--session", session);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-blue-100/20 bg-white/80 backdrop-blur-md transition-all duration-300 dark:border-blue-900/20 dark:bg-gray-900/80">
@@ -34,7 +35,7 @@ const Header = async () => {
 
           {/* User Section */}
           <div className="relative">
-            {!session?.user.id ? (
+            {!session?.user.name ? (
               <div className="animate-fade-in">
                 <UserLogin />
               </div>
