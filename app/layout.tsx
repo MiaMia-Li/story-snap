@@ -9,21 +9,26 @@ import SessionWrapper from "@/components/header/SessionWrapper";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "InsightCV",
+  title: "StorySnap",
   description:
-    "InsightCV offers professional resume writing, career guidance, and job search assistance to help you stand out in the competitive job market",
-  keywords: "resume writing, career coaching, job search assistance",
+    "StorySnap is a platform that helps you create and share stories with your audience",
+  keywords: "story creation, story sharing, story marketing",
+
+  authors: [{ name: "StorySnap Team" }],
+  creator: "StorySnap",
+  publisher: "StorySnap Inc.",
+
   openGraph: {
-    title: "InsightCV - Your Career Development Partner",
+    title: "StorySnap - Create and Share Stories",
     description:
-      "Professional resume writing and career guidance services to help you achieve your career goals.",
-    images: [{ url: "/og-image.png" }],
+      "StorySnap is a platform that helps you create and share stories with your audience",
+    images: [{ url: "/og-img.png" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "InsightCV - Professional Resume Writing & Career Guidance",
-    description: "Clarify your career path and pave the way to success.",
-    images: ["/twitter-image.png"],
+    title: "StorySnap - Create and Share Stories",
+    description: "Create and share stories with your audience",
+    images: ["/og-img.png"],
   },
 };
 

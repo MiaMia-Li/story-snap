@@ -73,11 +73,6 @@ export default function BillingPage() {
     },
   ];
 
-  const handlePurchaseCredits = (packageId: string) => {
-    // Implement purchase logic here
-    console.log(`Purchasing package: ${packageId}`);
-  };
-
   return (
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
@@ -111,7 +106,7 @@ export default function BillingPage() {
       <CreditCards />
 
       {/* Transaction History */}
-      <Card>
+      {/* <Card>
         <CardHeader>
           <CardTitle>Transaction History</CardTitle>
           <CardDescription>
@@ -161,7 +156,7 @@ export default function BillingPage() {
             ))}
           </div>
         </CardContent>
-      </Card>
+      </Card> */}
     </div>
   );
 }

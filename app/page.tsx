@@ -67,9 +67,6 @@ const testimonials = [
 ];
 
 export default function HomePage() {
-  const { scrollYProgress } = useScroll();
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-
   return (
     <main className="min-h-screen relative bg-gradient-to-b from-primary/5 via-background to-background">
       <div className="relative">
@@ -129,12 +126,14 @@ export default function HomePage() {
                     <motion.div
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}>
-                      <Button
-                        size="lg"
-                        variant="outline"
-                        className="rounded-full px-8">
-                        View Examples
-                      </Button>
+                      <Link href="/examples">
+                        <Button
+                          size="lg"
+                          variant="outline"
+                          className="rounded-full px-8">
+                          View Examples
+                        </Button>
+                      </Link>
                     </motion.div>
                   </div>
                 </FadeIn>
@@ -232,7 +231,7 @@ export default function HomePage() {
           </section>
 
           {/* CTA Section */}
-          <section className="mb-32">
+          <section>
             <Card className="relative overflow-hidden border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-background">
               <CardContent className="p-12">
                 <div className="max-w-3xl mx-auto text-center space-y-6">

@@ -76,6 +76,14 @@ export async function POST(req: Request) {
           credits: {
             increment: creditsToAdd,
           },
+          stripePriceId: {
+            set: {
+              concat: [
+                { stripePriceId: "," }, // Add a space or other separator if needed
+                priceId,
+              ],
+            },
+          },
         },
       });
 

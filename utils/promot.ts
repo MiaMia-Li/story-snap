@@ -1,7 +1,6 @@
 // utils/promptGenerator.ts
 
 import { StoryConfig } from "@/types";
-import { StoryType, Length, Style, Tone, Language } from "@/types";
 // 定义每个配置项的提示语模板
 const PROMPT_TEMPLATES = {
   type: {
@@ -11,9 +10,9 @@ const PROMPT_TEMPLATES = {
     novel: "Write a novel",
   },
   length: {
-    short: "Keep it concise and brief",
-    medium: "Use a moderate length",
-    long: "Make it detailed and comprehensive",
+    short: "Keep it concise and brief, about 100 words",
+    medium: "Use a moderate length, about 300 words",
+    long: "Make it detailed and comprehensive, about 500 words",
   },
   style: {
     casual: "in a relaxed and informal style",

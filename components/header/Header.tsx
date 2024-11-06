@@ -54,11 +54,11 @@ const Header = async () => {
           <div className="relative flex h-9 w-9 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors hover:bg-blue-100 dark:bg-blue-950 dark:text-blue-400 dark:hover:bg-blue-900">
             <ThemeButton />
           </div>
-          <Link
+          {/* <Link
             href="/feedback"
             className="relative flex h-9 w-9 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors hover:bg-blue-100 dark:bg-blue-950 dark:text-blue-400 dark:hover:bg-blue-900">
             <HelpCircle />
-          </Link>
+          </Link> */}
         </div>
       </div>
     </header>

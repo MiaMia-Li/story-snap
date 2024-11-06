@@ -65,7 +65,7 @@ export default function PaymentSuccessPage() {
           <CardFooter className="flex flex-col gap-2 px-8 pb-8">
             <Button
               className="w-full bg-black hover:bg-black/90 text-white"
-              onClick={() => router.push("/orders")}>
+              onClick={() => router.push("/dashboard/billing")}>
               View Order Details
             </Button>
             <Button
