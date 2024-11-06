@@ -163,7 +163,7 @@ export function PricingCards({
             <CardFooter className="pt-4 pb-8">
               <div className="w-full relative group">
                 <CheckoutButton
-                  priceId={plan.price}
+                  priceId={plan.priceId}
                   buttonConfig={buttonConfig}
                   plan={plan}
                 />
