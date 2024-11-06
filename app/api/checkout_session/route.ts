@@ -17,6 +17,9 @@ export async function POST(request: Request) {
     }
 
     const origin = request.headers.get("origin") || "http://localhost:3000";
+    // 获取价格信息
+    const price = await stripe.prices.retrieve(priceId);
+    const product = await stripe.products.retrieve(price.product as string);
 
     const checkoutSession = await stripe.checkout.sessions.create({
       line_items: [
@@ -33,6 +36,38 @@ export async function POST(request: Request) {
       },
       automatic_tax: { enabled: true },
     });
+
+    const data = {
+      userId: session.user.id,
+      stripeSessionId: checkoutSession.id,
+      amount: price.unit_amount ? price.unit_amount / 100 : 0, // Stripe 金额以分为单位
+      currency: price.currency,
+      status: "pending", // 支付状态：pending, completed, failed
+      productName: product.name,
+      productId: product.id,
+      metadata: {
+        priceId: priceId,
+        checkoutUrl: checkoutSession.url,
+      },
+    };
+    console.log(data, "----stripe");
+
+    // 创建交易记录
+    // await prisma.transaction.create({
+    //   data: {
+    //     userId: session.user.id,
+    //     stripeSessionId: checkoutSession.id,
+    //     amount: price.unit_amount ? price.unit_amount / 100 : 0, // Stripe 金额以分为单位
+    //     currency: price.currency,
+    //     status: "pending", // 支付状态：pending, completed, failed
+    //     productName: product.name,
+    //     productId: product.id,
+    //     metadata: {
+    //       priceId: priceId,
+    //       checkoutUrl: checkoutSession.url,
+    //     },
+    //   },
+    // });
 
     return NextResponse.json({ url: checkoutSession.url });
   } catch (error: any) {

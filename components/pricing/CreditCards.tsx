@@ -8,6 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Package } from "lucide-react";
 import { PACKAGE_PLANS } from "./PricingCards";
+import CheckoutButton from "./CheckoutButton";
 
 export default function CreditCards() {
   return (
@@ -36,12 +37,14 @@ export default function CreditCards() {
                 <Package className="h-4 w-4 text-muted-foreground" />
                 <span>{pkg.credits} Credits</span>
               </div>
-              {/* <Button
-                className="w-full"
-                variant={pkg.popular ? "default" : "outline"}
-                onClick={() => handlePurchaseCredits(pkg.id)}>
-                Purchase
-              </Button> */}
+              <CheckoutButton
+                priceId={pkg.priceId}
+                buttonConfig={{
+                  text: "Purchase",
+                  disabled: false,
+                }}
+                plan={pkg}
+              />
             </CardContent>
           </Card>
         ))}

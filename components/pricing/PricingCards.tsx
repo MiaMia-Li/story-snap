@@ -26,6 +26,7 @@ export const PACKAGE_PLANS = [
       "Email Support",
     ],
     popular: false,
+    priceId: "price_1QHp0UP4SDLjMGpMGREmPNlN",
   },
   {
     id: "pro",
@@ -40,6 +41,7 @@ export const PACKAGE_PLANS = [
       "Email Support",
     ],
     popular: true,
+    priceId: "price_1QHp0UP4SDLjMGpMGREmPNlN",
   },
   {
     id: "business",
@@ -54,6 +56,7 @@ export const PACKAGE_PLANS = [
       "Email Support",
     ],
     popular: false,
+    priceId: "price_1QHp0UP4SDLjMGpMGREmPNlN",
   },
 ];
 
@@ -83,7 +86,7 @@ export function PricingCards({
 
     if (subscriptionPlan?.credits === 0) {
       return {
-        text: "Buy Now",
+        text: "Pay Now",
         disabled: false,
         tooltip: "Purchase more credits",
       };

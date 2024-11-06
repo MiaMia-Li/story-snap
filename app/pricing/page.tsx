@@ -2,6 +2,7 @@
 import { auth } from "@/auth";
 import { PricingCards } from "@/components/pricing/PricingCards";
 import { WhatsIncludes } from "@/components/pricing/WhatsIncludes";
+import Link from "next/link";
 import React, { useEffect } from "react";
 
 export default async function PricingPage() {
@@ -72,9 +73,11 @@ export default async function PricingPage() {
             <p className="mt-4 text-muted-foreground">
               Our team is here to help. Contact us anytime.
             </p>
-            <button className="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors duration-200">
+            <Link
+              href="mailto:support@storygen.ai"
+              className="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors duration-200">
               Contact Support
-            </button>
+            </Link>
           </div>
         </section>
       </div>

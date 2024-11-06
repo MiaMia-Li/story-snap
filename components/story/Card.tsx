@@ -75,26 +75,30 @@ export function TestimonialCard({
   quote: string;
   author: string;
   role: string;
-  avatar?: string;
+  avatar: string;
 }) {
   return (
     <FadeIn>
       <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
         <Card className="h-full group hover:border-primary/50 transition-all duration-300">
           <CardContent className="p-6 space-y-4">
-            <div className="text-primary">
-              <Star className="h-6 w-6 fill-current" />
+            <div className="text-primary flex items-center gap-2">
+              <Star className="h-6 w-6 fill-current text-amber-300" />
+              <Star className="h-6 w-6 fill-current text-amber-300" />
+              <Star className="h-6 w-6 fill-current text-amber-300" />
+              <Star className="h-6 w-6 fill-current text-amber-300" />
+              <Star className="h-6 w-6 fill-current text-amber-300" />
             </div>
             <p className="text-lg">{quote}</p>
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full overflow-hidden">
-                {/* <Image
+                <Image
                   width={50}
                   height={50}
                   src={avatar}
                   alt={author}
                   className="w-full h-full object-cover"
-                /> */}
+                />
               </div>
               <div>
                 <p className="font-semibold">{author}</p>

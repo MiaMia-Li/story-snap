@@ -48,21 +48,21 @@ const testimonials = [
       "This tool has revolutionized how I create content for my blog. The stories it generates are incredibly engaging.",
     author: "Sarah Johnson",
     role: "Content Creator",
-    // avatar: "/avatars/avatar-1.jpg",
+    avatar: "https://cdn.jsdelivr.net/gh/alohe/avatars/png/vibrent_1.png",
   },
   {
     quote:
       "As an educator, I use this daily to create engaging materials for my students. It's been a game-changer.",
     author: "Michael Chen",
     role: "Education Professional",
-    // avatar: "/avatars/avatar-2.jpg",
+    avatar: "https://cdn.jsdelivr.net/gh/alohe/avatars/png/vibrent_2.png",
   },
   {
     quote:
       "The quality of the generated stories is consistently high. It saves me hours of work every week.",
     author: "Emma Davis",
     role: "Marketing Manager",
-    // avatar: "/avatars/avatar-3.jpg",
+    avatar: "https://cdn.jsdelivr.net/gh/alohe/avatars/png/vibrent_3.png",
   },
 ];
 
@@ -233,13 +233,7 @@ export default function HomePage() {
 
           {/* CTA Section */}
           <section className="mb-32">
-            <Card className="relative overflow-hidden border-2 border-primary/20">
-              <motion.div
-                className="absolute inset-0 bg-[radial-gradient(circle_at_center,hsl(var(--primary))_0%,transparent_70%)]"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.1 }}
-                transition={{ duration: 1 }}
-              />
+            <Card className="relative overflow-hidden border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-background">
               <CardContent className="p-12">
                 <div className="max-w-3xl mx-auto text-center space-y-6">
                   <h2 className="text-3xl font-bold">
@@ -250,11 +244,14 @@ export default function HomePage() {
                     platform to bring their images to life
                   </p>
                   <motion.div
+                    className="z-10"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}>
-                    <Button size="lg" className="rounded-full px-8">
-                      Get Started Now <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
+                    <Link href="/generate-story">
+                      <Button size="lg" className="rounded-full px-8">
+                        Get Started Now <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </Link>
                   </motion.div>
                 </div>
               </CardContent>

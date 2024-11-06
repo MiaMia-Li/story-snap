@@ -6,6 +6,7 @@ import UserLogin from "./UserLogin";
 import UserMenu from "./UserMenu";
 import { auth } from "@/auth";
 import { Separator } from "@/components/ui/separator";
+import { CircleHelpIcon, HelpCircle, HelpingHand } from "lucide-react";
 
 const Header = async () => {
   const session = await auth();
@@ -53,6 +54,11 @@ const Header = async () => {
           <div className="relative flex h-9 w-9 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors hover:bg-blue-100 dark:bg-blue-950 dark:text-blue-400 dark:hover:bg-blue-900">
             <ThemeButton />
           </div>
+          <Link
+            href="/feedback"
+            className="relative flex h-9 w-9 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors hover:bg-blue-100 dark:bg-blue-950 dark:text-blue-400 dark:hover:bg-blue-900">
+            <HelpCircle />
+          </Link>
         </div>
       </div>
     </header>

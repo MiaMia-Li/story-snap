@@ -29,7 +29,7 @@ export default async function StoriesPage() {
             No stories created yet
           </div>
         ) : (
-          stories.map((story) => (
+          stories.map((story: any) => (
             <Card key={story.id}>
               <CardHeader>
                 <div className="flex items-center justify-between">
@@ -43,7 +43,7 @@ export default async function StoriesPage() {
               <CardContent className="flex gap-4">
                 {/* Images Grid */}
                 <div className="">
-                  {JSON.parse(story.images).length > 0 && (
+                  {story.images && JSON.parse(story.images).length > 0 && (
                     <div className="relative">
                       <div className="relative aspect-square rounded-lg overflow-hidden w-[150px]">
                         <Image
