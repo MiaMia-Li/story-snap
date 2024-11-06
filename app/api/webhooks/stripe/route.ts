@@ -68,6 +68,30 @@ export async function POST(req: Request) {
       }
 
       // 更新数据库
+      // await prisma.user.update({
+      //   where: {
+      //     id: userId,
+      //   },
+      //   data: {
+      //     credits: {
+      //       increment: creditsToAdd,
+      //     },
+      //   },
+      // });
+      // 更新数据库
+      const user = await prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+        select: {
+          stripePriceId: true,
+        },
+      });
+
+      const updatedStripePriceId = user?.stripePriceId
+        ? `${user.stripePriceId},${priceId}` // 如果已有值，添加逗号和新值
+        : priceId; // 如果是第一个值，直接使用
+
       await prisma.user.update({
         where: {
           id: userId,
@@ -76,14 +100,7 @@ export async function POST(req: Request) {
           credits: {
             increment: creditsToAdd,
           },
-          stripePriceId: {
-            set: {
-              concat: [
-                { stripePriceId: "," }, // Add a space or other separator if needed
-                priceId,
-              ],
-            },
-          },
+          stripePriceId: updatedStripePriceId,
         },
       });
 
