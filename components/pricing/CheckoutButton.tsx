@@ -10,7 +10,7 @@ export default function CheckoutButton({
   buttonConfig,
   plan,
 }: {
-  priceId: string | number;
+  priceId: string | undefined;
   buttonConfig: any;
   plan: any;
 }) {
