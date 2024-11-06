@@ -1,4 +1,4 @@
-import { Attachment, streamText } from "ai";
+import { streamText } from "ai";
 import { z } from "zod";
 import { openai } from "@ai-sdk/openai";
 import { generatePrompt } from "@/utils/promot";
@@ -15,7 +15,7 @@ const requestSchema = z.object({
       }
     }),
     z.object({
-      image: z.array(z.string()), // Ensure image is always an array
+      image: z.array(z.any()), // Ensure image is always an array
       storyType: z.string(),
       storyLength: z.string(),
       storyStyle: z.string(),
@@ -46,10 +46,10 @@ export async function POST(request: Request) {
     const { image, storyType, storyLength, storyStyle, storyTone, language } =
       promptData;
 
-    const image_content = image.map((img: string, index: number) => {
+    const image_content = image.map((img: any, index: number) => {
       return {
         type: "image",
-        image: img,
+        image: img.url,
       };
     });
     console.log("--image_content", image_content);
@@ -62,6 +62,12 @@ export async function POST(request: Request) {
       language: language,
     });
 
+    const prompt = `You are an imaginative storyteller with a focus on creating engaging and vivid narratives. Given a series of images and a descriptive prompt, your task is to generate a coherent story and a captivating title based on the provided images.
+
+Prompt: ${promptText}`;
+
+    console.log("--prompt", prompt);
+
     // 生成文本
     const result = await streamText({
       model: openai("gpt-4o-mini"),
@@ -71,9 +77,7 @@ export async function POST(request: Request) {
           content: [
             {
               type: "text",
-              text: `You are an imaginative storyteller with a focus on creating engaging and vivid narratives. Given a series of images and a descriptive prompt, your task is to generate a coherent story and a captivating title based on the provided content.
-
-Prompt: ${promptText} Your return language is ${language}`,
+              text: prompt,
             },
             ...image_content,
           ],

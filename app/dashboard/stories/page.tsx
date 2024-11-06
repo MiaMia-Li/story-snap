@@ -47,9 +47,10 @@ export default async function StoriesPage() {
                     <div className="relative">
                       <div className="relative aspect-square rounded-lg overflow-hidden w-[150px]">
                         <Image
-                          src={JSON.parse(story.images)[0]}
+                          src={JSON.parse(story.images)[0].url}
                           alt="Story image"
                           fill
+                          sizes="150px"
                           className="object-cover hover:scale-105 transition-transform duration-200"
                         />
                       </div>
@@ -63,7 +64,7 @@ export default async function StoriesPage() {
                 </div>
 
                 {/* Story Content */}
-                <ScrollArea className="h-[120px] w-full rounded-md border">
+                <ScrollArea className="h-[150px] w-full rounded-md border">
                   <p className="text-sm leading-relaxed">{story.content}</p>
                 </ScrollArea>
               </CardContent>

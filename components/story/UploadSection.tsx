@@ -28,7 +28,7 @@ import LoadingMessage from "./LoadingMessage";
 
 export function UploadSection() {
   const [isConfigExpanded, setIsConfigExpanded] = useState(false);
-  const [previewImage, setPreviewImage] = useState<string[] | null>(null);
+  const [previewImage, setPreviewImage] = useState<any[] | null>(null);
   const storyRef = useRef<HTMLDivElement>(null);
   const [randomPresetLabel, setRandomPresetLabel] = useState("Create a story");
   const { data: session } = useSession();
@@ -43,32 +43,50 @@ export function UploadSection() {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
 
+  // 文件上传处理
+  const uploadFile = async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await fetch("/api/images/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Upload failed");
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error("File upload error:", error);
+      toast.error((error as Error).message);
+      return undefined;
+    }
+  };
+
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
       setIsUploading(true);
       try {
-        const imagePromises = acceptedFiles.map((file) => {
-          return new Promise<string>((resolve, reject) => {
-            const reader = new FileReader();
+        const newImages = await Promise.all(
+          acceptedFiles.map((file) => uploadFile(file))
+        );
+        const validImages = newImages.filter(
+          (
+            file
+          ): file is {
+            url: string;
+            name: string;
+            contentType: string;
+            content: string;
+          } => file !== undefined
+        );
+        console.log("--newImages", newImages);
 
-            reader.onprogress = (event) => {
-              if (event.lengthComputable) {
-                const progress = Math.round((event.loaded / event.total) * 100);
-                setUploadProgress(progress);
-              }
-            };
-
-            reader.onload = () => {
-              resolve(reader.result as string);
-            };
-
-            reader.onerror = reject;
-            reader.readAsDataURL(file);
-          });
-        });
-
-        const newImages = await Promise.all(imagePromises);
-        setPreviewImage((prev) => [...(prev || []), ...newImages]);
+        setPreviewImage((prev) => [...(prev || []), ...validImages]);
       } catch (error) {
         console.error("Upload error:", error);
         toast("Upload failed");
@@ -90,11 +108,8 @@ export function UploadSection() {
     onError: (error) => {
       toast(error.message);
     },
-    onResponse: (response) => {
-      console.log("--onResponse", response);
-    },
+
     onFinish: (prompt: string, completion: string) => {
-      console.log("--onFinish", completion);
       const title = completion.split("\n")[0].replace(/(Title: |[#*])/g, "");
       const content = completion.split("\n").slice(1).join("\n");
       saveStory(title, content);
@@ -102,7 +117,6 @@ export function UploadSection() {
     },
   });
   const saveStory = async (title: string, content: string) => {
-    console.log("--saveStory", title, content);
     try {
       const response = await fetch("/api/story/save", {
         method: "POST",
@@ -143,18 +157,7 @@ export function UploadSection() {
 
   const handleGenerate = async () => {
     if (!previewImage) return;
-    //检查图片格式是否png,jpg,jpeg,webp
-    const isImageValid = previewImage.every(
-      (image) =>
-        image.startsWith("data:image/png") ||
-        image.startsWith("data:image/jpg") ||
-        image.startsWith("data:image/jpeg") ||
-        image.startsWith("data:image/webp")
-    );
-    if (!isImageValid) {
-      toast("Image format must be png, jpg, jpeg, or webp");
-      return;
-    }
+
     try {
       //再次生成时组件刷新
       setCompletion("");

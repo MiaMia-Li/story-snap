@@ -7,7 +7,7 @@ import { Progress } from "../ui/progress";
 import Image from "next/image";
 
 interface ImageUploadProps {
-  previewImage: string[] | null;
+  previewImage: any[] | null;
   getRootProps: () => any;
   onClearImages: () => void;
   onRemoveImage: (index: number) => void;
@@ -70,7 +70,7 @@ export default function ImageUpload({
 
               <div className="relative w-full h-full p-2">
                 <Image
-                  src={image}
+                  src={image.url}
                   alt={`Preview ${index + 1}`}
                   fill
                   className="object-contain rounded-lg"

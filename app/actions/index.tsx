@@ -10,3 +10,13 @@ export async function getStories() {
   });
   return stories;
 }
+
+export async function getCredits() {
+  const session = await auth();
+  const user = await prisma.user.findUnique({
+    where: {
+      id: session?.user.id,
+    },
+  });
+  return user?.credits;
+}
