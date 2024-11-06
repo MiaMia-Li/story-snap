@@ -13,7 +13,11 @@ import {
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
-export default function PaymentSuccessPage() {
+export default function PaymentSuccessPage({
+  searchParams,
+}: {
+  searchParams: { priceId: string; credits: number; bill: number };
+}) {
   const router = useRouter();
 
   useEffect(() => {
@@ -45,16 +49,24 @@ export default function PaymentSuccessPage() {
                 <h2 className="text-2xl font-semibold tracking-tight">
                   Payment Successful
                 </h2>
-                <p className="text-zinc-500 text-sm">Order #2024-0123</p>
+                <p className="text-zinc-500 text-sm">
+                  Order #{new Date().toLocaleDateString()}
+                </p>
               </div>
             </div>
           </CardHeader>
           <CardContent className="px-8">
             <div className="space-y-4">
-              <div className="bg-zinc-50 rounded-lg p-4">
+              <div className="bg-zinc-50 rounded-lg p-4 space-y-2">
                 <div className="flex justify-between items-center text-sm">
                   <span className="text-zinc-600">Amount paid</span>
-                  <span className="font-medium">$199.00</span>
+                  <span className="font-medium">${searchParams.bill}.00</span>
+                </div>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-zinc-600">Credits added</span>
+                  <span className="font-medium">
+                    {searchParams.credits} credits
+                  </span>
                 </div>
               </div>
               <p className="text-zinc-500 text-sm text-center">

@@ -68,17 +68,6 @@ export async function POST(req: Request) {
       }
 
       // 更新数据库
-      // await prisma.user.update({
-      //   where: {
-      //     id: userId,
-      //   },
-      //   data: {
-      //     credits: {
-      //       increment: creditsToAdd,
-      //     },
-      //   },
-      // });
-      // 更新数据库
       const user = await prisma.user.findUnique({
         where: {
           id: userId,

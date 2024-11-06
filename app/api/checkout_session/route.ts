@@ -2,6 +2,13 @@ import Stripe from "stripe";
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 
+// 定义价格和credits的映射关系
+const PRICE_CREDIT_MAP = {
+  [process.env.NEXT_PUBLIC_PRICE_30!]: { credits: 30, bill: 9 },
+  [process.env.NEXT_PUBLIC_PRICE_100!]: { credits: 100, bill: 19 },
+  [process.env.NEXT_PUBLIC_PRICE_200!]: { credits: 200, bill: 29 },
+};
+
 const stripeKey = process.env.STRIPE_SECRET_KEY;
 if (!stripeKey) throw new Error("Stripe secret key is not defined");
 
@@ -29,45 +36,13 @@ export async function POST(request: Request) {
         },
       ],
       mode: "payment",
-      success_url: `${origin}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${origin}/payment/success?priceId=${priceId}&credits=${PRICE_CREDIT_MAP[priceId].credits}&bill=${PRICE_CREDIT_MAP[priceId].bill}`,
       cancel_url: `${origin}/pricing?canceled=true`,
       metadata: {
         userId: session.user.id,
       },
       automatic_tax: { enabled: true },
     });
-
-    const data = {
-      userId: session.user.id,
-      stripeSessionId: checkoutSession.id,
-      amount: price.unit_amount ? price.unit_amount / 100 : 0, // Stripe 金额以分为单位
-      currency: price.currency,
-      status: "pending", // 支付状态：pending, completed, failed
-      productName: product.name,
-      productId: product.id,
-      metadata: {
-        priceId: priceId,
-        checkoutUrl: checkoutSession.url,
-      },
-    };
-    console.log(data, "----stripe");
-
-    // 创建交易记录
-    // await prisma.transaction.create({
-    //   data: {
-    //     userId: session.user.id,
-    //     stripeSessionId: checkoutSession.id,
-    //     amount: price.unit_amount ? price.unit_amount / 100 : 0, // Stripe 金额以分为单位
-    //     currency: price.currency,
-    //     status: "pending", // 支付状态：pending, completed, failed
-    //     productName: product.name,
-    //     productId: product.id,
-    //     metadata: {
-    //       priceId: priceId,
-    //       checkoutUrl: checkoutSession.url,
-    //     },
-    //   },
-    // });
 
     return NextResponse.json({ url: checkoutSession.url });
   } catch (error: any) {
