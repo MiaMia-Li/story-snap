@@ -48,11 +48,12 @@ export function StoryStyleConfig({
   };
 
   const basicConfig = [
+    { label: "Language", value: config.language, options: LANGUAGES },
+
     { label: "Type", value: config.type, options: STORY_TYPES },
     { label: "Length", value: config.length, options: LENGTHS },
     { label: "Style", value: config.style, options: STYLES },
     { label: "Tone", value: config.tone, options: TONES },
-    { label: "Language", value: config.language, options: LANGUAGES },
   ];
 
   return (

@@ -29,6 +29,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         console.log("--currentUser", currentUser);
 
         if (currentUser) {
+          session.user.credits = currentUser.credits ?? undefined;
           session.user.level = currentUser.level ?? undefined;
           session.user.stripePriceId = currentUser.stripePriceId;
           session.user.stripeCurrentPeriodEnd =

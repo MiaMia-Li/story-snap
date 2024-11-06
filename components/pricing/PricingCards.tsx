@@ -12,9 +12,10 @@ import { Badge } from "@/components/ui/badge";
 import { UserSubscriptionPlan } from "@/types";
 import CheckoutButton from "./CheckoutButton";
 
-const plans = [
+export const PACKAGE_PLANS = [
   {
-    name: "30 Credits",
+    id: "basic",
+    name: "Starter Pack",
     credits: 30,
     price: 9,
     pricePerCredit: "0.30",
@@ -27,7 +28,8 @@ const plans = [
     popular: false,
   },
   {
-    name: "100 Credits",
+    id: "pro",
+    name: "Professional Pack",
     credits: 100,
     price: 19,
     pricePerCredit: "0.19",
@@ -40,7 +42,8 @@ const plans = [
     popular: true,
   },
   {
-    name: "200 Credits",
+    id: "business",
+    name: "Business Pack",
     credits: 200,
     price: 29,
     pricePerCredit: "0.15",
@@ -95,11 +98,11 @@ export function PricingCards({
 
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8 items-start">
-      {plans.map((plan) => {
+      {PACKAGE_PLANS.map((plan) => {
         const buttonConfig = getButtonConfig(plan.name);
         return (
           <Card
-            key={plan.name}
+            key={plan.id}
             className={cn(
               "flex flex-col transition-all duration-200 hover:shadow-lg",
               {
@@ -115,7 +118,9 @@ export function PricingCards({
                   BEST VALUE
                 </Badge>
               )}
-              <CardTitle className="text-2xl font-bold">{plan.name}</CardTitle>
+              <CardTitle className="text-2xl font-bold">
+                {plan.credits} Credits
+              </CardTitle>
             </CardHeader>
             <CardContent className="flex-1">
               <div className="space-y-6">

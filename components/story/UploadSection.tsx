@@ -11,6 +11,8 @@ import {
   Settings2,
   Wand2,
   Shuffle,
+  PlusCircle,
+  ArrowBigRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -19,15 +21,17 @@ import { StoryConfig } from "@/types";
 import { StoryStyleConfig } from "./PersetSection";
 import ImageUpload from "./ImageUpload";
 import { PRESETS } from "@/config/lang";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import LoadingMessage from "./LoadingMessage";
 
 export function UploadSection() {
   const [isConfigExpanded, setIsConfigExpanded] = useState(false);
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [previewImage, setPreviewImage] = useState<string[] | null>(null);
   const storyRef = useRef<HTMLDivElement>(null);
   const [randomPresetLabel, setRandomPresetLabel] = useState("Create a story");
-  const router = useRouter();
+  const { data: session } = useSession();
 
   const [storyConfig, setStoryConfig] = useState<StoryConfig>({
     type: "story",
@@ -40,59 +44,84 @@ export function UploadSection() {
   const [isUploading, setIsUploading] = useState(false);
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
-    console.log("--acceptedFiles", acceptedFiles);
-    const file = acceptedFiles[0];
-    if (file) {
+    if (acceptedFiles.length > 0) {
       setIsUploading(true);
       try {
-        // 模拟上传进度
-        const reader = new FileReader();
-        reader.onprogress = (event) => {
-          if (event.lengthComputable) {
-            const progress = Math.round((event.loaded / event.total) * 100);
-            setUploadProgress(progress);
-          }
-        };
+        const imagePromises = acceptedFiles.map((file) => {
+          return new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
 
-        reader.onload = () => {
-          setPreviewImage(reader.result as string);
-          setIsUploading(false);
-          setUploadProgress(0);
-        };
+            reader.onprogress = (event) => {
+              if (event.lengthComputable) {
+                const progress = Math.round((event.loaded / event.total) * 100);
+                setUploadProgress(progress);
+              }
+            };
 
-        reader.readAsDataURL(file);
+            reader.onload = () => {
+              resolve(reader.result as string);
+            };
+
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+          });
+        });
+
+        const newImages = await Promise.all(imagePromises);
+        setPreviewImage((prev) => [...(prev || []), ...newImages]);
       } catch (error) {
         console.error("Upload error:", error);
+        toast("Upload failed");
       } finally {
         setIsUploading(false);
+        setUploadProgress(0);
       }
     }
   }, []);
 
   const {
-    completion,
+    completion: generatedCompletion,
     complete,
+    setCompletion,
     isLoading: isGenerating,
     error,
   } = useCompletion({
-    api: "/api/image",
+    api: "/api/generate_image",
     onError: (error) => {
-      console.log("--error", error.message);
-      if (error.message === "Unauthorized") {
-        router.push(`/login?callbackUrl=${window.location.href}`);
-      }
       toast(error.message);
     },
-    onFinish: () => {
+    onResponse: (response) => {
+      console.log("--onResponse", response);
+    },
+    onFinish: (prompt: string, completion: string) => {
+      console.log("--onFinish", completion);
+      const title = completion.split("\n")[0].replace(/(Title: |[#*])/g, "");
+      const content = completion.split("\n").slice(1).join("\n");
+      saveStory(title, content);
       storyRef.current?.scrollIntoView({ behavior: "smooth" });
     },
   });
+  const saveStory = async (title: string, content: string) => {
+    console.log("--saveStory", title, content);
+    try {
+      const response = await fetch("/api/story/save", {
+        method: "POST",
+        body: JSON.stringify({
+          title,
+          content,
+          images: JSON.stringify(previewImage),
+        }),
+      });
+    } catch (error) {
+      console.error("saveStory error", error);
+    }
+  };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: { "image/*": [".png", ".jpg", ".jpeg", ".webp"] },
     maxSize: 10485760,
-    multiple: false,
+    multiple: true,
     onError: (error) => {
       toast(error.message);
     },
@@ -114,7 +143,21 @@ export function UploadSection() {
 
   const handleGenerate = async () => {
     if (!previewImage) return;
+    //检查图片格式是否png,jpg,jpeg,webp
+    const isImageValid = previewImage.every(
+      (image) =>
+        image.startsWith("data:image/png") ||
+        image.startsWith("data:image/jpg") ||
+        image.startsWith("data:image/jpeg") ||
+        image.startsWith("data:image/webp")
+    );
+    if (!isImageValid) {
+      toast("Image format must be png, jpg, jpeg, or webp");
+      return;
+    }
     try {
+      //再次生成时组件刷新
+      setCompletion("");
       // 在开始生成时就滚动到生成区域
       setTimeout(() => {
         storyRef.current?.scrollIntoView({
@@ -140,6 +183,12 @@ export function UploadSection() {
       {/* 图片上传区域 */}
       <div className="relative overflow-hidden rounded-xl transition-all duration-300 h-[300px]">
         <ImageUpload
+          onClearImages={() => setPreviewImage([])}
+          onRemoveImage={(index) =>
+            setPreviewImage((prev: string[] | null) =>
+              prev ? prev.filter((_, i) => i !== index) : null
+            )
+          }
           previewImage={previewImage}
           getRootProps={getRootProps}
           getInputProps={getInputProps}
@@ -148,7 +197,7 @@ export function UploadSection() {
           isUploading={isUploading}
         />
       </div>
-      {previewImage && (
+      {previewImage && previewImage?.length > 0 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}>
@@ -189,45 +238,73 @@ export function UploadSection() {
                             </span>
                           </div>
                         </Button>
+                        {!session?.user && (
+                          <Link
+                            href={`/login?callbackUrl=${window.location.href}`}>
+                            <Button className="flex-1 h-12 group rounded-full">
+                              <div className="relative flex items-center justify-center">
+                                <ArrowBigRight className="h-5 w-5 mr-2" />
+                                <span className="relative z-10">Sign in</span>
+                              </div>
+                            </Button>
+                          </Link>
+                        )}
+                        {session?.user.credits &&
+                          session?.user.credits <= 0 && (
+                            <Link href="/pricing">
+                              <Button
+                                variant="outline"
+                                className="flex-1 h-12 group hover:bg-primary/5 transition-colors rounded-full"
+                                onClick={handleRandomPreset}>
+                                <div className="relative flex items-center justify-center">
+                                  <PlusCircle className="h-5 w-5 mr-2 group-hover:animate-spin" />
+                                  <span className="relative z-10">
+                                    Buy Credits
+                                  </span>
+                                </div>
+                              </Button>
+                            </Link>
+                          )}
 
-                        {/* Generate Button */}
-                        <Button
-                          className="flex-1 h-12 group relative overflow-hidden bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-300"
-                          onClick={handleGenerate}
-                          disabled={isGenerating}>
-                          <div className="relative flex items-center justify-center">
-                            {isGenerating ? (
-                              <>
-                                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                                <span className="animate-pulse">
-                                  Crafting your story...
-                                </span>
-                              </>
-                            ) : (
-                              <>
-                                <Wand2 className="mr-2 h-5 w-5 group-hover:animate-pulse" />
-                                Generate Story
-                              </>
-                            )}
-                          </div>
-                          {/* Enhanced Sparkle Effect */}
-                          <motion.div
-                            className="absolute inset-0 pointer-events-none"
-                            animate={{
-                              background: [
-                                "linear-gradient(45deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%)",
-                                "linear-gradient(45deg, transparent 100%, rgba(255,255,255,0.1) 150%, transparent 200%)",
-                              ],
-                              x: ["-100%", "100%"],
-                            }}
-                            transition={{
-                              duration: 1.5,
-                              repeat: Infinity,
-                              repeatType: "loop",
-                              ease: "linear",
-                            }}
-                          />
-                        </Button>
+                        {session?.user.credits && session.user.credits > 0 && (
+                          <Button
+                            className="flex-1 h-12 group relative overflow-hidden bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-300"
+                            onClick={handleGenerate}
+                            disabled={isGenerating}>
+                            <div className="relative flex items-center justify-center">
+                              {isGenerating ? (
+                                <>
+                                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                                  <span className="animate-pulse">
+                                    Crafting your story...
+                                  </span>
+                                </>
+                              ) : (
+                                <>
+                                  <Wand2 className="mr-2 h-5 w-5 group-hover:animate-pulse" />
+                                  Generate Story
+                                </>
+                              )}
+                            </div>
+                            {/* Enhanced Sparkle Effect */}
+                            <motion.div
+                              className="absolute inset-0 pointer-events-none"
+                              animate={{
+                                background: [
+                                  "linear-gradient(45deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%)",
+                                  "linear-gradient(45deg, transparent 100%, rgba(255,255,255,0.1) 150%, transparent 200%)",
+                                ],
+                                x: ["-100%", "100%"],
+                              }}
+                              transition={{
+                                duration: 1.5,
+                                repeat: Infinity,
+                                repeatType: "loop",
+                                ease: "linear",
+                              }}
+                            />
+                          </Button>
+                        )}
                       </div>
 
                       <Button
@@ -276,7 +353,7 @@ export function UploadSection() {
       {/* 故事展示区域 */}
       <div ref={storyRef}>
         <AnimatePresence mode="wait">
-          {completion ? (
+          {generatedCompletion ? (
             <Card className="bg-gradient-to-br from-primary/5 to-background border-primary/10">
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-4">
@@ -286,25 +363,14 @@ export function UploadSection() {
                   </h3>
                 </div>
                 <div className="prose prose-sm max-w-none">
-                  <div className="whitespace-pre-wrap">{completion}</div>
+                  <div className="whitespace-pre-wrap">
+                    {generatedCompletion}
+                  </div>
                 </div>
               </CardContent>
             </Card>
           ) : isGenerating ? (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="text-center py-12">
-              <Card className="bg-gradient-to-br from-primary/5 to-background max-w-md mx-auto">
-                <CardContent className="p-6">
-                  <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-primary" />
-                  <p className="text-muted-foreground animate-pulse">
-                    Creating your story...
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
+            <LoadingMessage />
           ) : null}
         </AnimatePresence>
       </div>

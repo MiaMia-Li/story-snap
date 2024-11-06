@@ -5,15 +5,10 @@ import ThemeButton from "./ThemeButton";
 import UserLogin from "./UserLogin";
 import UserMenu from "./UserMenu";
 import { auth } from "@/auth";
-import { getCredits } from "@/lib/credits";
 import { Separator } from "@/components/ui/separator";
 
 const Header = async () => {
   const session = await auth();
-  let credits = 0;
-  if (session?.user.id) {
-    credits = await getCredits();
-  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-blue-100/20 bg-white/80 backdrop-blur-md transition-all duration-300 dark:border-blue-900/20 dark:bg-gray-900/80">
@@ -47,7 +42,7 @@ const Header = async () => {
                 </Link>
                 <Separator orientation="vertical" className="h-6 mx-2" /> */}
                 <Link href="pricing" className="text-md hover:text-primary">
-                  {credits} credits
+                  {session?.user.credits} credits
                 </Link>
                 <Separator orientation="vertical" className="h-6 mx-2" />
                 <UserMenu />

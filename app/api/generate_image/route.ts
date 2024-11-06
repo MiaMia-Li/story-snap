@@ -1,4 +1,4 @@
-import { streamText } from "ai";
+import { Attachment, streamText } from "ai";
 import { z } from "zod";
 import { openai } from "@ai-sdk/openai";
 import { generatePrompt } from "@/utils/promot";
@@ -15,10 +15,11 @@ const requestSchema = z.object({
       }
     }),
     z.object({
-      image: z.string(),
+      image: z.array(z.string()), // Ensure image is always an array
       storyType: z.string(),
       storyLength: z.string(),
       storyStyle: z.string(),
+      storyTone: z.string().optional(), // Make storyTone optional
       language: z.string(),
     }),
   ]),
@@ -29,10 +30,11 @@ export async function POST(request: Request) {
   if (!session?.user.id) {
     return new Response("Unauthorized", { status: 401 });
   }
+  console.log("--session", session);
+
   try {
     // 解析并验证请求数据
     const rawBody = await request.json();
-    console.log("Raw body received:", JSON.stringify(rawBody, null, 2));
 
     // 验证和解析数据
     const validatedData = requestSchema.parse(rawBody);
@@ -44,9 +46,13 @@ export async function POST(request: Request) {
     const { image, storyType, storyLength, storyStyle, storyTone, language } =
       promptData;
 
-    // 获取base64图片数据
-    const base64Image = image.split(",")[1];
-
+    const image_content = image.map((img: string, index: number) => {
+      return {
+        type: "image",
+        image: img,
+      };
+    });
+    console.log("--image_content", image_content);
     // 构建提示文本
     const promptText = generatePrompt({
       type: storyType,
@@ -65,18 +71,16 @@ export async function POST(request: Request) {
           content: [
             {
               type: "text",
-              text: promptText,
+              text: `You are an imaginative storyteller with a focus on creating engaging and vivid narratives. Given a series of images and a descriptive prompt, your task is to generate a coherent story and a captivating title based on the provided content.
+
+Prompt: ${promptText} Your return language is ${language}`,
             },
-            {
-              type: "image",
-              image: base64Image,
-            },
+            ...image_content,
           ],
         },
       ],
       temperature: 0.7,
     });
-
     await prisma.user.update({
       where: { id: session?.user?.id },
       data: { credits: { decrement: 1 } },

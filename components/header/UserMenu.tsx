@@ -138,25 +138,25 @@ export default function UserMenu() {
 
         <div className="space-y-1">
           <MenuItem
+            icon={<RocketIcon className="h-4 w-4" />}
+            label="Buy Credits"
+            href="/pricing"
+          />
+          {/* <MenuItem
             icon={<PersonIcon className="h-4 w-4" />}
             label="Profile"
             href="/profile"
-          />
+          /> */}
           <MenuItem
             icon={<MixIcon className="h-4 w-4" />}
             label="Dashboard"
             href="/dashboard"
           />
-          <MenuItem
+          {/* <MenuItem
             icon={<GearIcon className="h-4 w-4" />}
             label="Settings"
             href="/settings"
-          />
-          <MenuItem
-            icon={<RocketIcon className="h-4 w-4" />}
-            label="Upgrade Plan"
-            href="/pricing"
-          />
+          /> */}
         </div>
 
         <DropdownMenuSeparator className="my-2 bg-blue-100/20 dark:bg-blue-900/20" />

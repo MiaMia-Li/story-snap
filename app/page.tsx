@@ -120,7 +120,7 @@ export default function HomePage() {
                     <motion.div
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}>
-                      <Link href="/generate">
+                      <Link href="/generate-story">
                         <Button size="lg" className="rounded-full px-8">
                           Get Started <ArrowRight className="ml-2 h-4 w-4" />
                         </Button>

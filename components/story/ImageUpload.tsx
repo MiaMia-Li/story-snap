@@ -1,14 +1,16 @@
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { AnimatePresence } from "framer-motion";
-import { RefreshCcw, Upload, Loader2 } from "lucide-react";
+import { RefreshCcw, Upload, Loader2, Trash2, X } from "lucide-react";
 import { Button } from "../ui/button";
 import { Progress } from "../ui/progress";
 import Image from "next/image";
 
 interface ImageUploadProps {
-  previewImage: string | null;
+  previewImage: string[] | null;
   getRootProps: () => any;
+  onClearImages: () => void;
+  onRemoveImage: (index: number) => void;
   getInputProps: () => any;
   isDragActive: boolean;
   uploadProgress?: number; // 新增：上传进度
@@ -20,67 +22,101 @@ export default function ImageUpload({
   getRootProps,
   getInputProps,
   isDragActive,
+  onClearImages,
+  onRemoveImage,
   uploadProgress = 0,
   isUploading = false,
 }: ImageUploadProps) {
-  return previewImage ? (
+  return previewImage && previewImage.length > 0 ? (
     // 图片预览状态
-    <div className="relative h-full">
-      {/* 图片展示 */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="h-full">
-        <Image
-          width={100}
-          height={100}
-          src={previewImage}
-          alt="Preview"
-          className="w-full h-full object-contain"
-        />
-        {/* 半透明遮罩 */}
-        {/* <div className="absolute inset-0 bg-black/5 backdrop-blur-[2px]" /> */}
-      </motion.div>
+    <div className="h-full w-full relative">
+      <div className="h-full w-full overflow-x-auto scrollbar-hide">
+        <div className="relative h-full min-w-full flex items-center justify-start px-4">
+          {previewImage.map((image, index) => (
+            <div
+              key={index}
+              className={cn(
+                "relative",
+                "w-[260px]",
+                "h-[90%]",
+                "flex-shrink-0",
+                "mx-2",
+                "bg-white",
+                "rounded-xl",
+                "shadow-[0_2px_8px_rgba(0,0,0,0.08)]",
+                "border-[1px] border-gray-100",
+                "transition-all duration-200 ease-out",
+                "group",
+                "hover:shadow-[0_4px_12px_rgba(0,0,0,0.12)]",
+                "hover:-translate-y-1"
+              )}>
+              {/* 删除按钮 - 右上角 */}
+              <button
+                onClick={() => onRemoveImage(index)} // 需要添加这个回调函数
+                className={cn(
+                  "absolute -top-2 -right-2 z-10",
+                  "w-6 h-6",
+                  "bg-red-500 hover:bg-red-600",
+                  "rounded-full",
+                  "flex items-center justify-center",
+                  "text-white",
+                  "shadow-lg",
+                  "transition-all duration-200",
+                  "opacity-0 group-hover:opacity-100", // hover时显示
+                  "transform scale-90 group-hover:scale-100"
+                )}>
+                <X className="w-4 h-4" />
+              </button>
 
-      {/* 重新上传按钮 */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="space-y-4">
-          <div {...getRootProps()}>
-            <input {...getInputProps()} />
-            <Button
-              variant="secondary"
-              size="lg"
-              className="gap-2 shadow-lg hover:shadow-xl transition-all duration-300"
-              disabled={isUploading}>
-              {isUploading ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Uploading...
-                </>
-              ) : (
-                <>
-                  <RefreshCcw className="h-4 w-4" />
-                  Change Image
-                </>
-              )}
-            </Button>
+              <div className="relative w-full h-full p-2">
+                <Image
+                  src={image}
+                  alt={`Preview ${index + 1}`}
+                  fill
+                  className="object-contain rounded-lg"
+                  priority={index === 0}
+                />
+
+                <div
+                  className="absolute bottom-3 right-3 bg-black/50 backdrop-blur-md 
+                          text-white px-2 py-1 rounded-md text-xs font-medium">
+                  {index + 1}/{previewImage.length}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 顶部操作栏 */}
+      <div className="absolute top-4 right-4 flex items-center gap-2">
+        {/* 清空按钮 */}
+        {previewImage.length > 0 && (
+          <button
+            onClick={onClearImages} // 需要添加这个回调函数
+            className={cn(
+              "px-3 py-1.5",
+              "bg-red-500 hover:bg-red-600",
+              "text-white text-sm font-medium",
+              "rounded-full",
+              "flex items-center gap-2",
+              "shadow-lg hover:shadow-xl",
+              "transition-all duration-200"
+            )}>
+            <Trash2 className="w-4 h-4" />
+            Clear All
+          </button>
+        )}
+
+        {/* 图片数量提示 */}
+        {previewImage.length > 1 && (
+          <div
+            className="bg-black/50 backdrop-blur-md 
+                    text-white px-3 py-1.5 rounded-full 
+                    text-sm font-medium">
+            {previewImage.length} images
           </div>
-          {/* 上传进度显示 */}
-          {isUploading && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="w-64">
-              <Progress value={uploadProgress} className="h-2" />
-              <p className="text-sm text-center mt-2 text-muted-foreground">
-                {uploadProgress}% uploaded
-              </p>
-            </motion.div>
-          )}
-        </motion.div>
+        )}
       </div>
     </div>
   ) : (
@@ -96,10 +132,7 @@ export default function ImageUpload({
       )}>
       <input {...getInputProps()} />
       <div className="absolute inset-0 flex items-center justify-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="text-center space-y-6">
+        <div className="text-center space-y-6">
           {isUploading ? (
             // 上传中状态
             <div className="space-y-4">
@@ -124,14 +157,12 @@ export default function ImageUpload({
           ) : (
             // 默认上传界面
             <>
-              <motion.div
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                className="mx-auto w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center">
+              <div className="mx-auto w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center">
                 <Upload className="h-10 w-10 text-primary" />
-              </motion.div>
+              </div>
               <div className="space-y-2">
                 <h3 className="text-xl font-semibold">
-                  Drop your image here or click to browse
+                  Drop your image here or click to browse,max 10 images
                 </h3>
                 <p className="text-sm text-muted-foreground">
                   Supports PNG, JPG, JPEG, WEBP (max 10MB)
@@ -139,29 +170,22 @@ export default function ImageUpload({
               </div>
             </>
           )}
-        </motion.div>
+        </div>
       </div>
 
       {/* 拖拽提示 */}
-      <AnimatePresence>
-        {isDragActive && !isUploading && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-primary/10 backdrop-blur-sm
+
+      {isDragActive && !isUploading && (
+        <div
+          className="absolute inset-0 bg-primary/10 backdrop-blur-sm
                              flex items-center justify-center pointer-events-none">
-            <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5 }}
-              className="bg-background/95 shadow-lg rounded-xl p-6">
-              <p className="text-lg font-medium text-primary">
-                Drop to create magic! ✨
-              </p>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          <div className="bg-background/95 shadow-lg rounded-xl p-6">
+            <p className="text-lg font-medium text-primary">
+              Drop to create magic! ✨
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
