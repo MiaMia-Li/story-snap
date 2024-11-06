@@ -16,25 +16,25 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         if (token.sub) {
           session.user.id = token.sub;
         }
-        const currentUser = await prisma.user.findUnique({
-          where: { id: token.sub },
-        });
+        // const currentUser = await prisma.user.findUnique({
+        //   where: { id: token.sub },
+        // });
 
-        // if (currentUser && currentUser.credits === null) {
-        //   await prisma.user.update({
-        //     where: { id: token.sub },
-        //     data: { credits: 5 },
-        //   });
+        // // if (currentUser && currentUser.credits === null) {
+        // //   await prisma.user.update({
+        // //     where: { id: token.sub },
+        // //     data: { credits: 5 },
+        // //   });
+        // // }
+        // console.log("--currentUser", currentUser);
+
+        // if (currentUser) {
+        //   session.user.credits = currentUser.credits ?? undefined;
+        //   session.user.level = currentUser.level ?? undefined;
+        //   session.user.stripePriceId = currentUser.stripePriceId;
+        //   session.user.stripeCurrentPeriodEnd =
+        //     currentUser.stripeCurrentPeriodEnd;
         // }
-        console.log("--currentUser", currentUser);
-
-        if (currentUser) {
-          session.user.credits = currentUser.credits ?? undefined;
-          session.user.level = currentUser.level ?? undefined;
-          session.user.stripePriceId = currentUser.stripePriceId;
-          session.user.stripeCurrentPeriodEnd =
-            currentUser.stripeCurrentPeriodEnd;
-        }
       }
       return session;
     },
