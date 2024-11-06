@@ -20,12 +20,12 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           where: { id: token.sub },
         });
 
-        if (currentUser && currentUser.credits === null) {
-          await prisma.user.update({
-            where: { id: token.sub },
-            data: { credits: 5 },
-          });
-        }
+        // if (currentUser && currentUser.credits === null) {
+        //   await prisma.user.update({
+        //     where: { id: token.sub },
+        //     data: { credits: 5 },
+        //   });
+        // }
         console.log("--currentUser", currentUser);
 
         if (currentUser) {
