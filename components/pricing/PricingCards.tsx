@@ -26,7 +26,7 @@ export const PACKAGE_PLANS = [
       "Email Support",
     ],
     popular: false,
-    priceId: "price_1QHp0UP4SDLjMGpMGREmPNlN",
+    priceId: process.env.NEXT_PUBLIC_PRICE_30,
   },
   {
     id: "pro",
@@ -41,7 +41,7 @@ export const PACKAGE_PLANS = [
       "Email Support",
     ],
     popular: true,
-    priceId: "price_1QHp0UP4SDLjMGpMGREmPNlN",
+    priceId: process.env.NEXT_PUBLIC_PRICE_100,
   },
   {
     id: "business",
@@ -56,7 +56,7 @@ export const PACKAGE_PLANS = [
       "Email Support",
     ],
     popular: false,
-    priceId: "price_1QHp0UP4SDLjMGpMGREmPNlN",
+    priceId: process.env.NEXT_PUBLIC_PRICE_200,
   },
 ];
 

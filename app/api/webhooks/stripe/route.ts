@@ -14,9 +14,9 @@ const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
 // 定义价格和credits的映射关系
 const PRICE_CREDIT_MAP = {
-  price_1QHp0UP4SDLjMGpMGREmPNlN: 30, // 基础套餐
-  // price_2xxxxxxxxxxxxx: 500, // 进阶套餐
-  // price_3xxxxxxxxxxxxx: 1000, // 专业套餐
+  [process.env.NEXT_PUBLIC_PRICE_30!]: 30,
+  [process.env.NEXT_PUBLIC_PRICE_100!]: 100,
+  [process.env.NEXT_PUBLIC_PRICE_200!]: 200,
 };
 
 export async function POST(req: Request) {
