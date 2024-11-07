@@ -111,3 +111,14 @@ export interface StoryConfig {
   explicitContent?: boolean; // 是否包含敏感内容
   readingLevel?: "beginner" | "intermediate" | "advanced"; // 阅读水平
 }
+
+// types/auth.ts
+export interface AuthContextType {
+  showLoginDialog: boolean;
+  openLoginDialog: () => void;
+  closeLoginDialog: () => void;
+  requireAuth: (callback: () => void) => void;
+  credits: number;
+  updateCredits: (newCredits: number) => void;
+  refreshCredits: () => void;
+}

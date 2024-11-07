@@ -25,14 +25,14 @@ import { toast } from "sonner";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import LoadingMessage from "./LoadingMessage";
+import { useAuth } from "@/contexts/auth";
 
 export function UploadSection() {
   const [isConfigExpanded, setIsConfigExpanded] = useState(false);
   const [previewImage, setPreviewImage] = useState<any[] | null>(null);
   const storyRef = useRef<HTMLDivElement>(null);
   const [randomPresetLabel, setRandomPresetLabel] = useState("Create a story");
-  const { data: session } = useSession();
-
+  const { requireAuth, refreshCredits, credits } = useAuth();
   const [storyConfig, setStoryConfig] = useState<StoryConfig>({
     type: "story",
     length: "medium",
@@ -67,35 +67,44 @@ export function UploadSection() {
     }
   };
 
-  const onDrop = useCallback(async (acceptedFiles: File[]) => {
-    if (acceptedFiles.length > 0) {
-      setIsUploading(true);
-      try {
-        const newImages = await Promise.all(
-          acceptedFiles.map((file) => uploadFile(file))
-        );
-        const validImages = newImages.filter(
-          (
-            file
-          ): file is {
-            url: string;
-            name: string;
-            contentType: string;
-            content: string;
-          } => file !== undefined
-        );
-        console.log("--newImages", newImages);
+  const onDrop = useCallback(
+    async (acceptedFiles: File[]) => {
+      if (acceptedFiles.length === 0) return;
 
-        setPreviewImage((prev) => [...(prev || []), ...validImages]);
-      } catch (error) {
-        console.error("Upload error:", error);
-        toast("Upload failed");
-      } finally {
-        setIsUploading(false);
-        setUploadProgress(0);
-      }
-    }
-  }, []);
+      // 将文件上传逻辑包装在一个函数中
+      const handleUpload = async () => {
+        setIsUploading(true);
+        try {
+          const newImages = await Promise.all(
+            acceptedFiles.map((file) => uploadFile(file))
+          );
+          const validImages = newImages.filter(
+            (
+              file
+            ): file is {
+              url: string;
+              name: string;
+              contentType: string;
+              content: string;
+            } => file !== undefined
+          );
+          console.log("--newImages", newImages);
+
+          setPreviewImage((prev) => [...(prev || []), ...validImages]);
+        } catch (error) {
+          console.error("Upload error:", error);
+          toast("Upload failed");
+        } finally {
+          setIsUploading(false);
+          setUploadProgress(0);
+        }
+      };
+
+      // 使用requireAuth包装上传函数
+      requireAuth(handleUpload);
+    },
+    [requireAuth, setIsUploading, setPreviewImage, setUploadProgress, toast]
+  );
 
   const {
     completion: generatedCompletion,
@@ -112,6 +121,8 @@ export function UploadSection() {
     onFinish: (prompt: string, completion: string) => {
       const title = completion.split("\n")[0].replace(/(Title: |[#*])/g, "");
       const content = completion.split("\n").slice(1).join("\n");
+      dispatchEvent(new Event("finishStory"));
+      refreshCredits();
       saveStory(title, content);
       storyRef.current?.scrollIntoView({ behavior: "smooth" });
     },
@@ -157,7 +168,10 @@ export function UploadSection() {
 
   const handleGenerate = async () => {
     if (!previewImage) return;
-
+    if (credits <= 0) {
+      toast("No credits, please buy credits");
+      return;
+    }
     try {
       //再次生成时组件刷新
       setCompletion("");
@@ -241,73 +255,44 @@ export function UploadSection() {
                             </span>
                           </div>
                         </Button>
-                        {!session?.user && (
-                          <Link
-                            href={`/login?callbackUrl=${window.location.href}`}>
-                            <Button className="flex-1 h-12 group rounded-full">
-                              <div className="relative flex items-center justify-center">
-                                <ArrowBigRight className="h-5 w-5 mr-2" />
-                                <span className="relative z-10">Sign in</span>
-                              </div>
-                            </Button>
-                          </Link>
-                        )}
-                        {session?.user.credits &&
-                          session?.user.credits <= 0 && (
-                            <Link href="/pricing">
-                              <Button
-                                variant="outline"
-                                className="flex-1 h-12 group hover:bg-primary/5 transition-colors rounded-full"
-                                onClick={handleRandomPreset}>
-                                <div className="relative flex items-center justify-center">
-                                  <PlusCircle className="h-5 w-5 mr-2 group-hover:animate-spin" />
-                                  <span className="relative z-10">
-                                    Buy Credits
-                                  </span>
-                                </div>
-                              </Button>
-                            </Link>
-                          )}
 
-                        {session?.user.credits && session.user.credits > 0 && (
-                          <Button
-                            className="flex-1 h-12 group relative overflow-hidden bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-300"
-                            onClick={handleGenerate}
-                            disabled={isGenerating}>
-                            <div className="relative flex items-center justify-center">
-                              {isGenerating ? (
-                                <>
-                                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                                  <span className="animate-pulse">
-                                    Crafting your story...
-                                  </span>
-                                </>
-                              ) : (
-                                <>
-                                  <Wand2 className="mr-2 h-5 w-5 group-hover:animate-pulse" />
-                                  Generate Story
-                                </>
-                              )}
-                            </div>
-                            {/* Enhanced Sparkle Effect */}
-                            <motion.div
-                              className="absolute inset-0 pointer-events-none"
-                              animate={{
-                                background: [
-                                  "linear-gradient(45deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%)",
-                                  "linear-gradient(45deg, transparent 100%, rgba(255,255,255,0.1) 150%, transparent 200%)",
-                                ],
-                                x: ["-100%", "100%"],
-                              }}
-                              transition={{
-                                duration: 1.5,
-                                repeat: Infinity,
-                                repeatType: "loop",
-                                ease: "linear",
-                              }}
-                            />
-                          </Button>
-                        )}
+                        <Button
+                          className="flex-1 h-12 group relative overflow-hidden bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-300"
+                          onClick={handleGenerate}
+                          disabled={isGenerating}>
+                          <div className="relative flex items-center justify-center">
+                            {isGenerating ? (
+                              <>
+                                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                                <span className="animate-pulse">
+                                  Crafting your story...
+                                </span>
+                              </>
+                            ) : (
+                              <>
+                                <Wand2 className="mr-2 h-5 w-5 group-hover:animate-pulse" />
+                                Generate Story
+                              </>
+                            )}
+                          </div>
+                          {/* Enhanced Sparkle Effect */}
+                          <motion.div
+                            className="absolute inset-0 pointer-events-none"
+                            animate={{
+                              background: [
+                                "linear-gradient(45deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%)",
+                                "linear-gradient(45deg, transparent 100%, rgba(255,255,255,0.1) 150%, transparent 200%)",
+                              ],
+                              x: ["-100%", "100%"],
+                            }}
+                            transition={{
+                              duration: 1.5,
+                              repeat: Infinity,
+                              repeatType: "loop",
+                              ease: "linear",
+                            }}
+                          />
+                        </Button>
                       </div>
 
                       <Button

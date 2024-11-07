@@ -6,6 +6,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Header from "@/components/header/Header";
 import SessionWrapper from "@/components/header/SessionWrapper";
+import { AuthProvider } from "@/contexts/auth";
+import { Analytics } from "@vercel/analytics/react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -67,11 +69,14 @@ export default function RootLayout({
         <body className={inter.className}>
           <ThemeProvider attribute="class">
             <TooltipProvider>
-              <Header />
-              {children}
-              <Toaster />
+              <AuthProvider>
+                <Header />
+                {children}
+                <Toaster />
+              </AuthProvider>
             </TooltipProvider>
           </ThemeProvider>
+          <Analytics />
         </body>
       </html>
     </SessionWrapper>

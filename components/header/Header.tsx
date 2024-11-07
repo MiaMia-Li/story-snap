@@ -6,7 +6,7 @@ import UserLogin from "./UserLogin";
 import UserMenu from "./UserMenu";
 import { auth } from "@/auth";
 import { Separator } from "@/components/ui/separator";
-import { CircleHelpIcon, HelpCircle, HelpingHand } from "lucide-react";
+import Credits from "./Credits";
 
 const Header = async () => {
   const session = await auth();
@@ -42,9 +42,7 @@ const Header = async () => {
                   GenStory
                 </Link>
                 <Separator orientation="vertical" className="h-6 mx-2" /> */}
-                <Link href="pricing" className="text-md hover:text-primary">
-                  {session?.user.credits} credits
-                </Link>
+                <Credits />
                 <Separator orientation="vertical" className="h-6 mx-2" />
                 <UserMenu />
               </div>
