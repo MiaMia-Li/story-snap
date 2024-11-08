@@ -6,6 +6,8 @@ const nextConfig = {
       "lh3.googleusercontent.com",
       "cdn.jsdelivr.net",
       "yggd8boz08mj0dzm.public.blob.vercel-storage.com",
+      "replicate.delivery",
+      "replicate.com",
     ],
   },
   /* config options here */

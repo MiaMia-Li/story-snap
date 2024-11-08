@@ -23,6 +23,12 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    // 扣除积分
+    await prisma.user.update({
+      where: { id: session.user.id },
+      data: { credits: { decrement: 1 } },
+    });
+
     console.log("Story created:", story);
 
     return NextResponse.json({ message: "OK" }, { status: 200 });

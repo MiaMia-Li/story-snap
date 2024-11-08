@@ -76,7 +76,7 @@ export default function RootLayout({
               </AuthProvider>
             </TooltipProvider>
           </ThemeProvider>
-          <Analytics />
+          {process.env.NODE_ENV === "production" && <Analytics />}
         </body>
       </html>
     </SessionWrapper>

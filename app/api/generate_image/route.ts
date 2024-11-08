@@ -64,7 +64,7 @@ export async function POST(request: Request) {
 
     const prompt = `You are an imaginative storyteller with a focus on creating engaging and vivid narratives. Given a series of images and a descriptive prompt, your task is to generate a coherent story and a captivating title based on the provided images.
 
-Prompt: ${promptText}`;
+Prompt: ${promptText} You should return a json object with the following keys: story, title and a image_url`;
 
     console.log("--prompt", prompt);
 
@@ -89,7 +89,7 @@ Prompt: ${promptText}`;
       where: { id: session?.user?.id },
       data: { credits: { decrement: 1 } },
     });
-
+    console.log("--result", result);
     // 返回生成的文本
     return result.toDataStreamResponse();
   } catch (error) {
