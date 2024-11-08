@@ -38,12 +38,16 @@ const Header = async () => {
               </div>
             ) : (
               <div className="animate-fade-in flex items-center gap-2">
-                {/* <Link href="/generate" className="text-md hover:text-primary">
-                  GenStory
-                </Link>
-                <Separator orientation="vertical" className="h-6 mx-2" /> */}
-                <Credits />
-                <Separator orientation="vertical" className="h-6 mx-2" />
+                <div className="hidden md:flex md:items-center">
+                  <Link
+                    href="/generate-story"
+                    className="text-md hover:text-primary">
+                    GenStory
+                  </Link>
+                  <Separator orientation="vertical" className="h-6 mx-2" />
+                  <Credits />
+                  <Separator orientation="vertical" className="h-6 mx-2" />
+                </div>
                 <UserMenu />
               </div>
             )}

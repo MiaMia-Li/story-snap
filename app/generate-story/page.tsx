@@ -4,23 +4,32 @@
 import { LoginDialog } from "@/components/header/LoginDialog";
 import { FormSection } from "@/components/story/FormSection";
 import { DisplaySection } from "@/components/story/DisplaySection";
-import { AuthProvider } from "@/contexts/auth";
+import { AuthProvider, useAuth } from "@/contexts/auth";
 import { uploadFile } from "@/utils/image";
 import { useState } from "react";
 import { toast } from "sonner";
 import { STYLE_PRESETS } from "@/config/story";
 import { useCompletion } from "ai/react";
 import { Language } from "@/types";
+import TwitterShareButton from "@/components/story/TwitterShareButton";
+import { Button } from "@/components/ui/button";
+import { Download } from "lucide-react";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export default function Home() {
-  const [prediction, setPrediction] = useState(null);
+  const [prediction, setPrediction] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { refreshCredits } = useAuth();
   const { completion, complete } = useCompletion({
     api: "/api/predictions/text",
   });
+
+  const handleDownload = () => {
+    const imageUrl = prediction?.output[prediction.output.length - 1];
+    window.open(imageUrl, "_blank");
+  };
 
   const saveStory = async (completion: string, image: string) => {
     const title = completion.split("\n")[0].replace(/(Title: |[#*])/g, "");
@@ -34,6 +43,7 @@ export default function Home() {
           images: image,
         }),
       });
+      await refreshCredits();
     } catch (error) {
       console.error("saveStory error", error);
     }
@@ -133,9 +143,9 @@ export default function Home() {
     <AuthProvider>
       <LoginDialog />
       <main className="min-h-screen bg-gradient-to-b from-primary/5 via-background to-background">
-        <div className="grid grid-cols-3 gap-20 max-w-[1200px] mx-auto py-20 px-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 md:gap-20 max-w-[1200px] mx-auto py-20 px-6">
           <div className="col-span-1">
-            <FormSection onGenerate={handleGenerate} />
+            <FormSection onGenerate={handleGenerate} isLoading={isLoading} />
             {error && (
               <div className="text-red-500 text-center p-4 bg-red-50 rounded-lg">
                 {error}
@@ -148,6 +158,25 @@ export default function Home() {
               isLoading={isLoading}
               storyContent={completion}
             />
+            {/* 按钮区域 */}
+            {prediction?.output && (
+              <div className="mt-10">
+                <div className="flex justify-center gap-4">
+                  <Button
+                    variant="outline"
+                    onClick={handleDownload}
+                    disabled={isLoading}>
+                    <Download className="w-4 h-4 mr-2" />
+                    Download
+                  </Button>
+
+                  <TwitterShareButton
+                    text="I just generated a story with SnapStoryAI! It's so much fun! You should try it out too! 🚀"
+                    hashtags="SnapStoryAI,EasyEditing"
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </main>

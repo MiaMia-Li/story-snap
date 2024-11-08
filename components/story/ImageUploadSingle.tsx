@@ -27,7 +27,7 @@ export function ImageUploadSingle({
 }: ImageUploadSingleProps) {
   return (
     <div className="space-y-2">
-      <h3 className="text-lg font-semibold text-gray-900">
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
         Upload Reference Image
       </h3>
 
@@ -37,7 +37,7 @@ export function ImageUploadSingle({
           relative border-2 border-dashed rounded-lg p-6
           ${isDragActive ? "border-blue-500 bg-blue-50" : "border-gray-300"}
           transition-colors duration-200 cursor-pointer
-          hover:border-blue-500 hover:bg-gray-50
+          hover:border-blue-500 hover:bg-gray-50 dark:hover:border-blue-400 dark:hover:bg-gray-800/50
         `}>
         <input {...getInputProps()} />
 
@@ -45,12 +45,12 @@ export function ImageUploadSingle({
           // Empty state
           <div className="text-center">
             <Upload className="w-8 h-8 mx-auto text-gray-400 mb-2" />
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
               {isDragActive
                 ? "Drop the image here..."
                 : "Drag & drop an image here, or click to select"}
             </p>
-            <p className="text-xs text-gray-500 mt-2">
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
               Supports JPG, PNG, WEBP (Max 5MB)
             </p>
           </div>

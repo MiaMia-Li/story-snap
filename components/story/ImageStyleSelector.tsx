@@ -13,13 +13,15 @@ export function ImageStyleSelector({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-gray-900">Image Style</h3>
-        <span className="text-sm text-gray-500">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          Image Style
+        </h3>
+        <span className="text-sm text-gray-500 dark:text-gray-400">
           Select a visual style for your story
         </span>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 gap-4">
         {STYLE_PRESETS.map((style: any) => (
           <div
             key={style.id}
@@ -48,7 +50,7 @@ export function ImageStyleSelector({
             {/* Style Information Overlay */}
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-3">
               <p className="text-sm text-white font-medium">{style.name}</p>
-              <p className="text-xs text-white/80 mt-1">{style.description}</p>
+              {/* <p className="text-xs text-white/80 mt-1">{style.description}</p> */}
             </div>
 
             {/* Selection Indicator */}

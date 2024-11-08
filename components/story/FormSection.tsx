@@ -2,20 +2,21 @@
 import { useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 
-import Image from "next/image";
 import { useDropzone } from "react-dropzone";
-import { X } from "lucide-react";
 import { useAuth } from "@/contexts/auth";
 
 import { ImageStyleSelector } from "./ImageStyleSelector";
-import ImageUpload from "./ImageUpload";
 import { ImageUploadSingle } from "./ImageUploadSingle";
 import { LanguageSelector } from "./LangSelector";
 import { Language } from "@/types";
+import { motion } from "framer-motion";
+import { Loader2, Wand2 } from "lucide-react";
 export function FormSection({
   onGenerate,
+  isLoading,
 }: {
   onGenerate: (formData: any) => void;
+  isLoading: boolean;
 }) {
   const [uploadedImages, setUploadedImages] = useState<
     {
@@ -87,13 +88,42 @@ export function FormSection({
       {/* 生成按钮区域 */}
       <div className="space-y-4">
         <Button
-          type="submit"
+          className="w-full h-12 group relative overflow-hidden bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-300"
           onClick={(e) => {
             e.preventDefault();
             handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
           }}
-          className="w-full h-12 text-lg font-medium">
-          Generate Image
+          disabled={isLoading}>
+          <div className="relative flex items-center justify-center">
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                <span className="animate-pulse">Crafting your story...</span>
+              </>
+            ) : (
+              <>
+                <Wand2 className="mr-2 h-5 w-5 group-hover:animate-pulse" />
+                Generate Story
+              </>
+            )}
+          </div>
+          {/* Enhanced Sparkle Effect */}
+          <motion.div
+            className="absolute inset-0 pointer-events-none"
+            animate={{
+              background: [
+                "linear-gradient(45deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%)",
+                "linear-gradient(45deg, transparent 100%, rgba(255,255,255,0.1) 150%, transparent 200%)",
+              ],
+              x: ["-100%", "100%"],
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              repeatType: "loop",
+              ease: "linear",
+            }}
+          />
         </Button>
         <p className="text-sm text-gray-500 text-center">
           This will consume 1 credit

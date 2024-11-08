@@ -23,6 +23,7 @@ import useUserStore from "@/app/hooks/useUserStore";
 import Link from "next/link";
 import { motion } from "framer-motion"; // 可选：添加动画效果
 import { Button } from "../ui/button";
+import Credits from "./Credits";
 
 interface User {
   id: string | undefined;
@@ -142,11 +143,11 @@ export default function UserMenu() {
             label="Buy Credits"
             href="/pricing"
           />
-          {/* <MenuItem
+          <MenuItem
             icon={<PersonIcon className="h-4 w-4" />}
-            label="Profile"
-            href="/profile"
-          /> */}
+            label="Generate Story"
+            href="/generate-story"
+          />
           <MenuItem
             icon={<MixIcon className="h-4 w-4" />}
             label="Dashboard"

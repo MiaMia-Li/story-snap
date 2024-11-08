@@ -16,7 +16,9 @@ export const LanguageSelector = ({
   handleLanguageChange: (language: Language) => void;
 }) => (
   <div className="space-y-2">
-    <h3 className="text-lg font-semibold text-gray-900">Story Language</h3>
+    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+      Story Language
+    </h3>
     <Select value={language} onValueChange={handleLanguageChange}>
       <SelectTrigger>
         <SelectValue placeholder="Select a language" />
