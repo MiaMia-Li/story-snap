@@ -20,7 +20,7 @@ export default async function StoriesPage() {
         </Link>
       </div>
 
-      <div className="columns-1 md:columns-2 lg:columns-3 gap-6">
+      <div className="columns-1 md:columns-2 lg:columns-2 gap-6">
         {stories.length === 0 ? (
           <div className="text-center text-muted-foreground py-12">
             No stories created yet

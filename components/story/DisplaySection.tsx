@@ -9,11 +9,13 @@ export function DisplaySection({
   error,
   isLoading,
   storyContent,
+  storyTitle,
 }: {
   prediction: any;
   error?: string;
   isLoading: boolean;
-  storyContent: any;
+  storyContent: string | undefined;
+  storyTitle: string | undefined;
 }) {
   return (
     <div className="space-y-8">
@@ -47,11 +49,11 @@ export function DisplaySection({
             </p>
           </div>
         )}
-        {storyContent && (
+        {(storyContent || storyTitle) && (
           <div className="space-y-2">
-            <h6>{storyContent.title}</h6>
+            <h6>{storyTitle}</h6>
             <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-              {storyContent.content}
+              {storyContent}
             </p>
           </div>
         )}

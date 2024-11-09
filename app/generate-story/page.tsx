@@ -5,12 +5,14 @@ import { LoginDialog } from "@/components/header/LoginDialog";
 import { FormSection } from "@/components/story/FormSection";
 import { DisplaySection } from "@/components/story/DisplaySection";
 import { AuthProvider, useAuth } from "@/contexts/auth";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { STYLE_PRESETS, TEMPLATE_IMAGES } from "@/config/story";
 import { Language } from "@/types";
 import TwitterShareButton from "@/components/story/TwitterShareButton";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
+import { useCompletion, experimental_useObject as useObject } from "ai/react";
+import { z } from "zod";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -21,9 +23,8 @@ export default function Home() {
   const [prediction, setPrediction] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [story, setStory] = useState<{ title: string; content: string } | null>(
-    null
-  );
+
+  const currentStyle = useRef<any>(null);
   const { refreshCredits } = useAuth();
 
   const handleDownload = () => {
@@ -47,119 +48,133 @@ export default function Home() {
     }
   };
 
-  const fetchImage = async (payload: { prompt: string; image: string }) => {
-    const response = await fetch("/api/predictions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
+  const fetchImage = async (payload: {
+    prompt: string;
+    image: string;
+  }): Promise<any> => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        // 初始请求
+        const response = await fetch("/api/predictions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        let prediction = await response.json();
+
+        if (response.status !== 201) {
+          throw new Error(prediction.detail || "Failed to start prediction.");
+        }
+
+        setPrediction(prediction);
+
+        // 轮询检查状态
+        while (
+          prediction.status !== "succeeded" &&
+          prediction.status !== "failed"
+        ) {
+          await sleep(1000);
+
+          const pollResponse = await fetch(`/api/predictions/${prediction.id}`);
+          prediction = await pollResponse.json();
+
+          if (pollResponse.status !== 200) {
+            throw new Error(
+              prediction.detail || "Error during polling prediction."
+            );
+          }
+
+          setPrediction(prediction);
+        }
+
+        if (prediction.status === "failed") {
+          throw new Error("Prediction generation failed.");
+        }
+
+        // 成功完成
+        resolve(prediction);
+      } catch (error) {
+        const errorMessage =
+          error instanceof Error ? error.message : "An unknown error occurred";
+        setError(errorMessage);
+        reject(error);
+      }
     });
-    let prediction = await response.json();
-    if (response.status !== 201) {
-      setError(prediction.detail || "Failed to start prediction.");
-      return;
-    }
-    setPrediction(prediction);
-    while (
-      prediction.status !== "succeeded" &&
-      prediction.status !== "failed"
-    ) {
-      await sleep(1000);
-      const pollResponse = await fetch(`/api/predictions/${prediction.id}`);
-      prediction = await pollResponse.json();
-      if (pollResponse.status !== 200) {
-        setError(prediction.detail || "Error during polling prediction.");
+  };
+
+  const {
+    submit,
+    isLoading: isLoadingFrame,
+    object,
+  } = useObject({
+    api: "/api/predictions/frame",
+    schema: z.object({
+      frames: z.string(),
+      title: z.string(),
+      content: z.string(),
+    }),
+    onFinish: async (result) => {
+      if (result.error) {
+        setError("Failed to generate story, please try again.");
         return;
       }
-      setPrediction(prediction); // Update the state after each poll
-    }
-    if (prediction.status === "failed") {
-      setError("Prediction generation failed.");
-    }
-  };
+      const { frames, title, content } = result.object as {
+        frames: string;
+        title: string;
+        content: string;
+      };
+      const templates: string[] =
+        TEMPLATE_IMAGES.get(currentStyle.current.id)?.images || [];
 
-  useEffect(() => {
-    if (prediction?.status === "succeeded" && prediction?.output) {
-      saveStory({
-        title: story?.title || "",
-        content: story?.content || "",
-        image: prediction?.output[prediction.output.length - 1],
-      });
-    }
-  }, [prediction, story]);
-
-  const fetchFrame = async (payload: {
-    style: string;
-    image: string;
-    language: Language;
-  }) => {
-    try {
-      const response = await fetch("/api/predictions/frame", {
-        method: "POST",
-        body: JSON.stringify(payload),
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      const templateImage =
+        templates[Math.floor(Math.random() * templates.length)];
+      try {
+        const predictionResult = await fetchImage({
+          prompt: `${currentStyle.current.promptImage}${frames}`,
+          image: templateImage,
+        });
+        saveStory({
+          title,
+          content,
+          image: predictionResult?.output[predictionResult.output.length - 1],
+        });
+        setIsLoading(false);
+      } catch (error) {
+        setError("Failed to generate story, please try again.");
+        setIsLoading(false);
       }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error("fetchFrame error", error);
-      throw error;
-    }
-  };
+    },
+  });
 
   const handleGenerate = async (formData: any) => {
-    setIsLoading(true);
-    setError(null);
-    setStory(null);
-
     const { images, imageStyle, language } = formData;
     console.log(images, "images");
-
-    const image = images[0].base64;
-    if (!image) {
+    if (!images || images.length === 0) {
       setError("Please reupload images");
       return;
     }
+
+    const image = images[0].base64;
 
     const style = STYLE_PRESETS.find((style) => style.id === imageStyle);
     if (!style) {
       setError("Selected style is invalid. Please choose another style.");
       return;
     }
+    currentStyle.current = style;
+
+    setIsLoading(true);
+    setError(null);
 
     try {
-      const frameData = await fetchFrame({
+      await submit({
         style: style.name,
         image: image,
         language: language,
       });
-
-      if (!frameData) {
-        throw new Error("Failed to fetch frame data");
-      }
-
-      const { frames, title, content } = frameData;
-      setStory({ title, content });
-      console.log(frames, "frames");
-      const templates: string[] | undefined = TEMPLATE_IMAGES.get(
-        style.id
-      )?.images;
-      if (!templates) {
-        throw new Error("No templates found for this style");
-      }
-      const templateImage =
-        templates[Math.floor(Math.random() * templates.length)];
-
-      await fetchImage({
-        prompt: `${style.promptImage}${frames}`,
-        image: templateImage,
-      });
-
-      setIsLoading(false);
     } catch (err) {
       console.error("handleGenerate error", err);
       setError("Generation failed. Please try again.");
@@ -175,7 +190,7 @@ export default function Home() {
           <div className="col-span-1">
             <FormSection onGenerate={handleGenerate} isLoading={isLoading} />
             {error && (
-              <div className="text-red-500 text-center p-4 bg-red-50 rounded-lg">
+              <div className="text-red-500 text-center p-4 bg-red-50 rounded-lg mt-4">
                 {error}
               </div>
             )}
@@ -184,7 +199,8 @@ export default function Home() {
             <DisplaySection
               prediction={prediction}
               isLoading={isLoading}
-              storyContent={story}
+              storyContent={object?.content}
+              storyTitle={object?.title}
             />
             {/* 按钮区域 */}
             {prediction?.output && (
@@ -201,6 +217,7 @@ export default function Home() {
                   <TwitterShareButton
                     text="I just generated a story with SnapStoryAI! It's so much fun! You should try it out too! 🚀"
                     hashtags="SnapStoryAI,EasyEditing"
+                    image={prediction?.output[prediction.output.length - 1]}
                   />
                 </div>
               </div>

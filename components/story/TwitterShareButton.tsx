@@ -2,13 +2,14 @@ import React from "react";
 import { FaTwitter } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 
-const TwitterShareButton: React.FC<{ text: string; hashtags: string }> = ({
-  text,
-  hashtags,
-}) => {
+const TwitterShareButton: React.FC<{
+  text: string;
+  hashtags: string;
+  image: string;
+}> = ({ text, hashtags, image }) => {
   const encodedText = encodeURIComponent(text);
   const encodedHashtags = encodeURIComponent(hashtags);
-  const url = encodeURIComponent("https://www.snapstoryai.com");
+  const url = encodeURIComponent(image || "https://www.snapstoryai.com");
 
   return (
     <>

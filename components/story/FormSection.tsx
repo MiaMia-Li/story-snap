@@ -119,7 +119,9 @@ export function FormSection({
           className="w-full h-12 group relative overflow-hidden bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-300"
           onClick={(e) => {
             e.preventDefault();
-            handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
+            requireAuth(() =>
+              handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>)
+            );
           }}
           disabled={isLoading}>
           <div className="relative flex items-center justify-center">

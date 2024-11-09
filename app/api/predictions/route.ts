@@ -7,8 +7,8 @@ const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
 });
 
-const WEBHOOK_HOST = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
+const WEBHOOK_HOST = process.env.APP_HOST
+  ? `https://${process.env.APP_HOST}`
   : process.env.NGROK_HOST;
 
 export async function POST(request: NextRequest) {
@@ -54,11 +54,8 @@ export async function POST(request: NextRequest) {
       input: input,
     };
 
-    console.log(WEBHOOK_HOST, process.env.VERCEL_URL, "WEBHOOK_HOST");
-
     if (WEBHOOK_HOST) {
       options.webhook = `${WEBHOOK_HOST}/api/webhooks`;
-      options.webhook_events_filter = ["start", "completed"];
     }
 
     // Run the prediction

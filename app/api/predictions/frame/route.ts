@@ -1,4 +1,10 @@
-import { generateObject } from "ai";
+import {
+  generateId,
+  generateObject,
+  StreamData,
+  streamObject,
+  streamText,
+} from "ai";
 import { openai } from "@ai-sdk/openai";
 import { z } from "zod";
 import { auth } from "@/auth";
@@ -11,7 +17,7 @@ export async function POST(req: Request) {
   }
 
   const context = await req.json();
-  console.log(context, "context");
+  console.log(context, "context---");
   const { stype, image, language } = context;
   const prompt = `You are a creator who generates vivid, detailed stories based on images, following the unique story style of ${stype}. Using the specified story style and provided images, create a captivating, well-developed story with an engaging title and comprehensive descriptions of four storyboard frames for stable-diffusion-3.5-large to render as a storyboard sequence.
   You need to tell the story in the first person, not describe it, to have the feeling of a real person telling the story, to have an immersive feeling.
@@ -26,9 +32,41 @@ Frame 2: [Detailed and imaginative description of the second storyboard frame]
 Frame 3: [Detailed and imaginative description of the third storyboard frame]
 Frame 4: [Detailed and imaginative description of the fourth storyboard frame]
 
-- The title and content should be in ${language}, with frames described in English. Ensure the title is short yet captivating. The story content should be highly descriptive, setting a strong tone, and ranging between 300-700 characters to provide more narrative richness and context.`;
+- The title and content should be in ${language}, with frames described in English. Ensure the title is short yet captivating. The story content should be highly descriptive, setting a strong tone, and ranging between 300-700 characters to provide more narrative richness and context.
+- You need to return the json format in the following format,the frames should be string and no space between them:
+{
+  "title": "Generated story title",
+  "content": "Detailed, engaging story description with rich narrative depth",
+  "frames": "Detailed and imaginative description of the first storyboard frame", "Detailed and imaginative description of the second storyboard frame", "Detailed and imaginative description of the third storyboard frame", "Detailed and imaginative description of the fourth storyboard frame"
+}
+`;
 
-  const result = await generateObject({
+  // const result = await generateObject({
+  //   model: openai("gpt-4o-mini"),
+  //   system: "You generate the story frame for a image.",
+  //   messages: [
+  //     {
+  //       role: "user",
+  //       content: [
+  //         {
+  //           type: "text",
+  //           text: prompt,
+  //         },
+  //         { type: "image", image: image },
+  //       ],
+  //     },
+  //   ],
+  //   schema: z.object({
+  //     frames: z.string().describe("story board frame description in json"),
+  //     title: z.string().describe("story title"),
+  //     content: z.string().describe("story content"),
+  //   }),
+  // });
+
+  // return result.toJsonResponse();
+
+  // Create a new StreamData object
+  const result = await streamObject({
     model: openai("gpt-4o-mini"),
     system: "You generate the story frame for a image.",
     messages: [
@@ -48,7 +86,9 @@ Frame 4: [Detailed and imaginative description of the fourth storyboard frame]
       title: z.string().describe("story title"),
       content: z.string().describe("story content"),
     }),
+    temperature: 0.7,
+    maxTokens: 2000,
   });
 
-  return result.toJsonResponse();
+  return result.toTextStreamResponse();
 }
