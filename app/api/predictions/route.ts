@@ -54,6 +54,8 @@ export async function POST(request: NextRequest) {
       input: input,
     };
 
+    console.log(WEBHOOK_HOST, process.env.VERCEL_URL, "WEBHOOK_HOST");
+
     if (WEBHOOK_HOST) {
       options.webhook = `${WEBHOOK_HOST}/api/webhooks`;
       options.webhook_events_filter = ["start", "completed"];
