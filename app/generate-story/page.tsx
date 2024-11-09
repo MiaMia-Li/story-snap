@@ -5,11 +5,8 @@ import { LoginDialog } from "@/components/header/LoginDialog";
 import { FormSection } from "@/components/story/FormSection";
 import { DisplaySection } from "@/components/story/DisplaySection";
 import { AuthProvider, useAuth } from "@/contexts/auth";
-import { uploadFile } from "@/utils/image";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
 import { STYLE_PRESETS, TEMPLATE_IMAGES } from "@/config/story";
-import { useCompletion } from "ai/react";
 import { Language } from "@/types";
 import TwitterShareButton from "@/components/story/TwitterShareButton";
 import { Button } from "@/components/ui/button";
@@ -47,18 +44,6 @@ export default function Home() {
       await refreshCredits();
     } catch (error) {
       console.error("saveStory error", error);
-    }
-  };
-
-  const uploadImages = async (images: File[]) => {
-    try {
-      const imageUrls = await Promise.all(images.map(uploadFile));
-      const validImageUrls = imageUrls.filter((url) => url !== undefined);
-      return validImageUrls;
-    } catch (error) {
-      console.error("File upload error:", error);
-      toast.error((error as Error).message);
-      return [];
     }
   };
 
@@ -132,18 +117,13 @@ export default function Home() {
     setStory(null);
 
     const { images, imageStyle, language } = formData;
+    console.log(images, "images");
 
-    const imageUrls = await uploadImages(
-      images.map((image: any) => image.file)
-    );
-    console.log(imageUrls, "imageUrls");
-
-    if (imageUrls.length === 0) {
+    const image = images[0].base64;
+    if (!image) {
       setError("Please reupload images");
       return;
     }
-
-    const image = imageUrls[0].url;
 
     const style = STYLE_PRESETS.find((style) => style.id === imageStyle);
     if (!style) {

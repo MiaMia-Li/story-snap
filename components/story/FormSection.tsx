@@ -30,16 +30,33 @@ export function FormSection({
   const [isUploading, setIsUploading] = useState(false);
   const { requireAuth } = useAuth();
 
-  // 处理图片拖拽上传
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    setIsUploading(true);
-    const newImages = acceptedFiles.map((file) => ({
-      file,
-      preview: URL.createObjectURL(file),
-    }));
+  const toBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
+  };
 
-    setUploadedImages((prev) => [...prev, ...newImages]);
-    setIsUploading(false);
+  // 处理图片拖拽上传
+  const onDrop = useCallback(async (acceptedFiles: File[]) => {
+    setIsUploading(true);
+    try {
+      const newImages = await Promise.all(
+        acceptedFiles.map(async (file) => ({
+          file,
+          preview: URL.createObjectURL(file),
+          base64: await toBase64(file),
+        }))
+      );
+      setUploadedImages((prev) => [...prev, ...newImages]);
+    } catch (error) {
+      toast.error("Image processing failed");
+      console.error("Image processing failed", error);
+    } finally {
+      setIsUploading(false);
+    }
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
