@@ -13,7 +13,7 @@ export function DisplaySection({
   prediction: any;
   error?: string;
   isLoading: boolean;
-  storyContent: string;
+  storyContent: any;
 }) {
   return (
     <div className="space-y-8">
@@ -40,11 +40,22 @@ export function DisplaySection({
             Your Story
           </h3>
         </div>
-        {storyContent ? (
-          <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-            {storyContent}
-          </p>
-        ) : (
+        {isLoading && !storyContent && (
+          <div className="text-center">
+            <p className="text-sm text-gray-500 dark:text-gray-400 animate-pulse">
+              Please wait while we process your request...
+            </p>
+          </div>
+        )}
+        {storyContent && (
+          <div className="space-y-2">
+            <h6>{storyContent.title}</h6>
+            <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+              {storyContent.content}
+            </p>
+          </div>
+        )}
+        {!storyContent && !isLoading && (
           <div className="space-y-2">
             <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-3/4" />
             <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-1/2" />
@@ -53,19 +64,24 @@ export function DisplaySection({
         )}
       </div>
       {prediction?.status && (
-        <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
-          Status: {prediction.status}
-        </p>
+        <div className="flex items-center justify-center space-x-2 p-3 rounded-lg bg-gray-50 dark:bg-gray-800">
+          <div className="flex items-center space-x-2 mr-4">
+            <div className="w-2 h-2 rounded-full bg-primary" />
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              {prediction.status}
+            </span>
+          </div>
+          {isLoading && !prediction?.output && (
+            <div className="text-center">
+              <p className="text-sm text-gray-500 dark:text-gray-400 animate-pulse">
+                Please wait while we process your request...
+              </p>
+            </div>
+          )}
+        </div>
       )}
 
       {/* Loading状态提示 */}
-      {isLoading && !prediction?.output && (
-        <div className="text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400 animate-pulse">
-            Please wait while we process your request...
-          </p>
-        </div>
-      )}
 
       <div className="space-y-4">
         {/* 图片展示区域 */}

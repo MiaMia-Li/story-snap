@@ -6,9 +6,9 @@ import { FormSection } from "@/components/story/FormSection";
 import { DisplaySection } from "@/components/story/DisplaySection";
 import { AuthProvider, useAuth } from "@/contexts/auth";
 import { uploadFile } from "@/utils/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { STYLE_PRESETS } from "@/config/story";
+import { STYLE_PRESETS, TEMPLATE_IMAGES } from "@/config/story";
 import { useCompletion } from "ai/react";
 import { Language } from "@/types";
 import TwitterShareButton from "@/components/story/TwitterShareButton";
@@ -17,31 +17,32 @@ import { Download } from "lucide-react";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
+// const IMAGE_URL =
+//   "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/image/1719814052939-Klrm7gBgErzQyXqvHaR4CKCB6Zd71B.jpeg";
+
 export default function Home() {
   const [prediction, setPrediction] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [story, setStory] = useState<{ title: string; content: string } | null>(
+    null
+  );
   const { refreshCredits } = useAuth();
-  const { completion, complete } = useCompletion({
-    api: "/api/predictions/text",
-  });
 
   const handleDownload = () => {
     const imageUrl = prediction?.output[prediction.output.length - 1];
     window.open(imageUrl, "_blank");
   };
 
-  const saveStory = async (completion: string, image: string) => {
-    const title = completion.split("\n")[0].replace(/(Title: |[#*])/g, "");
-    const content = completion.split("\n").slice(1).join("\n");
+  const saveStory = async (payload: {
+    title: string;
+    content: string;
+    image: string;
+  }) => {
     try {
       await fetch("/api/story/save", {
         method: "POST",
-        body: JSON.stringify({
-          title,
-          content,
-          images: image,
-        }),
+        body: JSON.stringify(payload),
       });
       await refreshCredits();
     } catch (error) {
@@ -61,13 +62,13 @@ export default function Home() {
     }
   };
 
-  const fetchImage = async (prompt: string, image: string) => {
+  const fetchImage = async (payload: { prompt: string; image: string }) => {
     const response = await fetch("/api/predictions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ prompt, image }),
+      body: JSON.stringify(payload),
     });
     let prediction = await response.json();
     if (response.status !== 201) {
@@ -75,7 +76,6 @@ export default function Home() {
       return;
     }
     setPrediction(prediction);
-    console.log(prediction, "initial prediction");
     while (
       prediction.status !== "succeeded" &&
       prediction.status !== "failed"
@@ -88,25 +88,49 @@ export default function Home() {
         return;
       }
       setPrediction(prediction); // Update the state after each poll
-      console.log(prediction, "updated prediction status");
     }
     if (prediction.status === "failed") {
       setError("Prediction generation failed.");
     }
   };
 
-  const fetchText = async (
-    prompt: string,
-    image: string,
-    language: Language
-  ) => {
-    await complete(prompt, {
-      body: { image, language },
-    });
+  useEffect(() => {
+    if (prediction?.status === "succeeded" && prediction?.output) {
+      saveStory({
+        title: story?.title || "",
+        content: story?.content || "",
+        image: prediction?.output[prediction.output.length - 1],
+      });
+    }
+  }, [prediction, story]);
+
+  const fetchFrame = async (payload: {
+    style: string;
+    image: string;
+    language: Language;
+  }) => {
+    try {
+      const response = await fetch("/api/predictions/frame", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("fetchFrame error", error);
+      throw error;
+    }
   };
 
   const handleGenerate = async (formData: any) => {
-    console.log(formData, "formData");
+    setIsLoading(true);
+    setError(null);
+    setStory(null);
+
     const { images, imageStyle, language } = formData;
 
     const imageUrls = await uploadImages(
@@ -119,21 +143,45 @@ export default function Home() {
       return;
     }
 
+    const image = imageUrls[0].url;
+
     const style = STYLE_PRESETS.find((style) => style.id === imageStyle);
     if (!style) {
       setError("Selected style is invalid. Please choose another style.");
       return;
     }
-    setIsLoading(true);
 
     try {
-      await Promise.all([
-        fetchImage(style.prompt, imageUrls[0].url),
-        fetchText(style.promptText, imageUrls[0].url, language),
-      ]);
-      saveStory(completion, imageUrls[0].url);
+      const frameData = await fetchFrame({
+        style: style.name,
+        image: image,
+        language: language,
+      });
+
+      if (!frameData) {
+        throw new Error("Failed to fetch frame data");
+      }
+
+      const { frames, title, content } = frameData;
+      setStory({ title, content });
+      console.log(frames, "frames");
+      const templates: string[] | undefined = TEMPLATE_IMAGES.get(
+        style.id
+      )?.images;
+      if (!templates) {
+        throw new Error("No templates found for this style");
+      }
+      const templateImage =
+        templates[Math.floor(Math.random() * templates.length)];
+
+      await fetchImage({
+        prompt: `${style.promptImage}${frames}`,
+        image: templateImage,
+      });
+
       setIsLoading(false);
     } catch (err) {
+      console.error("handleGenerate error", err);
       setError("Generation failed. Please try again.");
       setIsLoading(false);
     }
@@ -156,7 +204,7 @@ export default function Home() {
             <DisplaySection
               prediction={prediction}
               isLoading={isLoading}
-              storyContent={completion}
+              storyContent={story}
             />
             {/* 按钮区域 */}
             {prediction?.output && (

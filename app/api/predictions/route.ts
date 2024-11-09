@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { writeFile } from "node:fs/promises";
 import Replicate from "replicate";
@@ -21,6 +22,11 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  const session = await auth();
+  if (!session || !session.user?.id) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const { prompt, image } = await request.json();
 
@@ -42,15 +48,16 @@ export async function POST(request: NextRequest) {
     };
 
     const options: any = {
-      version:
-        "7762fd07cf82c948538e41f63f77d685e02b063e37e496e96eefd46c929f9bdc",
+      model: "stability-ai/stable-diffusion-3.5-large",
+      // version:
+      //   "5599ed30703defd1d160a25a63321b4dec97101d98b4674bcc56e41f62f35637",
       input: input,
     };
 
-    if (WEBHOOK_HOST) {
-      options.webhook = `${WEBHOOK_HOST}/api/webhooks`;
-      options.webhook_events_filter = ["start", "completed"];
-    }
+    // if (WEBHOOK_HOST) {
+    //   options.webhook = `${WEBHOOK_HOST}/api/webhooks`;
+    //   options.webhook_events_filter = ["start", "completed"];
+    // }
 
     // Run the prediction
     const prediction = await replicate.predictions.create(options);

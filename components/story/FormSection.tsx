@@ -11,6 +11,7 @@ import { LanguageSelector } from "./LangSelector";
 import { Language } from "@/types";
 import { motion } from "framer-motion";
 import { Loader2, Wand2 } from "lucide-react";
+import { toast } from "sonner";
 export function FormSection({
   onGenerate,
   isLoading,
@@ -43,10 +44,20 @@ export function FormSection({
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: (acceptedFiles) => requireAuth(() => onDrop(acceptedFiles)),
+    onDropRejected: (fileRejections) => {
+      fileRejections.forEach(({ file, errors }) => {
+        errors.forEach((error) => {
+          if (error.code === "file-too-large") {
+            toast.error("File size cannot exceed 5MB");
+          }
+        });
+      });
+    },
+    maxSize: 5242880, // 5MB in bytes
     accept: {
       "image/*": [".jpeg", ".jpg", ".png", ".webp"],
     },
-    multiple: true,
+    multiple: false,
   });
 
   const removeImage = (index: number) => {

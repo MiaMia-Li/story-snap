@@ -43,22 +43,22 @@ export default async function StoriesPage() {
               <CardContent className="flex gap-4">
                 {/* Images Grid */}
                 <div className="">
-                  {story.images && JSON.parse(story.images).length > 0 && (
+                  {story.image && (
                     <div className="relative">
                       <div className="relative aspect-square rounded-lg overflow-hidden w-[150px]">
                         <Image
-                          src={JSON.parse(story.images)[0].url}
+                          src={story.image}
                           alt="Story image"
                           fill
                           sizes="150px"
                           className="object-cover hover:scale-105 transition-transform duration-200"
                         />
                       </div>
-                      {JSON.parse(story.images).length > 1 && (
+                      {/* {JSON.parse(story.images).length > 1 && (
                         <div className="absolute bottom-2 right-2 bg-black/60 text-white text-sm px-2 py-1 rounded-full">
                           +{JSON.parse(story.images).length - 1}
                         </div>
-                      )}
+                      )} */}
                     </div>
                   )}
                 </div>

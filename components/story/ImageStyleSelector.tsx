@@ -1,6 +1,8 @@
 import { STYLE_PRESETS } from "@/config/story";
 import { CheckIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
+import { ShuffleIcon } from "@radix-ui/react-icons";
+import { Button } from "../ui/button";
 
 // Image Style Selection Component
 export function ImageStyleSelector({
@@ -10,15 +12,25 @@ export function ImageStyleSelector({
   selectedStyle: string;
   onStyleSelect: (styleId: string) => void;
 }) {
+  const handleRandomStyle = () => {
+    const randomIndex = Math.floor(Math.random() * STYLE_PRESETS.length);
+    onStyleSelect(STYLE_PRESETS[randomIndex].id);
+  };
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
           Image Style
         </h3>
-        <span className="text-sm text-gray-500 dark:text-gray-400">
-          Select a visual style for your story
-        </span>
+        <div className="flex items-center gap-4">
+          <Button onClick={handleRandomStyle} variant="outline">
+            <ShuffleIcon className="w-4 h-4 mr-2" />
+            Random
+          </Button>
+          {/* <span className="text-sm text-gray-500 dark:text-gray-400">
+            Select a visual style for your story
+          </span> */}
+        </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4">

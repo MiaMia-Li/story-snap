@@ -90,7 +90,7 @@ model Story {
   userId    String
   title     String
   content   String
-  images    Json
+  image    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

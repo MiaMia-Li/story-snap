@@ -10,7 +10,8 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { title, content, images } = body;
+    console.log(body, "body");
+    const { title, content, image } = body;
 
     console.log("Received body:", body);
 
@@ -19,7 +20,7 @@ export async function POST(request: NextRequest) {
         userId: session.user.id,
         title,
         content,
-        images,
+        image,
       },
     });
 
