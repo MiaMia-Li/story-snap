@@ -10,7 +10,7 @@ import { STYLE_PRESETS, TEMPLATE_IMAGES } from "@/config/story";
 import { Language } from "@/types";
 import TwitterShareButton from "@/components/story/TwitterShareButton";
 import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
+import { BookOpen, Download, Sparkles } from "lucide-react";
 import { useCompletion, experimental_useObject as useObject } from "ai/react";
 import { z } from "zod";
 
@@ -54,7 +54,6 @@ export default function Home() {
   }): Promise<any> => {
     return new Promise(async (resolve, reject) => {
       try {
-        // 初始请求
         const response = await fetch("/api/predictions", {
           method: "POST",
           headers: {
@@ -71,7 +70,6 @@ export default function Home() {
 
         setPrediction(prediction);
 
-        // 轮询检查状态
         while (
           prediction.status !== "succeeded" &&
           prediction.status !== "failed"
@@ -93,8 +91,7 @@ export default function Home() {
         if (prediction.status === "failed") {
           throw new Error("Prediction generation failed.");
         }
-
-        // 成功完成
+        console.log("prediction", prediction);
         resolve(prediction);
       } catch (error) {
         const errorMessage =
@@ -196,12 +193,59 @@ export default function Home() {
             )}
           </div>
           <div className="col-span-2">
-            <DisplaySection
-              prediction={prediction}
-              isLoading={isLoading}
-              storyContent={object?.content}
-              storyTitle={object?.title}
-            />
+            <div className="space-y-8 mb-10">
+              <div className="space-y-2 text-center">
+                <h1 className="md:text-3xl text-xl font-semibold md:flex items-center justify-center gap-2">
+                  <Sparkles className="w-5 h-5 text-primary" />
+                  Transform Your Ideas into
+                  <span className="bg-gradient-to-r from-primary via-primary/90 to-primary/70 bg-clip-text text-transparent">
+                    Magic
+                  </span>
+                </h1>
+                <p className="text-gray-600 dark:text-gray-400 text-sm max-w-md mx-auto leading-relaxed">
+                  Watch as AI turns your stories into stunning visuals. Each
+                  image is
+                  <span className="text-primary font-medium">
+                    {" "}
+                    uniquely crafted{" "}
+                  </span>
+                  just for you ✨
+                </p>
+              </div>
+
+              {/* 故事内容展示区块 */}
+              <div className="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+                <div className="flex items-center gap-2 mb-3">
+                  <BookOpen className="w-5 h-5 text-primary" />
+                  <h3 className="font-medium text-gray-900 dark:text-gray-100">
+                    Your Story
+                  </h3>
+                </div>
+                {isLoading && !object?.content && (
+                  <div className="text-center">
+                    <p className="text-sm text-gray-500 dark:text-gray-400 animate-pulse">
+                      Please wait while we process your request...
+                    </p>
+                  </div>
+                )}
+                {(object?.content || object?.title) && (
+                  <div className="space-y-2">
+                    <h6>{object?.title}</h6>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                      {object?.content}
+                    </p>
+                  </div>
+                )}
+                {!object?.content && !isLoading && (
+                  <div className="space-y-2">
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-3/4" />
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-1/2" />
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-2/3" />
+                  </div>
+                )}
+              </div>
+            </div>
+            <DisplaySection prediction={prediction} isLoading={isLoading} />
             {/* 按钮区域 */}
             {prediction?.output && (
               <div className="mt-10">

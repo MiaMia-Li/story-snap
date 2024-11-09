@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
     };
 
     if (WEBHOOK_HOST) {
-      options.webhook = `${WEBHOOK_HOST}/api/webhooks`;
+      options.webhook = `${WEBHOOK_HOST}/api/webhooks/replicate`;
     }
 
     // Run the prediction
