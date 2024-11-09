@@ -54,10 +54,10 @@ export async function POST(request: NextRequest) {
       input: input,
     };
 
-    // if (WEBHOOK_HOST) {
-    //   options.webhook = `${WEBHOOK_HOST}/api/webhooks`;
-    //   options.webhook_events_filter = ["start", "completed"];
-    // }
+    if (WEBHOOK_HOST) {
+      options.webhook = `${WEBHOOK_HOST}/api/webhooks`;
+      options.webhook_events_filter = ["start", "completed"];
+    }
 
     // Run the prediction
     const prediction = await replicate.predictions.create(options);
