@@ -57,7 +57,7 @@ export default async function PricingPage() {
               Our team is here to help. Contact us anytime.
             </p>
             <Link
-              href="mailto:sept.miamia@gmail.com"
+              href="mailto:support@ahaapple.com"
               className="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors duration-200">
               Contact Support
             </Link>
