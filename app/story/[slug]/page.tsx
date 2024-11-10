@@ -133,8 +133,8 @@ export default async function StoryPage({
           </Button> */}
           <TwitterShareButton
             text={story.title}
-            hashtags={"SnappyStory"}
-            image={story.image}
+            hashtags={"SnapyStory"}
+            image={window.location.href}
           />
         </div>
 

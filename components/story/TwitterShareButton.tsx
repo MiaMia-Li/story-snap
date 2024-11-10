@@ -8,19 +8,20 @@ import { cn } from "@/lib/utils";
 interface TwitterShareButtonProps {
   text: string;
   hashtags: string;
-  image: string;
+  image?: string;
   className?: string;
 }
 
 const TwitterShareButton: React.FC<TwitterShareButtonProps> = ({
   text,
   hashtags,
-  image,
   className,
 }) => {
   const encodedText = encodeURIComponent(text);
   const encodedHashtags = encodeURIComponent(hashtags);
-  const url = encodeURIComponent(image || "https://www.snapstoryai.com");
+  const url = encodeURIComponent(
+    window.location.href || "https://www.snapstoryai.com"
+  );
 
   return (
     <Button
