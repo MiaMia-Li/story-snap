@@ -15,6 +15,9 @@ export async function POST(req: Request) {
   if (!session || !session.user?.id) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
+  if (!session.user.credits || session.user.credits <= 0) {
+    return NextResponse.json({ message: "No credits left" }, { status: 400 });
+  }
 
   const context = await req.json();
   console.log(context, "context---");

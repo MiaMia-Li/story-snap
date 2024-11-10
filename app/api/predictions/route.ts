@@ -7,9 +7,9 @@ const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
 });
 
-const WEBHOOK_HOST = process.env.APP_HOST
-  ? `https://${process.env.APP_HOST}`
-  : process.env.NGROK_HOST;
+// const WEBHOOK_HOST = process.env.APP_HOST
+//   ? `https://${process.env.APP_HOST}`
+//   : process.env.NGROK_HOST;
 
 export async function POST(request: NextRequest) {
   if (!process.env.REPLICATE_API_TOKEN) {
@@ -54,9 +54,9 @@ export async function POST(request: NextRequest) {
       input: input,
     };
 
-    if (WEBHOOK_HOST) {
-      options.webhook = `${WEBHOOK_HOST}/api/webhooks/replicate`;
-    }
+    // if (WEBHOOK_HOST) {
+    //   options.webhook = `${WEBHOOK_HOST}/api/webhooks/replicate`;
+    // }
 
     // Run the prediction
     const prediction = await replicate.predictions.create(options);

@@ -25,7 +25,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const currentStyle = useRef<any>(null);
-  const { refreshCredits } = useAuth();
+  const { refreshCredits, credits } = useAuth();
 
   const handleDownload = () => {
     const imageUrl = prediction?.output[prediction.output.length - 1];
@@ -147,8 +147,11 @@ export default function Home() {
   });
 
   const handleGenerate = async (formData: any) => {
+    if (credits <= 0) {
+      setError("You have no credits left. Please buy more credits.");
+      return;
+    }
     const { images, imageStyle, language } = formData;
-    console.log(images, "images");
     if (!images || images.length === 0) {
       setError("Please reupload images");
       return;
