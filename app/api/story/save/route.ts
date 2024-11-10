@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { generateId } from "@/utils/uuid";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -21,6 +22,7 @@ export async function POST(request: NextRequest) {
         title,
         content,
         image,
+        storyId: generateId(),
       },
     });
 
@@ -32,7 +34,10 @@ export async function POST(request: NextRequest) {
 
     console.log("Story created:", story);
 
-    return NextResponse.json({ message: "OK" }, { status: 200 });
+    return NextResponse.json(
+      { message: "OK", storyId: story.storyId },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error creating story:", error);
     return NextResponse.json({ message: "Error" }, { status: 500 });

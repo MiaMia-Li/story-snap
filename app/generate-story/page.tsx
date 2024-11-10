@@ -10,9 +10,11 @@ import { STYLE_PRESETS, TEMPLATE_IMAGES } from "@/config/story";
 import { Language } from "@/types";
 import TwitterShareButton from "@/components/story/TwitterShareButton";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Download, Sparkles } from "lucide-react";
+import { BookOpen, Download, Share, Sparkles } from "lucide-react";
 import { useCompletion, experimental_useObject as useObject } from "ai/react";
 import { z } from "zod";
+import { toast } from "sonner";
+import ShareButton from "@/components/story/ShareButton";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -25,6 +27,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const currentStyle = useRef<any>(null);
+  const storyId = useRef<string | null>(null);
   const { refreshCredits, credits } = useAuth();
 
   const handleDownload = () => {
@@ -38,11 +41,12 @@ export default function Home() {
     image: string;
   }) => {
     try {
-      await fetch("/api/story/save", {
+      const response = await fetch("/api/story/save", {
         method: "POST",
         body: JSON.stringify(payload),
       });
-      await refreshCredits();
+      const data = await response.json();
+      storyId.current = data.storyId;
     } catch (error) {
       console.error("saveStory error", error);
     }
@@ -182,6 +186,30 @@ export default function Home() {
     }
   };
 
+  const handleShare = async () => {
+    if (!storyId.current) {
+      setError("Please generate a story first.");
+      return;
+    }
+    try {
+      await fetch(`/api/story/share/`, {
+        method: "POST",
+        body: JSON.stringify({
+          storyId: storyId.current,
+        }),
+      });
+      const shareUrl = `${window.location.origin}/story/${storyId.current}`;
+      await navigator.clipboard.writeText(shareUrl);
+
+      toast.success("✨ Copied!", {
+        description: "Share it with your friends~",
+        duration: 2000,
+      });
+    } catch (e) {
+      console.error("handleShare error", e);
+    }
+  };
+
   return (
     <AuthProvider>
       <LoginDialog />
@@ -249,6 +277,7 @@ export default function Home() {
               </div>
             </div>
             <DisplaySection prediction={prediction} isLoading={isLoading} />
+
             {/* 按钮区域 */}
             {prediction?.output && (
               <div className="mt-10">
@@ -261,11 +290,10 @@ export default function Home() {
                     Download
                   </Button>
 
-                  <TwitterShareButton
-                    text="I just generated a story with SnapStoryAI! It's so much fun! You should try it out too! 🚀"
-                    hashtags="SnapStoryAI,EasyEditing"
-                    image={prediction?.output[prediction.output.length - 1]}
-                  />
+                  <Button onClick={handleShare}>
+                    <Share className="w-4 h-4 mr-2" />
+                    Share
+                  </Button>
                 </div>
               </div>
             )}
