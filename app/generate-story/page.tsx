@@ -7,14 +7,20 @@ import { DisplaySection } from "@/components/story/DisplaySection";
 import { AuthProvider, useAuth } from "@/contexts/auth";
 import { useEffect, useRef, useState } from "react";
 import { STYLE_PRESETS, TEMPLATE_IMAGES } from "@/config/story";
-import { Language } from "@/types";
-import TwitterShareButton from "@/components/story/TwitterShareButton";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Download, Share, Share2Icon, Sparkles } from "lucide-react";
+import {
+  BookOpen,
+  CheckCircle,
+  Download,
+  Share,
+  Share2Icon,
+  Sparkles,
+} from "lucide-react";
 import { useCompletion, experimental_useObject as useObject } from "ai/react";
 import { z } from "zod";
 import { toast } from "sonner";
 import ShareButton from "@/components/story/ShareButton";
+import Link from "next/link";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -280,22 +286,37 @@ export default function Home() {
 
             {/* 按钮区域 */}
             {prediction?.output && (
-              <div className="mt-10">
-                <div className="flex justify-center gap-4">
-                  <Button
-                    variant="outline"
-                    onClick={handleDownload}
-                    disabled={isLoading}>
-                    <Download className="w-4 h-4 mr-2" />
-                    Download
-                  </Button>
+              <div className="space-y-4 mt-10">
+                <div className="flex items-center gap-3 text-sm bg-green-50/50 p-3 rounded-lg">
+                  <div className="animate-bounce-small">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                  </div>
+                  <p className="text-muted-foreground">
+                    Story saved successfully! View it in your{" "}
+                    <Link
+                      href="/dashboard/stories"
+                      className="text-primary hover:underline font-medium transition-colors">
+                      dashboard
+                    </Link>
+                  </p>
+                </div>
+                <div className="mt-10">
+                  <div className="flex justify-center gap-4">
+                    <Button
+                      variant="outline"
+                      onClick={handleDownload}
+                      disabled={isLoading}>
+                      <Download className="w-4 h-4 mr-2" />
+                      Download
+                    </Button>
 
-                  <Button
-                    onClick={handleShare}
-                    className="bg-gradient-to-r from-pink-500 to-purple-500 text-white hover:opacity-90">
-                    <Share2Icon className="w-4 h-4 mr-2" />
-                    Share
-                  </Button>
+                    <Button
+                      onClick={handleShare}
+                      className="bg-gradient-to-r from-pink-500 to-purple-500 text-white hover:opacity-90">
+                      <Share2Icon className="w-4 h-4 mr-2" />
+                      Share
+                    </Button>
+                  </div>
                 </div>
               </div>
             )}

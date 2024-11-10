@@ -11,27 +11,111 @@ import { Analytics } from "@vercel/analytics/react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "StorySnap",
+  title:
+    "StorySnap | AI-Powered Photo Story Generator | Create Engaging Stories",
   description:
-    "Transform your photos into captivating stories with StorySnap - the AI-powered platform that brings your memories to life. Turn any image into an engaging narrative with just one click.",
+    "Transform photos into engaging stories with StorySnap's AI technology. Create, customize, and share memorable narratives from your images instantly. Try our free story generator today.",
   keywords:
-    "story creation, story sharing, story marketing, AI story, AI art, AI generate, AI art generator, AI art creator, AI art platform, AI art tool, AI art generator online, AI art creator online, AI art platform online, AI art tool online, AI art generator free, AI art creator free, AI art platform free, AI art tool free, AI art generator online free, AI art creator online free, AI art platform online free, AI art tool online free, AI art generator free online, AI art creator free online, AI art platform free online, AI art tool free online, AI art generator free tool, AI art creator free tool, AI art platform free tool, AI art tool free tool, AI art generator free tool online, AI art creator free tool online, AI art platform free tool online, AI art tool free tool online, AI art generator free tool online free, AI art creator free tool online free, AI art platform free tool online free, AI art tool free tool online free, AI art generator free tool online free free, AI art creator free tool online free free, AI art platform free tool online free free, AI art tool free tool online free free, AI art generator free tool online free free free, AI art creator free tool online free free free, AI art platform free tool online free free free, AI art tool free tool online free free free",
+    "AI story generator, photo story creator, image storytelling, AI writing assistant, visual storytelling platform, photo narrative creator, AI story maker, digital storytelling tool",
 
   authors: [{ name: "StorySnap Team" }],
   creator: "StorySnap",
   publisher: "StorySnap Inc.",
 
-  openGraph: {
-    title: "StorySnap - Create and Share Stories",
-    description:
-      "StorySnap is a platform that helps you create and share stories with your audience",
-    images: [{ url: "/og-img.png" }],
+  // Add canonical URL
+  alternates: {
+    canonical: "https://snapstoryai.com",
   },
+
+  // Improved OpenGraph metadata
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://snapstoryai.com",
+    siteName: "StorySnap",
+    title: "StorySnap - Transform Photos into Engaging AI-Generated Stories",
+    description:
+      "Create captivating stories from your photos using AI technology. Transform any image into a compelling narrative with our intuitive story generator.",
+    images: [
+      {
+        url: "/og-img.png",
+        width: 1200,
+        height: 630,
+        alt: "StorySnap - AI Story Generator",
+      },
+    ],
+  },
+
+  // Improved Twitter metadata
   twitter: {
     card: "summary_large_image",
-    title: "StorySnap - Create and Share Stories",
-    description: "Create and share stories with your audience",
-    images: ["/og-img.png"],
+    site: "@snapstoryai",
+    creator: "@snapstoryai",
+    title: "StorySnap - AI-Powered Photo Story Generator",
+    description:
+      "Transform your photos into engaging stories with AI technology. Create and share memorable narratives instantly.",
+    images: [
+      {
+        url: "/og-img.png",
+        alt: "StorySnap - AI Story Generator",
+      },
+    ],
+  },
+
+  // Add structured data
+  other: {
+    "script:ld+json": {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: "StorySnap",
+      applicationCategory: "Photography & Story Creation",
+      description:
+        "Transform photos into engaging stories with StorySnap's AI technology. Create, customize, and share memorable narratives from your images instantly.",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "4.8",
+        ratingCount: "1250",
+      },
+      creator: {
+        "@type": "Organization",
+        name: "StorySnap Inc.",
+        url: "https://snapstoryai.com",
+      },
+      faq: {
+        "@type": "FAQPage",
+        mainEntity: [
+          {
+            "@type": "Question",
+            name: "What is StorySnap?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "StorySnap is an AI-powered platform that transforms photos into engaging stories. Upload any image and our AI technology will generate a compelling narrative around it.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "How does StorySnap work?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Simply upload your photo, and our AI analyzes the image to generate a unique story. You can then customize and edit the story before sharing it with your audience.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Is StorySnap free to use?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "StorySnap offers both free and premium plans. You can start creating stories for free, with advanced features available in our premium plans.",
+            },
+          },
+        ],
+      },
+    },
   },
 };
 

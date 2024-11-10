@@ -7,6 +7,9 @@ export async function getStories() {
     where: {
       userId: session?.user.id,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
   return stories;
 }
