@@ -21,7 +21,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${story.title}`,
+    title: `${story.title} | SnapyStory`,
     description: story.content.substring(0, 155),
     openGraph: {
       title: story.title,
@@ -132,8 +132,8 @@ export default async function StoryPage({
             Share
           </Button> */}
           <TwitterShareButton
-            text={story.title}
-            hashtags={"SnapyStory"}
+            text={`I just created a story on SnapyStory, so amazing✨! Check it out: ${story.title}`}
+            hashtags={"SnapyStory,AIStory,AIArt"}
             image={`https://www.snapstoryai.com/story/${story.storyId}`}
           />
         </div>
