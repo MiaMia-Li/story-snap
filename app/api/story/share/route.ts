@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/dist/server/web/spec-extension/revalidate";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -14,7 +15,7 @@ export async function POST(request: NextRequest) {
       where: { storyId },
       data: { isPublic: true },
     });
-
+    revalidatePath("/dashboard/stories");
     return NextResponse.json({ message: "OK" }, { status: 200 });
   } catch (error) {
     console.error("Error creating story:", error);

@@ -1,9 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
-import { BotIcon, CalendarIcon } from "lucide-react";
+import { BotIcon, CalendarIcon, LinkIcon, Share2Icon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { getStories } from "@/app/actions";
+import { getStories, shareStory } from "@/app/actions";
+import ShareButton from "@/components/story/ShareButton";
 
 export default async function StoriesPage() {
   const stories = await getStories();
@@ -27,18 +29,46 @@ export default async function StoriesPage() {
           </div>
         ) : (
           stories.map((story: any) => (
-            <Card
-              key={story.id}
-              className="break-inside-avoid mb-6 hover:shadow-lg transition-shadow duration-200">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg">{story.title}</CardTitle>
+            <Card className="break-inside-avoid mb-6 hover:shadow-lg transition-shadow duration-200">
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-lg">
+                      {story.isPublic ? (
+                        <Link
+                          href={`/story/${story.storyId}`}
+                          className="text-primary hover:underline">
+                          {story.title}
+                        </Link>
+                      ) : (
+                        story.title
+                      )}
+                    </CardTitle>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CalendarIcon className="h-4 w-4" />
+                    {new Date(story.createdAt).toLocaleDateString()}
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <CalendarIcon className="h-4 w-4" />
-                  {new Date(story.createdAt).toLocaleDateString()}
+
+                <div className="flex items-center gap-2">
+                  {/* Copy Link Button */}
+
+                  {/* Share/Public Badge */}
+                  {story.isPublic ? (
+                    <>
+                      <Badge
+                        variant="default"
+                        className="bg-blue-500 text-white border-none font-medium shadow-sm shadow-blue-200">
+                        Public
+                      </Badge>
+                    </>
+                  ) : (
+                    <ShareButton story={story} size="sm" />
+                  )}
                 </div>
               </CardHeader>
+
               <CardContent className="flex flex-col gap-4">
                 {/* Image Section */}
                 {story.image && (
@@ -47,7 +77,7 @@ export default async function StoriesPage() {
                       src={story.image}
                       alt="Story image"
                       fill
-                      className="object-cover hover:scale-105 transition-transform duration-200"
+                      className="object-cover"
                     />
                   </div>
                 )}

@@ -39,3 +39,10 @@ export async function getCredits() {
   });
   return user?.credits;
 }
+
+export async function shareStory(storyId: string) {
+  await prisma.story.update({
+    where: { storyId },
+    data: { isPublic: true },
+  });
+}

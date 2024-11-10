@@ -10,7 +10,7 @@ import { STYLE_PRESETS, TEMPLATE_IMAGES } from "@/config/story";
 import { Language } from "@/types";
 import TwitterShareButton from "@/components/story/TwitterShareButton";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Download, Share, Sparkles } from "lucide-react";
+import { BookOpen, Download, Share, Share2Icon, Sparkles } from "lucide-react";
 import { useCompletion, experimental_useObject as useObject } from "ai/react";
 import { z } from "zod";
 import { toast } from "sonner";
@@ -290,8 +290,10 @@ export default function Home() {
                     Download
                   </Button>
 
-                  <Button onClick={handleShare}>
-                    <Share className="w-4 h-4 mr-2" />
+                  <Button
+                    onClick={handleShare}
+                    className="bg-gradient-to-r from-pink-500 to-purple-500 text-white hover:opacity-90">
+                    <Share2Icon className="w-4 h-4 mr-2" />
                     Share
                   </Button>
                 </div>

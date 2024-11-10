@@ -7,6 +7,7 @@ import { HeartIcon, ShareIcon } from "lucide-react";
 import Link from "next/link";
 import { getStory } from "@/app/actions";
 import { redirect } from "next/navigation";
+import TwitterShareButton from "@/components/story/TwitterShareButton";
 
 // Generate metadata for SEO
 export async function generateMetadata({
@@ -123,16 +124,21 @@ export default async function StoryPage({
         </Card>
 
         {/* Engagement Buttons */}
-        {/* <div className="mt-8 flex space-x-4">
-          <Button variant="outline" className="flex-1">
+        <div className="mt-8 flex space-x-4 justify-center">
+          {/* <Button variant="outline" className="flex-1">
             <HeartIcon className="w-4 h-4 mr-2" />
             Like
           </Button>
           <Button variant="outline" className="flex-1">
             <ShareIcon className="w-4 h-4 mr-2" />
             Share
-          </Button>
-        </div> */}
+          </Button> */}
+          <TwitterShareButton
+            text={story.title}
+            hashtags={"SnappyStory"}
+            image={story.image}
+          />
+        </div>
 
         {/* Related Stories */}
         {/* <section className="mt-12">
@@ -141,23 +147,26 @@ export default async function StoryPage({
           </div>
         </section> */}
         {/* Try Our Platform Section */}
-        <section className="bg-muted py-12 mt-12">
-          <div className="container mx-auto px-4 max-w-4xl text-center flex flex-col items-center">
-            <h3 className="text-xl md:text-2xl font-bold mb-4">
-              Start Your Story Journey Today
-            </h3>
-            <p className="text-muted-foreground mb-6">
-              Join our community to create and discover amazing stories
+
+        <section className="bg-secondary/20 rounded-lg p-8 mt-8">
+          <div className="text-center space-y-4">
+            <h2 className="text-2xl font-semibold">
+              Start Creating Your Story
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Choose from multiple styles and formats to bring your imagination
+              to life. Our AI-powered tools make it easy to create stunning
+              visual stories.
             </p>
-            <div className="flex gap-4 max-w-md mx-auto">
+            <div className="flex gap-4 justify-center">
               <Link href="/generate-story">
-                <Button className="flex-1" size="lg">
-                  Start Writing
+                <Button size="lg" variant="outline">
+                  Create New Story
                 </Button>
               </Link>
               <Link href="/examples">
-                <Button variant="outline" className="flex-1" size="lg">
-                  Read Stories
+                <Button variant="outline" size="lg">
+                  Explore Examples
                 </Button>
               </Link>
             </div>
