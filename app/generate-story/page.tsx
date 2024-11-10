@@ -224,7 +224,7 @@ export default function Home() {
           <div className="col-span-1">
             <FormSection onGenerate={handleGenerate} isLoading={isLoading} />
             {error && (
-              <div className="text-red-500 text-center p-4 bg-red-50 rounded-lg mt-4">
+              <div className="text-red-500 text-center p-4 bg-red-50 dark:bg-red-900/50 rounded-lg mt-4">
                 {error}
               </div>
             )}
@@ -287,7 +287,7 @@ export default function Home() {
             {/* 按钮区域 */}
             {prediction?.output && (
               <div className="space-y-4 mt-10">
-                <div className="flex items-center gap-3 text-sm bg-green-50/50 p-3 rounded-lg">
+                <div className="flex items-center gap-3 text-sm bg-green-50/50 dark:bg-green-900/50 p-3 rounded-lg">
                   <div className="animate-bounce-small">
                     <CheckCircle className="w-5 h-5 text-green-500" />
                   </div>

@@ -48,13 +48,14 @@ export function ImageStyleSelector({
               }
             `}>
             {/* Thumbnail Image */}
-            <div className="relative aspect-square">
+            <div className="relative w-[150px] h-[150px]">
               <Image
                 src={style.thumbnail}
                 alt={style.name}
                 fill
-                className="object-cover"
-                sizes="(max-width: 150px) 10vw, 5vw"
+                className="object-cover rounded-lg"
+                sizes="150px"
+                quality={100} // 提高图片质量
                 priority
               />
             </div>

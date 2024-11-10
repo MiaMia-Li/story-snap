@@ -1,10 +1,32 @@
 export const STYLE_PRESETS = [
   {
+    id: "dynamic_sketch",
+    name: "Dynamic Sketch",
+    description: "Intense action sequences in futuristic settings",
+    thumbnail:
+      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/out-0%20(16)-5nYnqocqdlCfgP2kz0WdZKTJ0O1Y6w.webp",
+    promptText: `
+      Capture the thrill of a high-speed chase through a futuristic cityscape where gravity takes a backseat. Depict intense action as characters sprint across hovering platforms and race through urban mazes in a high-energy tale of suspense and adrenaline.`,
+    promptImage: `
+      Create a four-panel dynamic comic strip in a futuristic city. Use sharp lines and dynamic poses, showing action-packed scenes with intense energy. Each panel should have rounded corners and slight shadows for emphasis.`,
+  },
+  {
+    id: "animated_sticker",
+    name: "Animated Sticker",
+    description: "Cute and playful sticker-style illustrations",
+    thumbnail:
+      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/out-0%20(14)-Or4ItfgHTZ7dgdaPjp1uT3CuXXalXs.webp",
+    promptText: `
+      Share a cute and uplifting story with chibi characters exploring a whimsical world. Highlight endearing interactions and playful expressions in a setting full of kawaii elements like stars, hearts, and magical sparkles that make each scene feel like an adorable sticker.`,
+    promptImage: `
+      Create a four-panel kawaii comic strip in chibi style with pastel colors, rounded corners, and decorative elements like stars and sparkles. Use thick outlines, cute expressions, and slight drop shadows for a playful sticker effect.`,
+  },
+  {
     id: "fantasy_adventure",
     name: "Fantasy Adventure",
     description: "Epic quests and mysterious landscapes",
     thumbnail:
-      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7839-6yExouRskOLKf4T71ZyP7JZcfBqdVa.JPG",
+      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/out-0%20(9)-HRR1lq5dlS0CY7SOR5lItCD3SKac8X.webp",
     promptText: `
       Embark on an epic adventure through fantastical worlds suspended in the sky. Describe the heroes' journey as they traverse mystical realms filled with floating islands, enchanted creatures, and ancient artifacts, where every landscape tells a story of wonder and magic.`,
     promptImage: `
@@ -25,7 +47,7 @@ export const STYLE_PRESETS = [
     name: "Cyberpunk Future",
     description: "High-tech, neon-lit worlds",
     thumbnail:
-      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7824-QMxeqDZYJaM8MuvMjpLyb63wNPc4tz.JPG",
+      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/out-0%20(20)-tBoWVhJbpyAqlvjgl5gmLGCq0u2IRc.webp",
     promptText: `
       Dive into a high-tech dystopian world where towering neon cities defy gravity. Narrate the lives of characters navigating a chaotic metropolis filled with holographic billboards, floating structures, and cutting-edge technology, capturing both the allure and perils of a cyberpunk future.`,
     promptImage: `
@@ -36,7 +58,7 @@ export const STYLE_PRESETS = [
     name: "Fairy Tale",
     description: "Enchanted, magical realms",
     thumbnail:
-      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7836-RBTnRTeV2lpthXXjOljSLShHjg2qZ1.JPG",
+      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/out-0%20(21)-g7S4eAI7RgxFFrSo03JC20lAws0Y1p.webp",
     promptText: `
       Enter a world of magic and wonder, where enchanted forests, floating petals, and friendly spirit creatures await. Tell a gentle story of discovery and adventure, as characters explore a place where the impossible becomes possible, surrounded by beauty and whimsy at every turn.`,
     promptImage: `
@@ -58,33 +80,11 @@ export const STYLE_PRESETS = [
     name: "Romantic Anime",
     description: "Heartwarming encounters in vibrant settings",
     thumbnail:
-      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7832-ZO7CJF6R7J4tDkCW1fbM9s15UBxxrw.JPG",
+      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/out-0%20(18)-WBMmn5Cd0HARhrAkBeux3ZFR0OFOby.webp",
     promptText: `
       Journey into the past to witness the legends of ancient heroes and lost civilizations. Describe the discovery of majestic ruins suspended in the air, where a hero unearths the secrets of a forgotten culture known for defying gravity, capturing the grandeur and mystery of history’s epic tales.`,
     promptImage: `
       Create a four-panel romantic anime comic strip, with each frame showing warm, pastel-colored scenes of love on floating islands. Use soft lines and ethereal lighting effects. Rounded corners and a slight drop shadow give a cozy feel to each panel.`,
-  },
-  {
-    id: "dynamic_sketch",
-    name: "Dynamic Sketch",
-    description: "Intense action sequences in futuristic settings",
-    thumbnail:
-      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7798-fDXJ0rCHvFNxRGrVSzbaKWFKQPWhFw.jpg",
-    promptText: `
-      Capture the thrill of a high-speed chase through a futuristic cityscape where gravity takes a backseat. Depict intense action as characters sprint across hovering platforms and race through urban mazes in a high-energy tale of suspense and adrenaline.`,
-    promptImage: `
-      Create a four-panel dynamic comic strip in a futuristic city. Use sharp lines and dynamic poses, showing action-packed scenes with intense energy. Each panel should have rounded corners and slight shadows for emphasis.`,
-  },
-  {
-    id: "animated_sticker",
-    name: "Animated Sticker",
-    description: "Cute and playful sticker-style illustrations",
-    thumbnail:
-      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7822-Z7TCRrWU0tSOBd47HoaRCmeB2HHVSV.JPG",
-    promptText: `
-      Share a cute and uplifting story with chibi characters exploring a whimsical world. Highlight endearing interactions and playful expressions in a setting full of kawaii elements like stars, hearts, and magical sparkles that make each scene feel like an adorable sticker.`,
-    promptImage: `
-      Create a four-panel kawaii comic strip in chibi style with pastel colors, rounded corners, and decorative elements like stars and sparkles. Use thick outlines, cute expressions, and slight drop shadows for a playful sticker effect.`,
   },
 ];
 

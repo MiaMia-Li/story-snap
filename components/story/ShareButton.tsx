@@ -12,6 +12,7 @@ const ShareButton = ({
   size: "sm" | "default";
 }) => {
   const handleShare = async () => {
+    console.log("handleShare", story);
     if (!story.storyId) {
       return;
     }
