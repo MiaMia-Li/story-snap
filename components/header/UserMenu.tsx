@@ -3,6 +3,7 @@
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -61,16 +62,17 @@ const MenuItem = ({
 
   if (href) {
     return (
-      <DropdownMenuItem className="focus:bg-blue-50 dark:focus:bg-blue-900/20">
-        <Link href={href} className="w-full">
+      <Link href={href} className="w-full">
+        <DropdownMenuItem className="focus:bg-blue-50 dark:focus:bg-blue-900/20">
           {content}
-        </Link>
-      </DropdownMenuItem>
+        </DropdownMenuItem>
+      </Link>
     );
   }
 
   return (
     <DropdownMenuItem
+      asChild
       onClick={onClick}
       className="focus:bg-blue-50 dark:focus:bg-blue-900/20">
       {content}
@@ -136,29 +138,30 @@ export default function UserMenu() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="my-2 bg-blue-100/20 dark:bg-blue-900/20" />
-
-        <div className="space-y-1">
-          <MenuItem
-            icon={<RocketIcon className="h-4 w-4" />}
-            label="Buy Credits"
-            href="/pricing"
-          />
-          <MenuItem
-            icon={<PersonIcon className="h-4 w-4" />}
-            label="Generate Story"
-            href="/generate-story"
-          />
-          <MenuItem
-            icon={<MixIcon className="h-4 w-4" />}
-            label="Dashboard"
-            href="/dashboard"
-          />
-          {/* <MenuItem
+        <DropdownMenuGroup>
+          <div className="space-y-1">
+            <MenuItem
+              icon={<RocketIcon className="h-4 w-4" />}
+              label="Buy Credits"
+              href="/pricing"
+            />
+            <MenuItem
+              icon={<PersonIcon className="h-4 w-4" />}
+              label="Generate Story"
+              href="/generate-story"
+            />
+            <MenuItem
+              icon={<MixIcon className="h-4 w-4" />}
+              label="Dashboard"
+              href="/dashboard"
+            />
+            {/* <MenuItem
             icon={<GearIcon className="h-4 w-4" />}
             label="Settings"
             href="/settings"
           /> */}
-        </div>
+          </div>
+        </DropdownMenuGroup>
 
         <DropdownMenuSeparator className="my-2 bg-blue-100/20 dark:bg-blue-900/20" />
 

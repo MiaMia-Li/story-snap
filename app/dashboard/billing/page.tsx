@@ -2,25 +2,13 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  CreditCard,
-  Coins,
-  ArrowUpCircle,
-  ArrowDownCircle,
-  Zap,
-  Package,
-} from "lucide-react";
-import { useSession } from "next-auth/react";
+import { CreditCard, Coins } from "lucide-react";
 import Link from "next/link";
 import CreditCards from "@/components/pricing/CreditCards";
+import { AuthProvider, useAuth } from "@/contexts/auth";
+import { LoginDialog } from "@/components/header/LoginDialog";
 
 interface CreditPackage {
   id: string;
@@ -40,10 +28,7 @@ interface Transaction {
 }
 
 export default function BillingPage() {
-  const session = useSession();
-  const [currentCredits, setCurrentCredits] = useState(
-    session?.data?.user?.credits
-  );
+  const { refreshCredits, credits } = useAuth();
 
   // Transaction history
   const transactions: Transaction[] = [
@@ -74,39 +59,41 @@ export default function BillingPage() {
   ];
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Credits & Billing</h1>
-      </div>
+    <AuthProvider>
+      <LoginDialog />
+      <div className="p-6 space-y-6">
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold">Credits & Billing</h1>
+        </div>
 
-      {/* Current Credits Status */}
-      <Card>
-        <CardContent className="pt-6">
-          <div className="flex items-center justify-between">
-            <div className="space-y-1">
-              <h2 className="text-2xl font-bold flex items-center gap-2">
-                <Coins className="h-6 w-6 text-yellow-500" />
-                {currentCredits} Credits
-              </h2>
-              <p className="text-sm text-muted-foreground">
-                Available credits for generating stories
-              </p>
+        {/* Current Credits Status */}
+        <Card>
+          <CardContent className="pt-6">
+            <div className="flex items-center justify-between">
+              <div className="space-y-1">
+                <h2 className="text-2xl font-bold flex items-center gap-2">
+                  <Coins className="h-6 w-6 text-yellow-500" />
+                  {credits} Credits
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  Available credits for generating stories
+                </p>
+              </div>
+              <Link href="/pricing">
+                <Button>
+                  <CreditCard className="mr-2 h-4 w-4" />
+                  Buy More Credits
+                </Button>
+              </Link>
             </div>
-            <Link href="/pricing">
-              <Button>
-                <CreditCard className="mr-2 h-4 w-4" />
-                Buy More Credits
-              </Button>
-            </Link>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
 
-      {/* Credit Packages */}
-      <CreditCards />
+        {/* Credit Packages */}
+        <CreditCards />
 
-      {/* Transaction History */}
-      {/* <Card>
+        {/* Transaction History */}
+        {/* <Card>
         <CardHeader>
           <CardTitle>Transaction History</CardTitle>
           <CardDescription>
@@ -157,6 +144,7 @@ export default function BillingPage() {
           </div>
         </CardContent>
       </Card> */}
-    </div>
+      </div>
+    </AuthProvider>
   );
 }

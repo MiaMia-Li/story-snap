@@ -4,6 +4,8 @@ import { cn } from "@/lib/utils";
 import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
+import { LoginDialog } from "../header/LoginDialog";
+import { AuthProvider, useAuth } from "@/contexts/auth";
 
 export default function CheckoutButton({
   priceId,
@@ -15,6 +17,7 @@ export default function CheckoutButton({
   plan: any;
 }) {
   const [loading, setLoading] = useState(false);
+  const { requireAuth } = useAuth();
   const handleClick = async () => {
     try {
       setLoading(true); // 添加加载状态
@@ -44,7 +47,7 @@ export default function CheckoutButton({
 
   return (
     <Button
-      onClick={handleClick}
+      onClick={() => requireAuth(() => handleClick())}
       disabled={buttonConfig.disabled}
       className={cn("w-full font-medium text-base", {
         "bg-primary hover:bg-primary/90 shadow-lg":

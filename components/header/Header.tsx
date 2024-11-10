@@ -25,7 +25,9 @@ const Header = async () => {
             height={50}
             className="object-contain"
           />
-          <span className="text-2xl font-bold font-mono">StorySnap</span>
+          <span className="md:text-2xl text-xl font-bold font-mono">
+            StorySnap
+          </span>
         </Link>
 
         {/* Right Section */}
@@ -38,13 +40,16 @@ const Header = async () => {
               </div>
             ) : (
               <div className="animate-fade-in flex items-center gap-2">
-                <div className="hidden md:flex md:items-center">
+                <div className="flex items-center">
                   <Link
                     href="/generate-story"
-                    className="text-md hover:text-primary">
+                    className="text-md hover:text-primary hidden md:block">
                     GenStory
                   </Link>
-                  <Separator orientation="vertical" className="h-6 mx-2" />
+                  <Separator
+                    orientation="vertical"
+                    className="h-6 mx-2 hidden md:block"
+                  />
                   <Credits />
                   <Separator orientation="vertical" className="h-6 mx-2" />
                 </div>
@@ -53,7 +58,7 @@ const Header = async () => {
             )}
           </div>
           {/* Theme Toggle Button */}
-          <div className="relative flex h-9 w-9 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors hover:bg-blue-100 dark:bg-blue-950 dark:text-blue-400 dark:hover:bg-blue-900">
+          <div className="hidden md:flex relative h-9 w-9 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors hover:bg-blue-100 dark:bg-blue-950 dark:text-blue-400 dark:hover:bg-blue-900">
             <ThemeButton />
           </div>
           {/* <Link
