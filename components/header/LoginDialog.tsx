@@ -88,13 +88,13 @@ export function LoginDialog() {
           <p className="text-center text-xs text-muted-foreground mt-4">
             By continuing, you agree to our{" "}
             <button
-              onClick={() => window.open("/terms", "_blank")}
+              onClick={() => window.open("/terms-of-service", "_blank")}
               className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors">
               Terms of Service
             </button>{" "}
             and{" "}
             <button
-              onClick={() => window.open("/privacy", "_blank")}
+              onClick={() => window.open("/privacy-policy", "_blank")}
               className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors">
               Privacy Policy
             </button>
