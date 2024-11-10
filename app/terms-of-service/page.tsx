@@ -10,9 +10,10 @@ export default function TermsOfService() {
         <Card className="p-6">
           <h2 className="text-2xl font-semibold mb-4">1. Agreement to Terms</h2>
           <p className="text-gray-700">
-            By accessing and using snapstoryai.com ("the Website"), you agree to
-            be bound by these Terms of Service. If you disagree with any part of
-            these terms, you may not access the Website or use our services.
+            By accessing and using snapstoryai.com (&quot;the Website&quot;),
+            you agree to be bound by these Terms of Service. If you disagree
+            with any part of these terms, you may not access the Website or use
+            our services.
           </p>
         </Card>
 
@@ -23,7 +24,7 @@ export default function TermsOfService() {
           <div className="space-y-4 text-gray-700">
             <p>
               SnapStoryAI provides an AI-powered platform for creating and
-              sharing stories ("the Service"). The Service includes:
+              sharing stories (&quot;the Service&quot;). The Service includes:
             </p>
             <ul className="list-disc pl-6">
               <li>Story generation using AI technology</li>
@@ -107,7 +108,7 @@ export default function TermsOfService() {
               <li>Violating any applicable laws or regulations</li>
               <li>Impersonating others or providing false information</li>
               <li>Attempting to breach security measures</li>
-              <li>Interfering with the Service's functionality</li>
+              <li>Interfering with the Service&apos;s functionality</li>
               <li>Engaging in unauthorized data collection</li>
             </ul>
           </div>

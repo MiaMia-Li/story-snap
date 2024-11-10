@@ -81,28 +81,6 @@ export default function PrivacyPolicy() {
           </ul>
         </Card>
 
-        {/* <Card className="p-6">
-          <h2 className="text-2xl font-semibold mb-4">Cancellation Policy</h2>
-          <div className="space-y-4 text-gray-700">
-            <p>
-              You have the right to cancel your account and request the deletion
-              of your personal information at any time.
-            </p>
-            <h3 className="text-xl font-medium">To cancel your account:</h3>
-            <ol className="list-decimal pl-6">
-              <li>Log into your account</li>
-              <li>Go to Account Settings</li>
-              <li>Select "Delete Account"</li>
-              <li>Confirm your decision</li>
-            </ol>
-            <p>
-              After cancellation, we will delete your personal information
-              within 30 days, except for information we are required to keep for
-              legal or legitimate business purposes.
-            </p>
-          </div>
-        </Card> */}
-
         <Card className="p-6">
           <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
           <p className="text-gray-700">
