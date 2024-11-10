@@ -1,12 +1,18 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import Replicate from "replicate";
 
 const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
 });
 
+// Prevent Next.js / Vercel from caching responses
+// See https://github.com/replicate/replicate-javascript/issues/136#issuecomment-1728053102
+replicate.fetch = (url, options) => {
+  return fetch(url, { cache: "no-store", ...options });
+};
+
 export async function GET(
-  request: NextRequest,
+  request: Request,
   { params }: { params: { id: string } }
 ) {
   const { id } = params;
