@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   title:
     "StorySnap | AI-Powered Photo Story Generator | Create Engaging Stories",
   description:
-    "Transform photos into engaging stories with StorySnap's AI technology. Create, customize, and share memorable narratives from your images instantly. Try our free story generator today.",
+    "Transform photos into captivating stories with StorySnap, the AI platform that brings your memories to life. Create engaging narratives from any image in one click.",
   keywords:
     "AI story generator, photo story creator, image storytelling, AI writing assistant, visual storytelling platform, photo narrative creator, AI story maker, digital storytelling tool",
 
