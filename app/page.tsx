@@ -45,7 +45,7 @@ import { PricingCards } from "@/components/pricing/PricingCards";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 
-export const features = [
+const features = [
   {
     icon: <Wand2 className="h-8 w-8" />,
     title: "AI Magic",
