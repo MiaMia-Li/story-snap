@@ -171,7 +171,7 @@ export default function Home() {
 
     try {
       await submit({
-        style: style.name,
+        style: style.promptText,
         image: image,
         language: language,
       });
