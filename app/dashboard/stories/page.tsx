@@ -29,7 +29,9 @@ export default async function StoriesPage() {
           </div>
         ) : (
           stories.map((story: any) => (
-            <Card className="break-inside-avoid mb-6 hover:shadow-lg transition-shadow duration-200">
+            <Card
+              className="break-inside-avoid mb-6 hover:shadow-lg transition-shadow duration-200"
+              key={story.id}>
               <CardHeader className="flex flex-row items-center justify-between">
                 <div>
                   <div className="flex items-center justify-between">

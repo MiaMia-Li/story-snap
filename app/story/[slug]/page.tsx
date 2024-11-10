@@ -17,13 +17,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const story = await getStory(params.slug);
   if (!story) {
-    return {
-      title: "Story not found",
-    };
+    redirect("/");
   }
 
   return {
-    title: `${story.title} | YourSite Stories`,
+    title: `${story.title}`,
     description: story.content.substring(0, 155),
     openGraph: {
       title: story.title,
@@ -63,7 +61,7 @@ export default async function StoryPage({
             "@type": "Article",
             headline: story.title,
             image: story.image,
-            datePublished: story.publishedAt,
+            datePublished: story.createdAt,
             author: {
               "@type": "Person",
               name: story.author.name,

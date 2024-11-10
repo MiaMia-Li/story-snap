@@ -23,10 +23,37 @@ export async function getStory(slug: string) {
         id: story?.userId,
       },
     });
-    return { ...story, author: { name: author?.name, avatar: author?.image } };
+    if (!story || !author) {
+      throw new Error("Story not found");
+    }
+    return {
+      id: story.id,
+      storyId: story.storyId,
+      title: story.title,
+      content: story.content || "",
+      image: story.image,
+      isPublic: story.isPublic,
+      createdAt: story.createdAt.toISOString(),
+      author: {
+        name: author?.name || "Anonymous",
+        avatar: author?.image || "",
+      },
+    };
   } catch (error) {
     console.error("Error getting story:", error);
-    return null;
+    return {
+      id: "",
+      storyId: "",
+      title: "",
+      content: "",
+      image: "",
+      isPublic: false,
+      createdAt: "",
+      author: {
+        name: "",
+        avatar: "",
+      },
+    };
   }
 }
 
