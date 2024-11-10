@@ -13,8 +13,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "StorySnap",
   description:
-    "StorySnap is a platform that helps you create and share stories with your audience",
-  keywords: "story creation, story sharing, story marketing",
+    "Transform your photos into captivating stories with StorySnap - the AI-powered platform that brings your memories to life. Turn any image into an engaging narrative with just one click.",
+  keywords:
+    "story creation, story sharing, story marketing, AI story, AI art, AI generate, AI art generator, AI art creator, AI art platform, AI art tool, AI art generator online, AI art creator online, AI art platform online, AI art tool online, AI art generator free, AI art creator free, AI art platform free, AI art tool free, AI art generator online free, AI art creator online free, AI art platform online free, AI art tool online free, AI art generator free online, AI art creator free online, AI art platform free online, AI art tool free online, AI art generator free tool, AI art creator free tool, AI art platform free tool, AI art tool free tool, AI art generator free tool online, AI art creator free tool online, AI art platform free tool online, AI art tool free tool online, AI art generator free tool online free, AI art creator free tool online free, AI art platform free tool online free, AI art tool free tool online free, AI art generator free tool online free free, AI art creator free tool online free free, AI art platform free tool online free free, AI art tool free tool online free free, AI art generator free tool online free free free, AI art creator free tool online free free free, AI art platform free tool online free free free, AI art tool free tool online free free free",
 
   authors: [{ name: "StorySnap Team" }],
   creator: "StorySnap",
