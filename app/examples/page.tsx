@@ -14,27 +14,30 @@ import Link from "next/link";
 const stories = [
   {
     id: 1,
-    title: "A Moment of Peace",
+    title: "Whiskers and Wonders",
     category: "Slice of Life",
-    image: "/eg_1.jpg",
+    image:
+      "https://story-snap.vercel.app/_next/image?url=https%3A%2F%2Freplicate.delivery%2Fxezq%2FE4O69spILUJRNNp9J7nkCv8WNXHxcQzRNeLwIfcUP9T4hOvTA%2Fout-0.webp&w=2048&q=75",
     content:
-      "Amid a busy market, Hana wanders alone, feeling out of place in the crowd. As she walks, she lifts her eyes to the leaves above, finding a moment of quiet beauty. The simple sight eases her heart, reminding her that peace can be found even in the busiest places.",
+      "As I strolled through the sunlit park, the crisp autumn air filled my lungs with a refreshing chill. My fluffy cat nestled in my arms, its soft purrs harmonizing with the rustling leaves. I felt a wave of joy wash over me, the kind that only comes from moments like these. The world around us was alive with color, laughter echoing in the distance, but all I could focus on was the warmth of my furry companion. Each step we took felt like an adventure, a journey into a world where worries faded and happiness reigned supreme.",
   },
   {
     id: 2,
-    title: "Our Playful Moments",
+    title: "Whispers of the Path",
     category: "Romance",
-    image: "/eg_2.jpg",
+    image:
+      "https://story-snap.vercel.app/_next/image?url=https%3A%2F%2Freplicate.delivery%2Fxezq%2FFGQORHqLqfRAMaA8NRPmlOrw1rVgbw0DRopQSAnf4fpUJf8OB%2Fout-0.webp&w=3840&q=75",
     content:
-      "Today was filled with laughter and little games between us. I tried to challenge him to an arm-wrestling match, but of course, he won every time, laughing as I struggled. He’d reach out for a hug, only to playfully pull away at the last second, teasing me until I finally caught him. Every moment felt warm and lighthearted, reminding me how lucky I am to have someone who brings so much joy to my life. Even in the simplest gestures, we find happiness together.",
+      "As I walk along the winding path, the world around me transforms with each step. The towering trees, their leaves rustling softly, seem to whisper secrets of the forest. The sun hangs low in the sky, casting a warm golden glow that dances on the ground. I pause, glancing back, feeling a mix of nostalgia and curiosity. The air is rich with the scent of damp earth and blooming flowers, and I can hear the distant call of birds settling in for the night. This moment, suspended in time, fills me with a sense of adventure, urging me to delve deeper into the heart of nature.",
   },
   {
     id: 1,
-    title: "A Day in My Wonderland",
+    title: "The Journey Within",
     category: " Childhood Wonder",
-    image: "/eg_3.jpg",
+    image:
+      "https://story-snap.vercel.app/_next/image?url=https%3A%2F%2Freplicate.delivery%2Fxezq%2FKGj1Iep5HuxyPqQPrLXYKy4NyCLraWiCvnWYkPNUaGy4Uq3JA%2Fout-0.webp&w=3840&q=75",
     content:
-      "Today is my big adventure day! I ran through the fields, feeling the sun warm my face and the flowers dancing around me. I lay down in the grass, letting ants tickle my skin as they climbed over me—I think they're my tiny friends! Then I chased the chickens, laughing as they flapped and scattered. Every moment was filled with fun, and I felt like the queen of my own little world.",
+      "I stood at the edge of the forest, where the tall trees whispered secrets of ancient times. The air was thick with the scent of pine and damp earth, a reminder of the rain that had just passed. With each step, I felt the ground soft beneath my feet, as if the forest was welcoming me into its embrace. I sought something deeper, a truth hidden among the shadows. As I ventured further, the sunlight flickered through the leaves, casting playful patterns on the ground, almost urging me to keep going. My heart raced with anticipation; I knew this journey would reveal more than just the beauty of nature—it would unveil parts of myself I had long forgotten.",
   },
 ];
 
@@ -53,7 +56,7 @@ export default function ExamplePage() {
         {/* 特色故事区域 */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {stories.map((story) => (
-            <Card key={story.id} className="overflow-hidden">
+            <Card key={story.id} className="overflow-hidden group">
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                   <span>{story.title}</span>
@@ -61,30 +64,23 @@ export default function ExamplePage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                {/* 图片区域 */}
-                <div className="relative aspect-[4/3] overflow-hidden">
+                {/* 图片和内容的容器 */}
+                <div className="relative aspect-[4/3]">
+                  {/* 图片 */}
                   <Image
                     src={story.image}
                     alt={story.title}
                     fill
-                    className="object-cover rounded-lg transition-transform hover:scale-105"
+                    className="object-cover rounded-lg"
                   />
+                  {/* 悬浮时显示的内容 */}
+                  <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 overflow-y-auto">
+                    <p className="text-white leading-relaxed">
+                      {story.content}
+                    </p>
+                  </div>
                 </div>
-                {/* 文字区域 */}
-                <p className="text-muted-foreground leading-relaxed">
-                  {story.content}
-                </p>
               </CardContent>
-              {/* <CardFooter className="flex gap-2">
-                <Button variant="outline" className="flex-1">
-                  <HeartIcon className="w-4 h-4 mr-2" />
-                  Like
-                </Button>
-                <Button variant="outline" className="flex-1">
-                  <ShareIcon className="w-4 h-4 mr-2" />
-                  Share
-                </Button>
-              </CardFooter> */}
             </Card>
           ))}
         </div>

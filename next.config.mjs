@@ -8,6 +8,7 @@ const nextConfig = {
       "yggd8boz08mj0dzm.public.blob.vercel-storage.com",
       "replicate.delivery",
       "replicate.com",
+      "story-snap.vercel.app",
     ],
   },
   /* config options here */
