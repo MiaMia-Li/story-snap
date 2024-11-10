@@ -134,7 +134,7 @@ export default async function StoryPage({
           <TwitterShareButton
             text={story.title}
             hashtags={"SnapyStory"}
-            image={window.location.href}
+            image={`https://www.snapstoryai.com/story/${story.storyId}`}
           />
         </div>
 

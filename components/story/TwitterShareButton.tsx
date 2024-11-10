@@ -16,21 +16,22 @@ const TwitterShareButton: React.FC<TwitterShareButtonProps> = ({
   text,
   hashtags,
   className,
+  image,
 }) => {
   const encodedText = encodeURIComponent(text);
   const encodedHashtags = encodeURIComponent(hashtags);
-  const url = encodeURIComponent(
-    window.location.href || "https://www.snapstoryai.com"
+  const encodedUrl = encodeURIComponent(
+    (image || "https://www.snapstoryai.com").trim()
   );
+
+  const url = `https://twitter.com/intent/tweet?text=${encodedText}&hashtags=${encodedHashtags}&url=${encodedUrl}`;
+  console.log(url, "---url");
 
   return (
     <Button
       size="lg"
       onClick={() => {
-        window.open(
-          `https://twitter.com/intent/tweet?text=${encodedText}&hashtags=${encodedHashtags}&url=${url}`,
-          "_blank"
-        );
+        window.open(url, "_blank", "noopener,noreferrer");
       }}
       className={cn(styleVariants["3d"], className)}>
       {/* 背景动画效果 */}

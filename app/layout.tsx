@@ -64,6 +64,7 @@ export default function RootLayout({
             href="/apple-touch-icon.png"
           />
           <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+          <meta content="text/html; charset=UTF-8" name="Content-Type" />
           <link rel="manifest" href="/site.webmanifest" />
         </head>
         <body className={inter.className}>
