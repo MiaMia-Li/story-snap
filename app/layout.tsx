@@ -62,9 +62,9 @@ export const metadata: Metadata = {
     ],
   },
 
-  // Add structured data
   other: {
-    "script:ld+json": {
+    // 将结构化数据转换为字符串
+    "script:ld+json": JSON.stringify({
       "@context": "https://schema.org",
       "@type": "WebApplication",
       name: "StorySnap",
@@ -115,7 +115,7 @@ export const metadata: Metadata = {
           },
         ],
       },
-    },
+    }),
   },
 };
 
