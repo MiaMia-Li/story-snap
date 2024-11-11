@@ -40,10 +40,11 @@ export function DisplaySection({
               <Image
                 src={prediction.output[prediction.output.length - 1]}
                 alt="Generated image"
-                layout="responsive"
                 width={1000}
                 height={1000}
+                sizes="(max-width: 600px) 100vw, 50vw"
                 className="object-contain"
+                style={{ objectFit: "contain", width: "100%", height: "auto" }} // Use inline styles if necessary
               />
             </div>
           ) : (

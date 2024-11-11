@@ -50,6 +50,7 @@ export default function Home() {
         body: JSON.stringify(payload),
       });
       const data = await response.json();
+      refreshCredits();
       storyId.current = data.storyId;
     } catch (error) {
       console.error("saveStory error", error);
@@ -121,6 +122,11 @@ export default function Home() {
       title: z.string(),
       content: z.string(),
     }),
+    onError: async (error) => {
+      setError("Failed to generate story, please try again.");
+      console.log(error);
+      return;
+    },
     onFinish: async (result) => {
       if (result.error) {
         setError("Failed to generate story, please try again.");

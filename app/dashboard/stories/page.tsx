@@ -7,6 +7,8 @@ import Link from "next/link";
 import { getStories, shareStory } from "@/app/actions";
 import ShareButton from "@/components/story/ShareButton";
 
+export const revalidate = false; // 禁用缓存
+
 export default async function StoriesPage() {
   const stories = await getStories();
 
@@ -54,20 +56,8 @@ export default async function StoriesPage() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  {/* Copy Link Button */}
-
                   {/* Share/Public Badge */}
-                  {story.isPublic ? (
-                    <>
-                      <Badge
-                        variant="default"
-                        className="bg-blue-500 text-white border-none font-medium shadow-sm shadow-blue-200">
-                        Public
-                      </Badge>
-                    </>
-                  ) : (
-                    <ShareButton story={story} size="sm" />
-                  )}
+                  <ShareButton story={story} size="sm" />
                 </div>
               </CardHeader>
 
