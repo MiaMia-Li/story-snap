@@ -1,7 +1,8 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
-import { revalidatePath } from "next/dist/server/web/spec-extension/revalidate";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
+import { sleep } from "openai/core.mjs";
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,7 +16,9 @@ export async function POST(request: NextRequest) {
       where: { storyId },
       data: { isPublic: true },
     });
-    revalidatePath("/dashboard/stories");
+    await sleep(100);
+    await revalidatePath("/dashboard/stories", "page");
+
     return NextResponse.json({ message: "OK" }, { status: 200 });
   } catch (error) {
     console.error("Error creating story:", error);

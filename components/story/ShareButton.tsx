@@ -17,7 +17,7 @@ const ShareButton = ({
       return;
     }
     try {
-      await fetch(`/api/story/share/`, {
+      await fetch(`/api/story/share`, {
         method: "POST",
         body: JSON.stringify({
           storyId: story.storyId,
@@ -26,10 +26,7 @@ const ShareButton = ({
       const shareUrl = `${window.location.origin}/story/${story.storyId}`;
       await navigator.clipboard.writeText(shareUrl);
 
-      toast.success("✨ Copied!", {
-        description: "Share it with your friends~",
-        duration: 2000,
-      });
+      toast.success("✨ Copied!, Share it with your friends~");
     } catch (e) {
       console.error("handleShare error", e);
     }

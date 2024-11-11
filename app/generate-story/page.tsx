@@ -12,14 +12,12 @@ import {
   BookOpen,
   CheckCircle,
   Download,
-  Share,
   Share2Icon,
   Sparkles,
 } from "lucide-react";
-import { useCompletion, experimental_useObject as useObject } from "ai/react";
+import { experimental_useObject as useObject } from "ai/react";
 import { z } from "zod";
 import { toast } from "sonner";
-import ShareButton from "@/components/story/ShareButton";
 import Link from "next/link";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -198,7 +196,7 @@ export default function Home() {
       return;
     }
     try {
-      await fetch(`/api/story/share/`, {
+      await fetch(`/api/story/share`, {
         method: "POST",
         body: JSON.stringify({
           storyId: storyId.current,
@@ -207,10 +205,7 @@ export default function Home() {
       const shareUrl = `${window.location.origin}/story/${storyId.current}`;
       await navigator.clipboard.writeText(shareUrl);
 
-      toast.success("✨ Copied!", {
-        description: "Share it with your friends~",
-        duration: 2000,
-      });
+      toast.success("✨ Copied!,Share it with your friends~");
     } catch (e) {
       console.error("handleShare error", e);
     }
