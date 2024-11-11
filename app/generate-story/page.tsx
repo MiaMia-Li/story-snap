@@ -176,6 +176,9 @@ export default function Home() {
 
     setIsLoading(true);
     setError(null);
+    setPrediction({
+      status: "starting",
+    });
 
     try {
       await submit({

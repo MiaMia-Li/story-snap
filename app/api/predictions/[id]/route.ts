@@ -1,3 +1,5 @@
+import { put } from "@vercel/blob";
+import axios from "axios";
 import { NextResponse } from "next/server";
 import Replicate from "replicate";
 
@@ -20,6 +22,37 @@ export async function GET(
 
   if (prediction?.error) {
     return NextResponse.json({ detail: prediction.error }, { status: 500 });
+  }
+  if (prediction.output) {
+    // Loop through each output with async handling
+    const uploadResponses = await Promise.all(
+      prediction.output.map(async (imageUrl: string, index: number) => {
+        try {
+          // 1. Download the image as an array buffer
+          const imageResponse = await axios.get(imageUrl, {
+            responseType: "arraybuffer",
+          });
+
+          // Convert the array buffer to a Buffer (Node.js environment)
+          const fileBuffer = Buffer.from(imageResponse.data);
+          const filename = `output_${index}.png`;
+
+          // 2. Upload to Vercel Blob Storage using Buffer directly
+          const uploadResponse = await put(filename, fileBuffer, {
+            access: "public",
+          });
+
+          return uploadResponse.url; // Collect upload response data
+        } catch (error) {
+          console.error(`Error uploading image at index ${index}:`, error);
+          return null; // Or handle error accordingly
+        }
+      })
+    );
+    return NextResponse.json({
+      ...prediction,
+      output: uploadResponses,
+    });
   }
 
   return NextResponse.json(prediction);
