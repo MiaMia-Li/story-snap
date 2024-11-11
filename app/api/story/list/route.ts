@@ -1,4 +1,3 @@
-import { getStories } from "@/app/actions";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
@@ -6,19 +5,14 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     const session = await auth();
-    const stories = await prisma.story.findMany(
-      {
-        where: {
-          userId: session?.user.id,
-        },
-        orderBy: {
-          createdAt: "desc",
-        },
+    const stories = await prisma.story.findMany({
+      where: {
+        userId: session?.user.id,
       },
-      {
-        cache: "no-store",
-      }
-    );
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
     return NextResponse.json({ data: stories }, { status: 200 });
   } catch (error) {
     console.error("Error fetching stories:", error);
