@@ -44,6 +44,7 @@ import { faqData, testimonials } from "@/config/home";
 import { PricingCards } from "@/components/pricing/PricingCards";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { DiscordLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 
 const features = [
   {
@@ -343,8 +344,8 @@ export default function HomePage() {
           </section> */}
         </div>
       </div>
-      <footer className="border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="mx-auto py-10 max-w-7xl justify-between px-4 lg:px-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
+      <footer className="border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-10">
+        <div className="mx-auto max-w-7xl justify-between px-4 lg:px-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
           {/* Logo and Description Column */}
           <div className="space-y-4">
             <Link
@@ -362,21 +363,43 @@ export default function HomePage() {
               </span>
             </Link>
             <p className="text-sm text-muted-foreground">
+              Built with{" "}
+              <Link
+                href="https://pagegen.ai/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:text-primary/80 transition-colors mr-6">
+                pagegen
+              </Link>
+              {/* © {new Date().getFullYear()} All Rights Reserved */}
+            </p>
+            <p className="text-sm text-muted-foreground">
               Transform your images into engaging stories with the power of AI.
             </p>
             <div className="flex space-x-4">
-              <Button variant="ghost" size="icon">
-                <Twitter className="h-4 w-4" />
-              </Button>
-              <Button variant="ghost" size="icon">
-                <Instagram className="h-4 w-4" />
-              </Button>
-              <Button variant="ghost" size="icon">
+              <Link
+                href="https://x.com/snapstoryAI"
+                target="_blank"
+                rel="noopener noreferrer">
+                <Button variant="ghost" size="icon">
+                  <TwitterLogoIcon className="h-4 w-4" />
+                </Button>
+              </Link>
+              <Link
+                href="https://discord.gg/z5NbSzm9"
+                target="_blank"
+                rel="noopener noreferrer">
+                <Button variant="ghost" size="icon">
+                  <DiscordLogoIcon className="h-4 w-4" />
+                </Button>
+              </Link>
+
+              {/* <Button variant="ghost" size="icon">
                 <Linkedin className="h-4 w-4" />
               </Button>
               <Button variant="ghost" size="icon">
                 <Github className="h-4 w-4" />
-              </Button>
+              </Button> */}
             </div>
           </div>
           <div className="space-y-4">
@@ -454,8 +477,6 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-
-        {/* Bottom Section */}
       </footer>
     </main>
   );
