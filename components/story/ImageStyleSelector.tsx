@@ -33,17 +33,17 @@ export function ImageStyleSelector({
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="flex flex-wrap gap-4">
         {STYLE_PRESETS.map((style: any) => (
           <div
             key={style.id}
             onClick={() => onStyleSelect(style.id)}
             className={`
-              relative rounded-lg overflow-hidden cursor-pointer
+              relative rounded-lg overflow-hidden cursor-pointer w-[150px]
               transition-all duration-200 transform hover:scale-[1.02]
               ${
                 selectedStyle === style.id
-                  ? "ring-2 ring-blue-500 ring-offset-2"
+                  ? "ring-2 ring-primary ring-offset-2"
                   : "hover:ring-2 hover:ring-gray-300 hover:ring-offset-2"
               }
             `}>
@@ -68,7 +68,7 @@ export function ImageStyleSelector({
 
             {/* Selection Indicator */}
             {selectedStyle === style.id && (
-              <div className="absolute top-2 right-2 bg-blue-500 rounded-full p-1">
+              <div className="absolute top-2 right-2 bg-primary rounded-full p-1">
                 <CheckIcon className="w-4 h-4 text-white" />
               </div>
             )}

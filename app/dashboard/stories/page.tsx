@@ -1,90 +1,103 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+// pages/stories.tsx
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import Image from "next/image";
-import { BotIcon, CalendarIcon, LinkIcon, Share2Icon } from "lucide-react";
+import { BotIcon, CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { getStories, shareStory } from "@/app/actions";
 import ShareButton from "@/components/story/ShareButton";
 
-export const revalidate = false; // 禁用缓存
+export const revalidate = false;
 
 export default async function StoriesPage() {
   const stories = await getStories();
 
   return (
-    <div className="p-6">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-3xl font-bold">My Stories</h1>
+    <div className="container mx-auto p-6">
+      <div className="mb-8 flex items-center justify-between">
+        <h1 className="text-3xl font-bold tracking-tight">My Stories</h1>
         <Link href="/generate-story">
-          <Button>
+          <Button className="hover:scale-105 transition-transform">
             <BotIcon className="mr-2 h-4 w-4" />
             Create Story
           </Button>
         </Link>
       </div>
 
-      <div className="columns-1 md:columns-2 lg:columns-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {stories.length === 0 ? (
-          <div className="text-center text-muted-foreground py-12">
-            No stories created yet
+          <div className="col-span-full flex flex-col items-center justify-center py-12 text-center">
+            <div className="text-muted-foreground mb-4">
+              No stories created yet
+            </div>
+            <Link href="/generate-story">
+              <Button variant="outline">
+                <BotIcon className="mr-2 h-4 w-4" />
+                Create Your First Story
+              </Button>
+            </Link>
           </div>
         ) : (
-          stories.map((story: any) => (
-            <Card
-              className="break-inside-avoid mb-6 hover:shadow-lg transition-shadow duration-200"
-              key={story.id}>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <div>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg">
-                      {story.isPublic ? (
-                        <Link
-                          href={`/story/${story.storyId}`}
-                          className="text-primary hover:underline">
-                          {story.title}
-                        </Link>
-                      ) : (
-                        story.title
-                      )}
-                    </CardTitle>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <CalendarIcon className="h-4 w-4" />
-                    {new Date(story.createdAt).toLocaleDateString()}
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  {/* Share/Public Badge */}
-                  <ShareButton story={story} size="sm" />
-                </div>
-              </CardHeader>
-
-              <CardContent className="flex flex-col gap-4">
-                {/* Image Section */}
-                {story.image && (
-                  <div className="relative w-full aspect-[3/2] rounded-lg overflow-hidden">
-                    <Image
-                      src={story.image}
-                      alt="Story image"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                )}
-
-                {/* Story Content */}
-                <div className="prose prose-sm max-w-none">
-                  <p className="text-sm leading-relaxed whitespace-pre-wrap">
-                    {story.content}
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          ))
+          stories.map((story) => <StoryCard key={story.id} story={story} />)
         )}
       </div>
     </div>
+  );
+}
+
+// components/StoryCard.tsx
+function StoryCard({ story }: { story: any }) {
+  return (
+    <Card className="group hover:shadow-lg transition-all duration-200 flex flex-col">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0">
+        <div className="space-y-1">
+          <CardTitle className="text-xl font-semibold">
+            {/* <Link
+              href={`/story/${story.storyId}`}
+              className="text-primary hover:underline decoration-2 underline-offset-2 transition-colors">
+              {story.title}
+            </Link> */}
+            {story.title}
+          </CardTitle>
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <CalendarIcon className="h-4 w-4" />
+            <time dateTime={story.createdAt}>
+              {new Date(story.createdAt).toLocaleDateString()}
+            </time>
+          </div>
+        </div>
+      </CardHeader>
+
+      <CardContent className="flex-grow space-y-4">
+        {story.image && (
+          <div className="relative aspect-[3/2] overflow-hidden rounded-lg">
+            <Image
+              src={story.image}
+              alt={`Image for ${story.title}`}
+              fill
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              priority
+            />
+          </div>
+        )}
+
+        <div className="prose prose-sm max-w-none dark:prose-invert">
+          <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+            {story.content}
+          </p>
+        </div>
+      </CardContent>
+
+      <CardFooter className="flex justify-between items-center pt-4 border-t">
+        <ShareButton story={story} />
+      </CardFooter>
+    </Card>
   );
 }

@@ -5,25 +5,16 @@ import { LoginDialog } from "@/components/header/LoginDialog";
 import { FormSection } from "@/components/story/FormSection";
 import { DisplaySection } from "@/components/story/DisplaySection";
 import { AuthProvider, useAuth } from "@/contexts/auth";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { STYLE_PRESETS, TEMPLATE_IMAGES } from "@/config/story";
 import { Button } from "@/components/ui/button";
-import {
-  BookOpen,
-  CheckCircle,
-  Download,
-  Share2Icon,
-  Sparkles,
-} from "lucide-react";
+import { BookOpen, Download, Share2Icon, Sparkles } from "lucide-react";
 import { experimental_useObject as useObject } from "ai/react";
 import { z } from "zod";
 import { toast } from "sonner";
 import Link from "next/link";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-
-// const IMAGE_URL =
-//   "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/image/1719814052939-Klrm7gBgErzQyXqvHaR4CKCB6Zd71B.jpeg";
 
 export default function Home() {
   const [prediction, setPrediction] = useState<any>(null);
@@ -124,12 +115,14 @@ export default function Home() {
     }),
     onError: async (error) => {
       setError("Failed to generate story, please try again.");
+      setIsLoading(false);
       console.log(error);
       return;
     },
     onFinish: async (result) => {
       if (result.error) {
         setError("Failed to generate story, please try again.");
+        setIsLoading(false);
         return;
       }
       const { frames, title, content } = result.object as {
@@ -209,6 +202,7 @@ export default function Home() {
         method: "POST",
         body: JSON.stringify({
           storyId: storyId.current,
+          isPublic: true,
         }),
       });
       const shareUrl = `${window.location.origin}/story/${storyId.current}`;
@@ -224,7 +218,28 @@ export default function Home() {
     <AuthProvider>
       <LoginDialog />
       <main className="min-h-screen bg-gradient-to-b from-primary/5 via-background to-background">
-        <div className="grid grid-cols-1 md:grid-cols-3 md:gap-20 max-w-[1200px] mx-auto py-20 px-6">
+        <div className="max-w-[1200px] mx-auto py-10 px-4 md:px-6">
+          {/* 页面标题 */}
+          <div className="text-center max-w-2xl mx-auto mb-8">
+            <h1 className="text-3xl md:text-4xl font-bold flex items-center justify-center gap-2 mb-4">
+              <Sparkles className="w-6 h-6 text-primary" />
+              Transform Your Ideas into
+              <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                Magic
+              </span>
+            </h1>
+            <p className="text-muted-foreground text-sm leading-relaxed">
+              Watch as AI turns your stories into stunning visuals. Each image
+              is
+              <span className="text-primary font-medium">
+                {" "}
+                uniquely crafted{" "}
+              </span>
+              just for you ✨
+            </p>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 md:gap-20 max-w-[1200px] mx-auto pb-20 px-6">
           <div className="col-span-1">
             <FormSection onGenerate={handleGenerate} isLoading={isLoading} />
             {error && (
@@ -235,25 +250,6 @@ export default function Home() {
           </div>
           <div className="col-span-2">
             <div className="space-y-8 mb-10">
-              <div className="space-y-2 text-center">
-                <h1 className="md:text-3xl text-xl font-semibold md:flex items-center justify-center gap-2">
-                  <Sparkles className="w-5 h-5 text-primary" />
-                  Transform Your Ideas into
-                  <span className="bg-gradient-to-r from-primary via-primary/90 to-primary/70 bg-clip-text text-transparent">
-                    Magic
-                  </span>
-                </h1>
-                <p className="text-gray-600 dark:text-gray-400 text-sm max-w-md mx-auto leading-relaxed">
-                  Watch as AI turns your stories into stunning visuals. Each
-                  image is
-                  <span className="text-primary font-medium">
-                    {" "}
-                    uniquely crafted{" "}
-                  </span>
-                  just for you ✨
-                </p>
-              </div>
-
               {/* 故事内容展示区块 */}
               <div className="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
                 <div className="flex items-center gap-2 mb-3">
@@ -287,39 +283,54 @@ export default function Home() {
               </div>
             </div>
             <DisplaySection prediction={prediction} isLoading={isLoading} />
-
             {/* 按钮区域 */}
-            {prediction?.output && (
-              <div className="space-y-4 mt-10">
-                <div className="flex items-center gap-3 text-sm bg-green-50/50 dark:bg-green-900/50 p-3 rounded-lg">
-                  <div className="animate-bounce-small">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                  </div>
-                  <p className="text-muted-foreground">
-                    Story saved successfully! View it in your{" "}
-                    <Link
-                      href="/dashboard/stories"
-                      className="text-primary hover:underline font-medium transition-colors">
-                      dashboard
-                    </Link>
-                  </p>
-                </div>
-                <div className="mt-10">
-                  <div className="flex justify-center gap-4">
-                    <Button
-                      variant="outline"
-                      onClick={handleDownload}
-                      disabled={isLoading}>
-                      <Download className="w-4 h-4 mr-2" />
-                      Download
-                    </Button>
 
-                    <Button
-                      onClick={handleShare}
-                      className="bg-gradient-to-r from-pink-500 to-purple-500 text-white hover:opacity-90">
-                      <Share2Icon className="w-4 h-4 mr-2" />
-                      Share
-                    </Button>
+            {prediction?.output && (
+              <div className="space-y-6 mt-10">
+                {/* 成功提示 */}
+                <div className="relative overflow-hidden rounded-xl border bg-primary/5 border-primary/10 p-6">
+                  {/* 装饰元素 */}
+                  <div className="absolute -top-6 -left-6 w-12 h-12 bg-primary/10 rounded-full blur-xl" />
+                  <div className="absolute -bottom-6 -right-6 w-12 h-12 bg-primary/10 rounded-full blur-xl" />
+
+                  <div className="relative space-y-4">
+                    {/* 图标和文字 */}
+                    <div className="flex flex-col items-center gap-3 text-center">
+                      <div className="p-3 rounded-full bg-primary/10 animate-bounce">
+                        <Sparkles className="w-6 h-6 text-primary" />
+                      </div>
+
+                      <div className="space-y-1">
+                        <h3 className="font-semibold text-lg text-primary">
+                          Story Created Successfully! ✨
+                        </h3>
+                        <p className="text-sm text-muted-foreground">
+                          Your story has been saved. View it in your{" "}
+                          <Link
+                            href="/dashboard/stories"
+                            className="text-primary hover:underline font-medium transition-colors underline-offset-4">
+                            dashboard
+                          </Link>
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* 操作按钮 */}
+                    <div className="flex justify-center gap-4 pt-2">
+                      <Button
+                        variant="outline"
+                        onClick={handleDownload}
+                        disabled={isLoading}
+                        className="group hover:bg-primary/5">
+                        <Download className="w-4 h-4 mr-2 group-hover:-translate-y-0.5 transition-transform" />
+                        Download
+                      </Button>
+
+                      <Button onClick={handleShare} className="group">
+                        <Share2Icon className="w-4 h-4 mr-2 group-hover:-translate-y-0.5 transition-transform" />
+                        Share
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>

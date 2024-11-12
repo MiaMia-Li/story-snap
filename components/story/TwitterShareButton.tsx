@@ -10,6 +10,7 @@ interface TwitterShareButtonProps {
   hashtags: string;
   image?: string;
   className?: string;
+  children?: string | React.ReactNode;
 }
 
 const TwitterShareButton: React.FC<TwitterShareButtonProps> = ({
@@ -17,6 +18,7 @@ const TwitterShareButton: React.FC<TwitterShareButtonProps> = ({
   hashtags,
   className,
   image,
+  children,
 }) => {
   const encodedText = encodeURIComponent(text);
   const encodedHashtags = encodeURIComponent(hashtags);
@@ -25,11 +27,10 @@ const TwitterShareButton: React.FC<TwitterShareButtonProps> = ({
   );
 
   const url = `https://twitter.com/intent/tweet?text=${encodedText}&hashtags=${encodedHashtags}&url=${encodedUrl}`;
-  console.log(url, "---url");
 
   return (
     <Button
-      size="lg"
+      size="default"
       onClick={() => {
         window.open(url, "_blank", "noopener,noreferrer");
       }}
@@ -51,7 +52,7 @@ const TwitterShareButton: React.FC<TwitterShareButtonProps> = ({
           "font-semibold",
           "group-hover:translate-x-0.5 transition-transform duration-300"
         )}>
-        Share on Twitter
+        {children || "Share on Twitter"}
       </span>
     </Button>
   );

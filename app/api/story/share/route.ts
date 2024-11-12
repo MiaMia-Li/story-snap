@@ -10,10 +10,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    const { storyId } = await request.json();
+    const { storyId, isPublic } = await request.json();
     await prisma.story.update({
       where: { storyId },
-      data: { isPublic: true },
+      data: { isPublic: isPublic },
     });
 
     return NextResponse.json({ message: "OK" }, { status: 200 });

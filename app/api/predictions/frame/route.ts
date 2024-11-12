@@ -1,10 +1,4 @@
-import {
-  generateId,
-  generateObject,
-  StreamData,
-  streamObject,
-  streamText,
-} from "ai";
+import { streamObject } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { z } from "zod";
 import { auth } from "@/auth";
@@ -20,7 +14,6 @@ export async function POST(req: Request) {
   }
 
   const context = await req.json();
-  console.log(context, "context---");
   const { stype, image, language } = context;
   const prompt = `You are a creator who generates vivid, detailed stories based on images, following the unique story style of ${stype}. Using the specified story style and provided images, create a captivating, well-developed story with an engaging title and comprehensive descriptions of four storyboard frames for stable-diffusion-3.5-large to render as a storyboard sequence.
   You need to tell the story in the first person, not describe it, to have the feeling of a real person telling the story, to have an immersive feeling.
