@@ -365,7 +365,7 @@ export default function HomePage() {
             <p className="text-sm text-muted-foreground">
               Built with{" "}
               <Link
-                href="https://pagegen.ai/"
+                href="https://pagegen.ai"
                 target="_blank"
                 className="text-primary hover:text-primary/80 transition-colors mr-6">
                 pagegen

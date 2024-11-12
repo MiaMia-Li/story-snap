@@ -10,6 +10,7 @@ import {
   BookOpen,
   Share2,
 } from "lucide-react";
+import Link from "next/link";
 
 const features = [
   {
@@ -98,9 +99,11 @@ export function WhatsIncludes() {
             </div>
             <p className="text-sm">Need help choosing? We are here to help</p>
           </div>
-          <button className="px-4 py-2 rounded-full bg-primary/5 hover:bg-primary/10 transition-colors duration-200 text-sm font-medium">
+          <Link
+            href="mailto:support@ahaapple.com"
+            className="px-4 py-2 rounded-full bg-primary/5 hover:bg-primary/10 transition-colors duration-200 text-sm font-medium">
             Contact Sales Team
-          </button>
+          </Link>
         </div>
       </div>
     </div>

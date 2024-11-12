@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
+import { testimonials } from "@/config/home";
 
 export async function getStories() {
   const session = await auth();
@@ -12,6 +13,33 @@ export async function getStories() {
     },
   });
   return stories;
+}
+
+export async function getExampleStories() {
+  const stories = await prisma.story.findMany({
+    where: {
+      storyId: {
+        in: [
+          "N4fIZnNHrc",
+          "hcHptmVNpr",
+          "wEoqZABQ32",
+          // "uXyfNIVTuc",
+          // "Q1f4DJI5G2",
+        ],
+      },
+    },
+  });
+
+  const data = stories.map((story, ind) => {
+    return {
+      ...story,
+      date: story.createdAt.toISOString(),
+      authorName: testimonials[ind].author,
+      authorAvatar: testimonials[ind].avatar,
+      likes: Math.floor(Math.random() * 8 + Math.random() * 10),
+    };
+  });
+  return data;
 }
 
 export async function getStory(slug: string) {

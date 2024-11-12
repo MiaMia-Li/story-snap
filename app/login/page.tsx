@@ -5,8 +5,15 @@ import { FaGoogle, FaGithub } from "react-icons/fa";
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { RiAtLine } from "react-icons/ri";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function LoginPage({
   searchParams,
@@ -36,24 +43,25 @@ export default function LoginPage({
   };
 
   return (
-    <div className="min-h-[calc(100vh-64px)] w-full bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-950 dark:to-blue-950 flex items-center justify-center p-4">
+    <div className="min-h-[calc(100vh-64px)] w-full bg-gradient-to-b from-primary/5 via-background to-background flex items-center justify-center p-4">
       <div className="w-full max-w-[1000px] grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         {/* Left Side - Brief Introduction */}
         <div className="space-y-6">
           <div className="flex items-center space-x-2">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center">
-              <RiAtLine className="w-6 h-6 text-white" />
-            </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              StoryVerse AI
-            </span>
+            <Image
+              src="/penguin.png"
+              alt="Logo"
+              width={50}
+              height={50}
+              className="object-contain"
+            />
           </div>
 
           <div className="space-y-4">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-3xl md:text-4xl font-bold">
               Create Stunning Stories with AI
             </h1>
-            <p className="text-lg text-gray-600 dark:text-gray-300">
+            <p className="text-lg text-muted-foreground">
               Transform your ideas into captivating stories and illustrations.
               Our AI-powered platform helps you craft unique narratives with
               matching visuals in seconds.
@@ -62,61 +70,66 @@ export default function LoginPage({
         </div>
 
         {/* Right Side - Login Card */}
-        <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl rounded-2xl border border-gray-200 dark:border-gray-800 shadow-lg">
-          <div className="p-6 space-y-6">
-            <div className="text-center space-y-2">
-              <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
-                Welcome Back
-              </h2>
-              <p className="text-gray-600 dark:text-gray-300">
-                Sign in to access your account
-              </p>
-            </div>
+        <Card className="backdrop-blur-xl bg-card/80">
+          <CardHeader className="text-center space-y-2">
+            <h2 className="text-2xl font-semibold">Welcome Back</h2>
+            <p className="text-muted-foreground">
+              Sign in to access your account
+            </p>
+          </CardHeader>
 
-            <div className="space-y-4">
-              <Button
-                type="button"
-                variant="outline"
-                disabled={isLoading !== null}
-                onClick={() => handleSignIn("google")}
-                className="w-full h-11 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
-                <div className="flex items-center justify-center gap-3">
-                  <FaGoogle className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                  <span>
-                    {isLoading === "google"
-                      ? "Connecting..."
-                      : "Continue with Google"}
-                  </span>
-                </div>
-              </Button>
+          <CardContent className="space-y-4">
+            <Button
+              type="button"
+              variant="outline"
+              disabled={isLoading !== null}
+              onClick={() => handleSignIn("google")}
+              className="w-full h-11">
+              <div className="flex items-center justify-center gap-3">
+                <FaGoogle className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                <span>
+                  {isLoading === "google"
+                    ? "Connecting..."
+                    : "Continue with Google"}
+                </span>
+              </div>
+            </Button>
 
-              <Button
-                type="button"
-                variant="outline"
-                disabled={isLoading !== null}
-                onClick={() => handleSignIn("github")}
-                className="w-full h-11 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
-                <div className="flex items-center justify-center gap-3">
-                  <FaGithub className="w-5 h-5 text-gray-900 dark:text-white" />
-                  <span>
-                    {isLoading === "github"
-                      ? "Connecting..."
-                      : "Continue with GitHub"}
-                  </span>
-                </div>
-              </Button>
-            </div>
+            <Button
+              type="button"
+              variant="outline"
+              disabled={isLoading !== null}
+              onClick={() => handleSignIn("github")}
+              className="w-full h-11">
+              <div className="flex items-center justify-center gap-3">
+                <FaGithub className="w-5 h-5" />
+                <span>
+                  {isLoading === "github"
+                    ? "Connecting..."
+                    : "Continue with GitHub"}
+                </span>
+              </div>
+            </Button>
+          </CardContent>
 
-            <div className="text-center">
-              <Button
-                variant="ghost"
-                className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                onClick={() => router.push("/demo")}>
-                Try Demo Version
-              </Button>
-            </div>
-          </div>
-        </div>
+          <CardFooter>
+            <p className="text-center text-sm text-muted-foreground px-6">
+              By continuing, you agree to our{" "}
+              <Link
+                href="terms-of-service"
+                className="underline hover:text-primary">
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link
+                href="privacy-policy"
+                onClick={() => router.push("/privacy")}
+                className="underline hover:text-primary">
+                Privacy Policy
+              </Link>
+            </p>
+          </CardFooter>
+        </Card>
       </div>
     </div>
   );

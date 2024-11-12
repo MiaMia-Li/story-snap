@@ -10,38 +10,20 @@ import {
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import Link from "next/link";
-// 故事数据
-const stories = [
-  {
-    id: 1,
-    title: "Whiskers and Wonders",
-    category: "Slice of Life",
-    image:
-      "https://story-snap.vercel.app/_next/image?url=https%3A%2F%2Freplicate.delivery%2Fxezq%2FE4O69spILUJRNNp9J7nkCv8WNXHxcQzRNeLwIfcUP9T4hOvTA%2Fout-0.webp&w=2048&q=75",
-    content:
-      "As I strolled through the sunlit park, the crisp autumn air filled my lungs with a refreshing chill. My fluffy cat nestled in my arms, its soft purrs harmonizing with the rustling leaves. I felt a wave of joy wash over me, the kind that only comes from moments like these. The world around us was alive with color, laughter echoing in the distance, but all I could focus on was the warmth of my furry companion. Each step we took felt like an adventure, a journey into a world where worries faded and happiness reigned supreme.",
-  },
-  {
-    id: 2,
-    title: "Whispers of the Path",
-    category: "Romance",
-    image:
-      "https://story-snap.vercel.app/_next/image?url=https%3A%2F%2Freplicate.delivery%2Fxezq%2FFGQORHqLqfRAMaA8NRPmlOrw1rVgbw0DRopQSAnf4fpUJf8OB%2Fout-0.webp&w=3840&q=75",
-    content:
-      "As I walk along the winding path, the world around me transforms with each step. The towering trees, their leaves rustling softly, seem to whisper secrets of the forest. The sun hangs low in the sky, casting a warm golden glow that dances on the ground. I pause, glancing back, feeling a mix of nostalgia and curiosity. The air is rich with the scent of damp earth and blooming flowers, and I can hear the distant call of birds settling in for the night. This moment, suspended in time, fills me with a sense of adventure, urging me to delve deeper into the heart of nature.",
-  },
-  {
-    id: 1,
-    title: "The Journey Within",
-    category: " Childhood Wonder",
-    image:
-      "https://story-snap.vercel.app/_next/image?url=https%3A%2F%2Freplicate.delivery%2Fxezq%2FKGj1Iep5HuxyPqQPrLXYKy4NyCLraWiCvnWYkPNUaGy4Uq3JA%2Fout-0.webp&w=3840&q=75",
-    content:
-      "I stood at the edge of the forest, where the tall trees whispered secrets of ancient times. The air was thick with the scent of pine and damp earth, a reminder of the rain that had just passed. With each step, I felt the ground soft beneath my feet, as if the forest was welcoming me into its embrace. I sought something deeper, a truth hidden among the shadows. As I ventured further, the sunlight flickered through the leaves, casting playful patterns on the ground, almost urging me to keep going. My heart raced with anticipation; I knew this journey would reveal more than just the beauty of nature—it would unveil parts of myself I had long forgotten.",
-  },
-];
+import { getExampleStories } from "../actions";
+import {
+  ArrowRight,
+  ArrowRightIcon,
+  Heart,
+  HeartIcon,
+  MessageCircle,
+  MessageCircleIcon,
+} from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export default function ExamplePage() {
+export default async function ExamplePage() {
+  const stories = await getExampleStories();
+  console.log("--stories", stories);
   return (
     <div className="container mx-auto py-8 px-4">
       <div className="space-y-12">
@@ -52,33 +34,87 @@ export default function ExamplePage() {
             Where images and words come together to create magical stories
           </p>
         </div>
-
         {/* 特色故事区域 */}
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {stories.map((story) => (
-            <Card key={story.id} className="overflow-hidden group">
-              <CardHeader>
-                <CardTitle className="flex items-center justify-between">
-                  <span>{story.title}</span>
-                  <Badge variant="secondary">{story.category}</Badge>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {/* 图片和内容的容器 */}
-                <div className="relative aspect-[4/3]">
-                  {/* 图片 */}
-                  <Image
-                    src={story.image}
-                    alt={story.title}
-                    fill
-                    className="object-cover rounded-lg"
-                  />
-                  {/* 悬浮时显示的内容 */}
-                  <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 overflow-y-auto">
-                    <p className="text-white leading-relaxed">
-                      {story.content}
-                    </p>
+            <Card
+              key={story.id}
+              className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+              {/* 图片区域 */}
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <Image
+                  src={story.image}
+                  alt={story.title}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  priority
+                />
+                {/* <Badge
+                  variant="secondary"
+                  className="absolute top-4 right-4 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm">
+                  {story.category}
+                </Badge> */}
+              </div>
+
+              <CardContent className="p-6 space-y-4">
+                {/* 标题和作者信息 */}
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-lg leading-tight tracking-tight line-clamp-2">
+                    {story.title}
+                  </h4>
+                  <div className="flex items-center gap-x-2">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage
+                        src={story.authorAvatar}
+                        alt={story.authorName}
+                      />
+                      <AvatarFallback>
+                        {story.authorName.slice(0, 2).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex flex-col text-sm">
+                      <span className="font-medium">{story.authorName}</span>
+
+                      <time
+                        dateTime={story.date}
+                        className="text-muted-foreground text-xs">
+                        {new Date(story.createdAt).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                      </time>
+                    </div>
                   </div>
+                </div>
+
+                {/* 故事预览 */}
+                <p className="text-sm text-muted-foreground line-clamp-2">
+                  {story.content}
+                </p>
+
+                {/* 互动数据和按钮 */}
+                <div className="flex items-center justify-between pt-4 border-t">
+                  <div className="flex gap-4">
+                    <button className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors">
+                      <Heart className="h-4 w-4" />
+                      <span>{story.likes}</span>
+                    </button>
+                    {/* <button className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors">
+                      <MessageCircle className="h-4 w-4" />
+                      <span>{story.comments}</span>
+                    </button> */}
+                  </div>
+                  {/* <Link href={`/story/${story.storyId}`}>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-8 hover:bg-primary hover:text-primary-foreground">
+                      Read more
+                      <ArrowRight className="h-4 w-4 ml-2" />
+                    </Button>
+                  </Link> */}
                 </div>
               </CardContent>
             </Card>
@@ -128,9 +164,9 @@ export default function ExamplePage() {
               <Link href="/generate-story">
                 <Button size="lg">Create New Story</Button>
               </Link>
-              <Button variant="outline" size="lg">
+              {/* <Button variant="outline" size="lg">
                 Watch Tutorial
-              </Button>
+              </Button> */}
             </div>
           </div>
         </section>

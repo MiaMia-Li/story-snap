@@ -8,6 +8,7 @@ import Link from "next/link";
 import { getStory } from "@/app/actions";
 import { redirect } from "next/navigation";
 import TwitterShareButton from "@/components/story/TwitterShareButton";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 // Generate metadata for SEO
 export async function generateMetadata({
@@ -92,14 +93,16 @@ export default async function StoryPage({
 
             {/* Author and Date */}
             <div className="flex items-center space-x-4">
-              <div className="relative h-10 w-10 rounded-full overflow-hidden">
-                <Image
-                  src={story.author.avatar}
-                  alt={story.author.name}
-                  fill
+              <Avatar className="h-10 w-10 transition-all">
+                <AvatarImage
+                  src={story?.author?.avatar}
+                  alt={story?.author?.name || "User avatar"}
                   className="object-cover"
                 />
-              </div>
+                <AvatarFallback className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white dark:from-blue-500 dark:to-indigo-500">
+                  {story?.author?.name.substring(0, 2).toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
               <div>
                 <p className="font-medium">{story.author.name}</p>
                 <p className="text-sm text-muted-foreground">
