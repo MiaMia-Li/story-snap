@@ -65,7 +65,6 @@ Frame 4: [Detailed and imaginative description of the fourth storyboard frame]
       content: z.string().describe("story content"),
     }),
     temperature: 0.7,
-    maxTokens: 2000,
   });
 
   return result.toTextStreamResponse();

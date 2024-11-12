@@ -367,7 +367,6 @@ export default function HomePage() {
               <Link
                 href="https://pagegen.ai/"
                 target="_blank"
-                rel="noopener noreferrer"
                 className="text-primary hover:text-primary/80 transition-colors mr-6">
                 pagegen
               </Link>

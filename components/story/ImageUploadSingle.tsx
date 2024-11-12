@@ -50,9 +50,10 @@ export function ImageUploadSingle({
                 ? "Drop the image here..."
                 : "Drag & drop an image here, or click to select"}
             </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-              Accepts JPG, PNG, WEBP • Max 5MB per file • Up to 5 images
-            </p>
+            <ul className="text-xs text-gray-500 dark:text-gray-400 mt-2 space-y-1">
+              <li>Accepts JPG, PNG, WEBP </li>
+              <li>Max 5MB per file, Up to 5 images</li>
+            </ul>
           </div>
         ) : (
           // Preview state
