@@ -13,6 +13,7 @@ import { experimental_useObject as useObject } from "ai/react";
 import { z } from "zod";
 import { toast } from "sonner";
 import Link from "next/link";
+import { uploadFile } from "@/utils/image";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -164,8 +165,6 @@ export default function Home() {
       return;
     }
 
-    // const image = images[0].base64;
-
     const style = STYLE_PRESETS.find((style) => style.id === imageStyle);
     if (!style) {
       setError("Selected style is invalid. Please choose another style.");
@@ -180,9 +179,14 @@ export default function Home() {
     });
 
     try {
+      const imagesUrls = (
+        await Promise.all(images.map((image: any) => uploadFile(image.file)))
+      ).filter((url) => url !== undefined);
+
+      console.log("-imagesUrls", imagesUrls);
       await submit({
         style: style.promptText,
-        images: images.map((i: any) => i.base64),
+        images: imagesUrls.map((i: any) => i.url),
         language: language,
       });
     } catch (err) {

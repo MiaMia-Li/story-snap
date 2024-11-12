@@ -38,7 +38,7 @@ export async function GET(
           const filename = `output_${index}.png`;
 
           // 2. Upload to Vercel Blob Storage using Buffer directly
-          const uploadResponse = await put(filename, fileBuffer, {
+          const uploadResponse = await put(`download/${filename}`, fileBuffer, {
             access: "public",
           });
 
