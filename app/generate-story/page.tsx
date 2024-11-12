@@ -164,7 +164,7 @@ export default function Home() {
       return;
     }
 
-    const image = images[0].base64;
+    // const image = images[0].base64;
 
     const style = STYLE_PRESETS.find((style) => style.id === imageStyle);
     if (!style) {
@@ -182,7 +182,7 @@ export default function Home() {
     try {
       await submit({
         style: style.promptText,
-        image: image,
+        images: images.map((i: any) => i.base64),
         language: language,
       });
     } catch (err) {

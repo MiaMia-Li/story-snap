@@ -14,7 +14,13 @@ export async function POST(req: Request) {
   }
 
   const context = await req.json();
-  const { stype, image, language } = context;
+  const { stype, images, language } = context;
+  const images_message = images.map((base64: string) => {
+    return {
+      type: "image",
+      image: base64,
+    };
+  });
   const prompt = `You are a creator who generates vivid, detailed stories based on images, following the unique story style of ${stype}. Using the specified story style and provided images, create a captivating, well-developed story with an engaging title and comprehensive descriptions of four storyboard frames for stable-diffusion-3.5-large to render as a storyboard sequence.
   You need to tell the story in the first person, not describe it, to have the feeling of a real person telling the story, to have an immersive feeling.
 
@@ -37,30 +43,6 @@ Frame 4: [Detailed and imaginative description of the fourth storyboard frame]
 }
 `;
 
-  // const result = await generateObject({
-  //   model: openai("gpt-4o-mini"),
-  //   system: "You generate the story frame for a image.",
-  //   messages: [
-  //     {
-  //       role: "user",
-  //       content: [
-  //         {
-  //           type: "text",
-  //           text: prompt,
-  //         },
-  //         { type: "image", image: image },
-  //       ],
-  //     },
-  //   ],
-  //   schema: z.object({
-  //     frames: z.string().describe("story board frame description in json"),
-  //     title: z.string().describe("story title"),
-  //     content: z.string().describe("story content"),
-  //   }),
-  // });
-
-  // return result.toJsonResponse();
-
   // Create a new StreamData object
   const result = await streamObject({
     model: openai("gpt-4o-mini"),
@@ -73,7 +55,7 @@ Frame 4: [Detailed and imaginative description of the fourth storyboard frame]
             type: "text",
             text: prompt,
           },
-          { type: "image", image: image },
+          ...images_message,
         ],
       },
     ],

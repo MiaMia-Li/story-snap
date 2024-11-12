@@ -41,6 +41,10 @@ export function FormSection({
 
   // 处理图片拖拽上传
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
+    if (uploadedImages.length + acceptedFiles.length > 5) {
+      toast.error("Maximum 5 images allowed");
+      return;
+    }
     setIsUploading(true);
     try {
       const newImages = await Promise.all(
@@ -62,6 +66,7 @@ export function FormSection({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: (acceptedFiles) => requireAuth(() => onDrop(acceptedFiles)),
     onDropRejected: (fileRejections) => {
+      console.log("--fileRejections-", fileRejections);
       fileRejections.forEach(({ file, errors }) => {
         errors.forEach((error) => {
           if (error.code === "file-too-large") {
@@ -74,7 +79,8 @@ export function FormSection({
     accept: {
       "image/*": [".jpeg", ".jpg", ".png", ".webp"],
     },
-    multiple: false,
+    multiple: true,
+    maxFiles: 5,
   });
 
   const removeImage = (index: number) => {
