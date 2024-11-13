@@ -5,7 +5,7 @@ import { LoginDialog } from "@/components/header/LoginDialog";
 import { FormSection } from "@/components/story/FormSection";
 import { DisplaySection } from "@/components/story/DisplaySection";
 import { AuthProvider, useAuth } from "@/contexts/auth";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { STYLE_PRESETS, TEMPLATE_IMAGES } from "@/config/story";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Download, Share2Icon, Sparkles } from "lucide-react";
@@ -159,7 +159,7 @@ export default function Home() {
       setError("You have no credits left. Please buy more credits.");
       return;
     }
-    const { images, imageStyle, language } = formData;
+    const { images, imageStyle, language, keyword } = formData;
     if (!images || images.length === 0) {
       setError("Please reupload images");
       return;
@@ -188,6 +188,7 @@ export default function Home() {
         style: style.promptText,
         images: imagesUrls.map((i: any) => i.url),
         language: language,
+        keyword: keyword,
       });
     } catch (err) {
       console.error("handleGenerate error", err);

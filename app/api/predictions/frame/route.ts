@@ -15,7 +15,7 @@ export async function POST(req: Request) {
 
   const context = await req.json();
   console.log("--context", context);
-  const { stype, images, language } = context;
+  const { stype, images, language, keyword } = context;
   const images_message = images.map((url: string) => {
     return {
       type: "image",
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
   });
   const prompt = `You are a creator who generates vivid, detailed stories based on images, following the unique story style of ${stype}. Using the specified story style and provided images, create a captivating, well-developed story with an engaging title and comprehensive descriptions of four storyboard frames for stable-diffusion-3.5-large to render as a storyboard sequence.
   Tell a story that feels deeply personal and genuine, as if someone is sharing their experience directly with the listener. The tone should feel human and spontaneous, capturing emotions, thoughts, and small details that bring the story to life. Avoid a robotic, formulaic approach; instead, let the story unfold naturally, with a conversational flow and realistic pauses or reflections. This is about creating a vivid, relatable experience, not just recounting events—focus on immersing the listener in the storyteller's world
-
+  Please includes the ${keyword} in the story.
 Please return the output in the following format:
 
 Story Title: [Generated story title]

@@ -12,6 +12,14 @@ import { Language } from "@/types";
 import { motion } from "framer-motion";
 import { Loader2, Wand2 } from "lucide-react";
 import { toast } from "sonner";
+import { Textarea } from "../ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 export function FormSection({
   onGenerate,
   isLoading,
@@ -29,6 +37,8 @@ export function FormSection({
   const [language, setLanguage] = useState<Language>("en");
   const [isUploading, setIsUploading] = useState(false);
   const { requireAuth } = useAuth();
+  const [keyword, setKeyword] = useState("");
+  const [storyType, setStoryType] = useState("fable");
 
   const toBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -93,6 +103,7 @@ export function FormSection({
       images: uploadedImages,
       imageStyle,
       language,
+      keyword,
     });
   };
 
@@ -118,6 +129,34 @@ export function FormSection({
         language={language}
         handleLanguageChange={setLanguage}
       />
+      <div className="space-y-2">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          Story Keyword
+        </h3>
+        <Textarea
+          placeholder="Enter a keyword"
+          onChange={(e) => setKeyword(e.target.value)}
+        />
+      </div>
+
+      {/* <div className="space-y-2">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          Story Type
+        </h3>
+        <Select value={storyType} onValueChange={setStoryType}>
+          <SelectTrigger>
+            <SelectValue placeholder="Select a story type" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="fable">Fable</SelectItem>
+            <SelectItem value="fairytale">Fairytale</SelectItem>
+            <SelectItem value="folktale">Folktale</SelectItem>
+            <SelectItem value="legend">Legend</SelectItem>
+            <SelectItem value="myth">Myth</SelectItem>
+            <SelectItem value="story">Story</SelectItem>
+          </SelectContent>
+        </Select>
+      </div> */}
 
       {/* 生成按钮区域 */}
       <div className="space-y-4">

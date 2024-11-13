@@ -52,6 +52,7 @@ export async function POST(request: NextRequest) {
       // version:
       //   "5599ed30703defd1d160a25a63321b4dec97101d98b4674bcc56e41f62f35637",
       input: input,
+      stream: true,
     };
 
     // if (WEBHOOK_HOST) {
