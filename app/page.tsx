@@ -10,21 +10,10 @@ import {
   MessageSquareText,
   Share2,
   PenTool,
-  CheckCircle2,
-  Twitter,
-  Instagram,
-  Linkedin,
-  Github,
   MessageSquare,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
 import { Badge } from "@/components/ui/badge";
 import { FadeIn } from "@/components/animations/FadeIn";
@@ -139,7 +128,8 @@ export default function HomePage() {
                       whileTap={{ scale: 0.95 }}>
                       <Link href="/generate-story">
                         <Button size="lg" className="rounded-full px-8">
-                          Get Started <ArrowRight className="ml-2 h-4 w-4" />
+                          Get Started Free Now
+                          <ArrowRight className="ml-2 h-4 w-4" />
                         </Button>
                       </Link>
                     </motion.div>
@@ -250,7 +240,8 @@ export default function HomePage() {
             <FadeIn className="text-center mb-16">
               <h2 className="text-3xl font-bold mb-4">Plan Comparison</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Choose the perfect plan for your storytelling needs
+                Every user starts with 5 free credits. Choose the perfect plan
+                for your storytelling needs
               </p>
             </FadeIn>
             <PricingCards userId={session?.user?.id} />
@@ -316,7 +307,8 @@ export default function HomePage() {
                     whileTap={{ scale: 0.95 }}>
                     <Link href="/generate-story">
                       <Button size="lg" className="rounded-full px-8">
-                        Get Started Now <ArrowRight className="ml-2 h-4 w-4" />
+                        Get Started Free Now
+                        <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
                     </Link>
                   </motion.div>

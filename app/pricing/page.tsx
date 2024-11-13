@@ -22,8 +22,8 @@ export default async function PricingPage() {
                 Simple, Transparent Pricing
               </h1>
               <p className="mt-4 max-w-xl text-muted-foreground md:text-lg">
-                Purchase credits once, use them anytime. No subscriptions, no
-                hidden fees.
+                Every user starts with 5 free credits. Purchase credits once,
+                use them anytime. No subscriptions, no hidden fees.
               </p>
             </div>
 
