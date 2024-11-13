@@ -1,0 +1,65 @@
+{
+  "home": {
+    "hero": {
+      "title": "Convierte Tus Imágenes en Historias Cautivadoras",
+      "description": "Sube cualquier imagen y observa cómo nuestra IA la transforma en una historia cautivadora. Perfecto para creadores de contenido, educadores y narradores.",
+      "badge": "✨ Transforma Imágenes en Historias con IA",
+      "startButton": "Comenzar Ahora",
+      "examplesButton": "Ver Ejemplos"
+    },
+    "features": {
+      "title": "¿Por Qué Elegir Nuestra Plataforma?",
+      "description": "Descubre cómo nuestra plataforma impulsada por IA puede transformar tu proceso de narración",
+      "item1Title": "Magia de IA",
+      "item1Description": "Algoritmos avanzados que comprenden el contexto y crean narrativas cautivadoras",
+      "item2Title": "Múltiples Idiomas",
+      "item2Description": "Genera historias en varios idiomas para alcanzar una audiencia global",
+      "item3Title": "Tono Personalizado",
+      "item3Description": "Ajusta el estilo narrativo para que coincida con la voz de tu marca",
+      "item4Title": "Análisis Inteligente de Imágenes",
+      "item4Description": "Tecnología avanzada de visión por computadora que captura detalles sutiles y emociones en tus fotos",
+      "item5Title": "Personalización de Estilo",
+      "item5Description": "Múltiples estilos de escritura, desde profesional hasta casual, asegurando que tu historia se ajuste a tus necesidades",
+      "item6Title": "Compartir Fácilmente",
+      "item6Description": "Comparte sin problemas tus historias en plataformas de redes sociales y exporta en múltiples formatos"
+    },
+    "howItWorks": {
+      "title": "Cómo Funciona",
+      "description": "Tres simples pasos para transformar tus imágenes en historias cautivadoras",
+      "step1Title": "Subir Imagen",
+      "step1Description": "Arrastra o selecciona cualquier imagen que desees transformar",
+      "step2Title": "Procesamiento IA",
+      "step2Description": "Nuestra IA analiza y comprende el contexto de tu imagen",
+      "step3Title": "Obtén Tu Historia",
+      "step3Description": "Recibe una historia única y cautivadora basada en tu imagen"
+    },
+    "testimonials": {
+      "title": "Lo Que Dicen Nuestros Usuarios",
+      "description": "Únete a miles de usuarios satisfechos que ya están usando nuestra plataforma"
+    },
+    "faq": {
+      "title": "Preguntas Frecuentes",
+      "description": "Encuentra respuestas a preguntas comunes sobre StorySnap",
+      "item1-question": "¿Cómo funciona StorySnap?",
+      "item1-answer": "StorySnap utiliza algoritmos avanzados de IA para analizar tu imagen y generar una historia basada en su contenido.",
+      "item2-question": "¿Qué tipos de imágenes puedo usar?",
+      "item2-answer": "StorySnap admite una amplia gama de imágenes, incluyendo fotos, ilustraciones y gráficos. Cuanto más detallada y descriptiva sea tu imagen, mejor será la historia resultante.",
+      "item3-question": "¿Puedo personalizar el estilo de la historia?",
+      "item3-answer": "Sí, StorySnap ofrece múltiples estilos de escritura, desde profesional hasta casual, asegurando que tu historia se ajuste a tus necesidades.",
+      "item4-question": "¿Cuántos idiomas soporta StorySnap?",
+      "item4-answer": "StorySnap actualmente soporta inglés, chino, japonés, coreano y español. Estamos constantemente expandiéndonos para admitir más idiomas.",
+      "item5-question": "¿Mi imagen es privada?",
+      "item5-answer": "Sí, tu imagen es privada y segura. No compartimos tu imagen o historia con nadie sin tu permiso.",
+      "item6-question": "¿Puedo exportar mi historia?",
+      "item6-answer": "Sí, StorySnap te permite exportar tu historia en múltiples formatos, incluyendo PDF, HTML y más."
+    },
+    "cta": {
+      "title": "¿Listo para Comenzar Tu Historia?",
+      "description": "Únete a miles de creadores que ya están usando nuestra plataforma para dar vida a sus imágenes",
+      "button": "Comenzar Ahora"
+    },
+    "footer": {
+      "description": "Transforma tus imágenes en historias cautivadoras con el poder de la IA."
+    }
+  }
+}

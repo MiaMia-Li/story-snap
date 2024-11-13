@@ -1,0 +1,65 @@
+{
+  "home": {
+    "hero": {
+      "title": "将您的图片转化为引人入胜的故事",
+      "description": "上传任何图片，观看我们的AI如何将其转化为一个引人入胜的故事。完美适合内容创作者、教育工作者和讲故事的人。",
+      "badge": "✨ 用AI将图片转化为故事",
+      "startButton": "立即开始",
+      "examplesButton": "查看示例"
+    },
+    "features": {
+      "title": "为什么选择我们的平台？",
+      "description": "探索我们的AI驱动平台如何改变您的故事创作过程",
+      "item1Title": "AI魔法",
+      "item1Description": "能够理解上下文并创作引人入胜故事的先进算法",
+      "item2Title": "多语言支持",
+      "item2Description": "用多种语言生成故事，面向全球受众",
+      "item3Title": "自定义语气",
+      "item3Description": "调整讲故事的风格以匹配您的品牌声音",
+      "item4Title": "智能图像分析",
+      "item4Description": "捕捉照片中细微细节和情感的先进计算机视觉技术",
+      "item5Title": "风格定制",
+      "item5Description": "从专业到休闲的多种写作风格，确保故事符合您的需求",
+      "item6Title": "轻松分享",
+      "item6Description": "无缝分享您的故事到各社交媒体平台，支持多种格式导出"
+    },
+    "howItWorks": {
+      "title": "使用方法",
+      "description": "三个简单步骤将您的图片转化为引人入胜的故事",
+      "step1Title": "上传图片",
+      "step1Description": "拖放或选择任何您想转换的图片",
+      "step2Title": "AI处理",
+      "step2Description": "我们的AI分析并理解您的图片内容",
+      "step3Title": "获取故事",
+      "step3Description": "获得基于您图片的独特、引人入胜的故事"
+    },
+    "testimonials": {
+      "title": "用户评价",
+      "description": "加入已经在使用我们平台的数千名满意用户"
+    },
+    "faq": {
+      "title": "常见问题",
+      "description": "找到关于StorySnap的常见问题答案",
+      "item1-question": "StorySnap是如何工作的？",
+      "item1-answer": "StorySnap使用先进的AI算法分析您的图片并根据其内容生成故事。",
+      "item2-question": "我可以使用什么类型的图片？",
+      "item2-answer": "StorySnap支持广泛的图片类型，包括照片、插图和图形。图片越详细和描述性强，生成的故事就越好。",
+      "item3-question": "我可以自定义故事风格吗？",
+      "item3-answer": "是的，StorySnap提供从专业到休闲的多种写作风格，确保故事符合您的需求。",
+      "item4-question": "StorySnap支持多少种语言？",
+      "item4-answer": "StorySnap目前支持英语、中文、日语、韩语和西班牙语。我们正在不断扩展以支持更多语言。",
+      "item5-question": "我的图片是私密的吗？",
+      "item5-answer": "是的，您的图片是私密且安全的。未经您的许可，我们不会与任何人分享您的图片或故事。",
+      "item6-question": "我可以导出我的故事吗？",
+      "item6-answer": "是的，StorySnap允许您以多种格式导出故事，包括PDF、HTML等。"
+    },
+    "cta": {
+      "title": "准备开始您的故事了吗？",
+      "description": "加入已经在使用我们平台让图片栩栩如生的数千名创作者",
+      "button": "立即开始"
+    },
+    "footer": {
+      "description": "借助AI的力量将您的图片转化为引人入胜的故事。"
+    }
+  }
+}
