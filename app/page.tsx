@@ -35,6 +35,83 @@ import { PricingCards } from "@/components/pricing/PricingCards";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { DiscordLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
+import GalleryCard from "@/components/story/GalleryCard";
+
+const stories = [
+  {
+    id: "1",
+    title: "A New Beginning",
+    image:
+      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/download/output_0-TTlzDRT5p47awZWL3WtH1ciB28pjXr.png",
+    authorAvatar:
+      "https://cdn.jsdelivr.net/gh/alohe/avatars/png/vibrent_10.png",
+    authorName: "John",
+    createdAt: "2024-11-11",
+    content:
+      "As I stood in the fading sunlight, my heart raced with both excitement and trepidation. The world felt vast and full of potential, yet here I was, clutching my beloved cat, Luna, as if she were my anchor. With each gentle purr, she reminded me that I wasn't alone in this journey of 'being open to work.' I took a deep breath, letting the warmth of the sun wash over me, promising to embrace this new chapter with hope and determination. Together, we would explore the opportunities that lay ahead, each step a testament to resilience and the bonds we cherish.",
+  },
+  {
+    id: "2",
+    title: "A Penguin's Journey",
+    image:
+      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/download/output_0-7XJ7dxbN93HfQX5ZwSYC7a0cwxzria.png",
+    authorAvatar:
+      "https://cdn.jsdelivr.net/gh/alohe/avatars/png/vibrent_11.png",
+    authorName: "Emily",
+    createdAt: "2024-11-02",
+    content:
+      "Once, there was a little penguin named Percy, who always dreamed of venturing beyond the icy shores of his homeland. He donned a tiny suit each day, clutching a briefcase, as he imagined himself in the bustling world of business. One day, he finally decided to take the leap and journey to a tropical paradise. Standing on a sun-kissed beach, he felt the warm breeze ruffle his feathers. It was unlike anything he'd ever experienced. As he gazed out at the vast ocean, he realized that this was not just a vacation; it was the start of a new chapter in his life, where possibilities were endless and dreams could come true.",
+    likes: 100,
+  },
+  {
+    id: "3",
+    title: "A Spring Evening with My Feline Friends",
+    image:
+      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/out-0%20(10)-bVJsXAgxiNkNmFvYwEzG9BZx5nJDBc.webp",
+    authorAvatar:
+      "https://cdn.jsdelivr.net/gh/alohe/avatars/png/vibrent_12.png",
+    authorName: "Alice",
+    createdAt: "2024-11-07",
+    content:
+      "As I sit beneath the cherry blossoms on this magical evening, I find myself surrounded by my two faithful black cats. The pink petals dance through the twilight air, creating a mystical atmosphere in our favorite park. My companions, Shadow and Luna, sit silently beside me, their emerald eyes fixed on the falling petals, just as enchanted as I am by nature's display.The city lights twinkle in the distance, but here, under the canopy of pink blossoms, time seems to stand still. I watch as my cats gracefully move through the carpet of fallen petals, their silhouettes perfect against the purple-hued sky. In moments like these, I understand why the Japanese celebrate hanami - there's something truly spiritual about witnessing the cherry blossoms with those you love, even if your companions happen to be cats.",
+  },
+  {
+    id: "4",
+    title: "A Peaceful Afternoon with My Furry Friends",
+    image:
+      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/out-0%20(5)-K6A2A7cREdgX2J4R3U9O3gQOi2jLkp.webp",
+    authorAvatar:
+      "https://cdn.jsdelivr.net/gh/alohe/avatars/png/vibrent_13.png",
+    authorName: "Charlie",
+    createdAt: "2024-11-06",
+    content:
+      "Today, I found a quiet spot on a park bench, the warm sun filtering through the trees. With my two cats snuggled on my lap, I felt an incredible sense of calm. People walked by, some smiling at the sight of us, but I was lost in this little bubble of warmth and purrs. I couldn’t help but smile, feeling lucky to share such a simple, perfect moment with my furry companions. As they nestled close, I realized there’s nothing quite like the joy of being together in the gentle afternoon breeze.",
+  },
+  {
+    id: "5",
+    title: "The First Day at the Iceberg Conference",
+    image:
+      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/out-0%20(14)-Or4ItfgHTZ7dgdaPjp1uT3CuXXalXs.webp",
+    authorAvatar:
+      "https://cdn.jsdelivr.net/gh/alohe/avatars/png/vibrent_14.png",
+    authorName: "Percy",
+    createdAt: "2024-11-10",
+    content:
+      "Once upon a time, in the icy landscapes of Antarctica, a penguin named Percy had a unique ambition—he wanted to work in corporate affairs. Unlike his friends who spent their days fishing and sliding on the ice, Percy wore a suit, carried a briefcase, and dreamed of making a difference.Today was Percy’s big day: his first conference with all the leading penguins from various icebergs. As he walked across the frozen plains, his friends watched in curiosity and awe, unable to understand his unusual passion for business. Arriving at the grand conference room, Percy took a deep breath, adjusted his tie, and stepped in. The room was filled with serious-looking penguins discussing the latest issues facing the iceberg community.Percy knew he was finally where he belonged. He might have been the only one wearing a tie, but he was ready to make waves in his own way. The journey had just begun for this corporate penguin.",
+  },
+  {
+    id: "6",
+    title: "In Awe of the Mountains",
+    image:
+      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/out-0%20(8)-kqmmbBBY10RG6zO9kRg6i6G1PVmAyF.webp",
+    authorAvatar:
+      "https://cdn.jsdelivr.net/gh/alohe/avatars/png/vibrent_15.png",
+    authorName: "Fiona",
+    createdAt: "2024-11-03",
+    content:
+      "I stand alone by the edge of a pristine lake, surrounded by towering mountains capped with snow. The air is crisp, and everything feels still, almost sacred. I watch as birds soar above, their silhouettes tiny against the vast sky. Gazing at the reflection of these majestic peaks, I feel both humbled and inspired. It's just me and this endless beauty, a reminder of how vast the world is and how small I am within it. In this moment, I am completely at peace, lost in nature's grandeur.",
+  },
+];
 
 const features = [
   {
@@ -92,7 +169,9 @@ export default function HomePage() {
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.5 }}
                 className="flex justify-center">
-                <Badge className="rounded-full px-6 py-2 text-sm bg-primary text-primary-foreground">
+                <Badge
+                  variant="outline"
+                  className="rounded-full px-6 py-2 text-sm border-2">
                   ✨ Transform Images into Stories with AI
                 </Badge>
               </motion.div>
@@ -133,7 +212,8 @@ export default function HomePage() {
                         </Button>
                       </Link>
                     </motion.div>
-                    <motion.div
+
+                    {/* <motion.div
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}>
                       <Link href="/examples">
@@ -144,12 +224,44 @@ export default function HomePage() {
                           View Examples
                         </Button>
                       </Link>
-                    </motion.div>
+                    </motion.div> */}
                   </div>
                 </FadeIn>
               </div>
             </FadeIn>
           </section>
+
+          <section className="mb-32">
+            <FadeIn className="text-center mb-16">
+              {/* <Badge className="rounded-full px-6 py-2 text-sm bg-primary text-primary-foreground mb-6">
+                Features
+              </Badge> */}
+              <h2 className="text-3xl font-bold mb-4">AI Story Gallery</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Where images and words come together to create magical stories
+              </p>
+            </FadeIn>
+
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
+              variants={{
+                hidden: { opacity: 0 },
+                show: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.2,
+                  },
+                },
+              }}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}>
+              {stories.map((story) => (
+                <GalleryCard key={story.id} story={story} />
+              ))}
+            </motion.div>
+          </section>
+
           <section className="mb-32">
             <FadeIn className="text-center mb-16">
               {/* <Badge className="rounded-full px-6 py-2 text-sm bg-primary text-primary-foreground mb-6">
