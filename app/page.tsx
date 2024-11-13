@@ -15,6 +15,7 @@ import {
   Instagram,
   Linkedin,
   Github,
+  MessageSquare,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -392,6 +393,11 @@ export default function HomePage() {
                   <DiscordLogoIcon className="h-4 w-4" />
                 </Button>
               </Link>
+              <Link href="/feedback">
+                <Button variant="ghost" size="icon">
+                  <MessageSquare className="h-4 w-4" />
+                </Button>
+              </Link>
 
               {/* <Button variant="ghost" size="icon">
                 <Linkedin className="h-4 w-4" />
@@ -458,7 +464,7 @@ export default function HomePage() {
                     Terms of Service
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link
                     href="/terms-of-service"
                     className="text-muted-foreground hover:text-primary">
@@ -471,7 +477,7 @@ export default function HomePage() {
                     className="text-muted-foreground hover:text-primary">
                     Licenses
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>

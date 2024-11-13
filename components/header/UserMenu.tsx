@@ -25,6 +25,7 @@ import Link from "next/link";
 import { motion } from "framer-motion"; // 可选：添加动画效果
 import { Button } from "../ui/button";
 import Credits from "./Credits";
+import { MessageSquare } from "lucide-react";
 
 interface User {
   id: string | undefined;
@@ -154,6 +155,11 @@ export default function UserMenu() {
               icon={<MixIcon className="h-4 w-4" />}
               label="Dashboard"
               href="/dashboard"
+            />
+            <MenuItem
+              icon={<MessageSquare className="h-4 w-4" />}
+              label="Feedback"
+              href="/feedback"
             />
             {/* <MenuItem
             icon={<GearIcon className="h-4 w-4" />}
