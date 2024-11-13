@@ -85,3 +85,7 @@ export const faqData = [
       "Our AI generates unique stories for each image by analyzing multiple aspects including composition, colors, subjects, emotions, and context. Each story is cross-checked against our database to ensure originality.",
   },
 ];
+export const homeConfig = {
+  testimonials,
+  faqData,
+};
