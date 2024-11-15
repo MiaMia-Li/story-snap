@@ -34,7 +34,7 @@ const Header = async () => {
         <div className="flex items-center gap-6">
           {/* User Section */}
           <div className="relative">
-            {!session?.user.name ? (
+            {!session?.user.id ? (
               <div className="animate-fade-in">
                 <UserLogin />
               </div>

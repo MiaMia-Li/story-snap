@@ -19,6 +19,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   session: {
     strategy: "jwt",
   },
+  debug: process.env.NODE_ENV !== "production",
   callbacks: {
     async session({ session, user, token }) {
       if (session.user) {
@@ -34,6 +35,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           session.user.stripePriceId = currentUser.stripePriceId;
         }
       }
+      session.user.name = session.user.name || session.user.email.split("@")[0];
       return session;
     },
   },
