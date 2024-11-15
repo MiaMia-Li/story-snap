@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
-
+import EmailSign from "@/components/header/EmailSign";
 export default function LoginPage({
   searchParams,
 }: {
@@ -70,7 +70,7 @@ export default function LoginPage({
         </div>
 
         {/* Right Side - Login Card */}
-        <Card className="backdrop-blur-xl bg-card/80">
+        <Card className="backdrop-blur-xl bg-card/80 p-6 rounded-lg shadow-lg">
           <CardHeader className="text-center space-y-2">
             <h2 className="text-2xl font-semibold">Welcome Back</h2>
             <p className="text-muted-foreground">
@@ -84,15 +84,13 @@ export default function LoginPage({
               variant="outline"
               disabled={isLoading !== null}
               onClick={() => handleSignIn("google")}
-              className="w-full h-11">
-              <div className="flex items-center justify-center gap-3">
-                <FaGoogle className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                <span>
-                  {isLoading === "google"
-                    ? "Connecting..."
-                    : "Continue with Google"}
-                </span>
-              </div>
+              className="w-full h-11 flex items-center justify-center gap-3 ">
+              <FaGoogle className="w-5 h-5" />
+              <span>
+                {isLoading === "google"
+                  ? "Connecting..."
+                  : "Continue with Google"}
+              </span>
             </Button>
 
             <Button
@@ -100,16 +98,19 @@ export default function LoginPage({
               variant="outline"
               disabled={isLoading !== null}
               onClick={() => handleSignIn("github")}
-              className="w-full h-11">
-              <div className="flex items-center justify-center gap-3">
-                <FaGithub className="w-5 h-5" />
-                <span>
-                  {isLoading === "github"
-                    ? "Connecting..."
-                    : "Continue with GitHub"}
-                </span>
-              </div>
+              className="w-full h-11 flex items-center justify-center gap-3">
+              <FaGithub className="w-5 h-5" />
+              <span>
+                {isLoading === "github"
+                  ? "Connecting..."
+                  : "Continue with GitHub"}
+              </span>
             </Button>
+
+            <div className="text-center text-sm text-muted-foreground">
+              <span>OR Sign in with Email</span>
+            </div>
+            <EmailSign />
           </CardContent>
 
           <CardFooter>

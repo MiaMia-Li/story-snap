@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 import { signIn } from "next-auth/react";
+import EmailSign from "./EmailSign";
 
 export function LoginDialog() {
   const { showLoginDialog, closeLoginDialog } = useAuth();
@@ -84,6 +85,13 @@ export function LoginDialog() {
               </span>
             </div>
           </Button>
+
+          <div className="flex items-center justify-center gap-2">
+            <span className="text-sm text-muted-foreground">
+              OR Sign in with Email{" "}
+            </span>
+          </div>
+          <EmailSign />
 
           <p className="text-center text-xs text-muted-foreground mt-4">
             By continuing, you agree to our{" "}

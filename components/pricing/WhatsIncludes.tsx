@@ -1,4 +1,5 @@
 // components/whats-includes.tsx
+import { EMAIL_ADDRESS } from "@/config/site";
 import {
   Sparkles,
   Palette,
@@ -100,7 +101,7 @@ export function WhatsIncludes() {
             <p className="text-sm">Need help choosing? We are here to help</p>
           </div>
           <Link
-            href="mailto:support@ahaapple.com"
+            href={`mailto:${EMAIL_ADDRESS}`}
             className="px-4 py-2 rounded-full bg-primary/5 hover:bg-primary/10 transition-colors duration-200 text-sm font-medium">
             Contact Sales Team
           </Link>

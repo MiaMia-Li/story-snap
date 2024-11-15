@@ -3,9 +3,18 @@ import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import { prisma } from "./lib/prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import Resend from "next-auth/providers/resend";
+import { sendVerificationRequest } from "./lib/email";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
-  providers: [GitHub, Google],
+  providers: [
+    Resend({
+      from: `SnapStory <support@snapstoryai.com>`,
+      sendVerificationRequest,
+    }),
+    GitHub,
+    Google,
+  ],
   adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt",

@@ -13,6 +13,7 @@ import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Button } from "../ui/button";
+import EmailSign from "./EmailSign";
 
 export default function UserLogin() {
   const [isLoading, setIsLoading] = useState<string | null>(null);
@@ -99,6 +100,12 @@ export default function UserLogin() {
               </span>
             </div>
           </Button>
+          <div className="flex items-center justify-center gap-2">
+            <span className="text-sm text-muted-foreground">
+              OR Sign in with Email{" "}
+            </span>
+          </div>
+          <EmailSign />
 
           {/* 可选：添加隐私政策提示 */}
           <p className="text-center text-xs text-muted-foreground mt-4">

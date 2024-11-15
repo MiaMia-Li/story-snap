@@ -36,6 +36,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { DiscordLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 import GalleryCard from "@/components/story/GalleryCard";
+import { EMAIL_ADDRESS } from "@/config/site";
 
 const stories = [
   {
@@ -394,7 +395,7 @@ export default function HomePage() {
               <p className="text-muted-foreground">
                 Still have questions?{" "}
                 <a
-                  href="mailto:support@ahaapple.com"
+                  href={`mailto:${EMAIL_ADDRESS}`}
                   className="text-primary hover:underline font-medium">
                   Contact our support team
                 </a>
