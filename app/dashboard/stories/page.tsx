@@ -12,7 +12,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { getStories, shareStory } from "@/app/actions";
 import ShareButton from "@/components/story/ShareButton";
-
+import { CopyButton } from "@/components/story/CopyButton";
+import DownloadButton from "@/components/story/DownloadButton";
 export const revalidate = false;
 
 export default async function StoriesPage() {
@@ -91,12 +92,14 @@ function StoryCard({ story }: { story: any }) {
         <div className="prose prose-sm max-w-none dark:prose-invert">
           <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
             {story.content}
+            <CopyButton content={story.content} />
           </p>
         </div>
       </CardContent>
 
       <CardFooter className="flex justify-between items-center pt-4 border-t">
         <ShareButton story={story} />
+        <DownloadButton imageUrl={story.image} />
       </CardFooter>
     </Card>
   );
