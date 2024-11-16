@@ -368,7 +368,7 @@ export default function HomePage() {
               </h2>
 
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Find answers to common questions about StorySnap
+                Find answers to common questions about SnapStory
               </p>
             </FadeIn>
 
@@ -465,7 +465,7 @@ export default function HomePage() {
                 className="object-contain"
               />
               <span className="md:text-2xl text-xl font-bold font-mono">
-                StorySnap
+                SnapStory
               </span>
             </Link>
             <p className="text-sm text-muted-foreground">

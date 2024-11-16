@@ -26,7 +26,7 @@ const Header = async () => {
             className="object-contain"
           />
           <span className="md:text-2xl text-xl font-bold font-mono">
-            StorySnap
+            SnapStory
           </span>
         </Link>
 

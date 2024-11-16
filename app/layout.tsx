@@ -12,15 +12,15 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title:
-    "StorySnap | AI-Powered Photo Story Generator | Create Engaging Stories",
+    "SnapStory | AI-Powered Photo Story Generator | Create Engaging Stories",
   description:
-    "Transform photos into captivating stories with StorySnap, the AI platform that brings your memories to life. Create engaging narratives from any image in one click.",
+    "Transform photos into captivating stories with SnapStory, the AI platform that brings your memories to life. Create engaging narratives from any image in one click.",
   keywords:
     "AI story generator, photo story creator, image storytelling, AI writing assistant, visual storytelling platform, photo narrative creator, AI story maker, digital storytelling tool",
 
-  authors: [{ name: "StorySnap Team" }],
-  creator: "StorySnap",
-  publisher: "StorySnap Inc.",
+  authors: [{ name: "SnapStory Team" }],
+  creator: "SnapStory",
+  publisher: "SnapStory Inc.",
 
   // Add canonical URL
   alternates: {
@@ -32,8 +32,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://snapstoryai.com",
-    siteName: "StorySnap",
-    title: "StorySnap - Transform Photos into Engaging AI-Generated Stories",
+    siteName: "SnapStory",
+    title: "SnapStory - Transform Photos into Engaging AI-Generated Stories",
     description:
       "Create captivating stories from your photos using AI technology. Transform any image into a compelling narrative with our intuitive story generator.",
     images: [
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
         url: "/og-img.png",
         width: 1200,
         height: 630,
-        alt: "StorySnap - AI Story Generator",
+        alt: "SnapStory - AI Story Generator",
       },
     ],
   },
@@ -51,13 +51,13 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@snapstoryai",
     creator: "@snapstoryai",
-    title: "StorySnap - AI-Powered Photo Story Generator",
+    title: "SnapStory - AI-Powered Photo Story Generator",
     description:
       "Transform your photos into engaging stories with AI technology. Create and share memorable narratives instantly.",
     images: [
       {
         url: "/og-img.png",
-        alt: "StorySnap - AI Story Generator",
+        alt: "SnapStory - AI Story Generator",
       },
     ],
   },
@@ -67,10 +67,10 @@ export const metadata: Metadata = {
     "script:ld+json": JSON.stringify({
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      name: "StorySnap",
+      name: "SnapStory",
       applicationCategory: "Photography & Story Creation",
       description:
-        "Transform photos into engaging stories with StorySnap's AI technology. Create, customize, and share memorable narratives from your images instantly.",
+        "Transform photos into engaging stories with SnapStory's AI technology. Create, customize, and share memorable narratives from your images instantly.",
       offers: {
         "@type": "Offer",
         price: "0",
@@ -83,7 +83,7 @@ export const metadata: Metadata = {
       },
       creator: {
         "@type": "Organization",
-        name: "StorySnap Inc.",
+        name: "SnapStory Inc.",
         url: "https://snapstoryai.com",
       },
       faq: {
@@ -91,15 +91,15 @@ export const metadata: Metadata = {
         mainEntity: [
           {
             "@type": "Question",
-            name: "What is StorySnap?",
+            name: "What is SnapStory?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "StorySnap is an AI-powered platform that transforms photos into engaging stories. Upload any image and our AI technology will generate a compelling narrative around it.",
+              text: "SnapStory is an AI-powered platform that transforms photos into engaging stories. Upload any image and our AI technology will generate a compelling narrative around it.",
             },
           },
           {
             "@type": "Question",
-            name: "How does StorySnap work?",
+            name: "How does SnapStory work?",
             acceptedAnswer: {
               "@type": "Answer",
               text: "Simply upload your photo, and our AI analyzes the image to generate a unique story. You can then customize and edit the story before sharing it with your audience.",
@@ -107,10 +107,10 @@ export const metadata: Metadata = {
           },
           {
             "@type": "Question",
-            name: "Is StorySnap free to use?",
+            name: "Is SnapStory free to use?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "StorySnap offers both free and premium plans. You can start creating stories for free, with advanced features available in our premium plans.",
+              text: "SnapStory offers both free and premium plans. You can start creating stories for free, with advanced features available in our premium plans.",
             },
           },
         ],

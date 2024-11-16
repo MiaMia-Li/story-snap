@@ -11,9 +11,9 @@ export async function sendVerificationRequest(params: any) {
     body: JSON.stringify({
       from: provider.from,
       to,
-      subject: `Sign in to StorySnap`,
+      subject: `Sign in to SnapStory`,
       html: html({ url }),
-      text: `Sign in to StorySnap`,
+      text: `Sign in to SnapStory`,
     }),
   });
 
@@ -58,14 +58,14 @@ function html(params: { url: string }) {
                                 <td style="padding: 40px 40px 20px 40px; text-align: center;">
                                     <div style="display: inline-block; margin-bottom: 24px;">
                                         <img src="https://www.snapstoryai.com/penguin.png" 
-                                             alt="StorySnap Logo" 
+                                             alt="SnapStory Logo" 
                                              style="width: 80px; height: 80px;"
                                         />
                                     </div>
                                     <h1 style="margin: 0; font-size: 28px; font-weight: 700; color: ${
                                       colors.text
                                     };">
-                                        Welcome to StorySnap
+                                        Welcome to SnapStory
                                     </h1>
                                 </td>
                             </tr>
@@ -92,7 +92,7 @@ function html(params: { url: string }) {
   } 0%, ${
     colors.secondary
   } 100%); border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2); transition: all 0.2s ease;">
-                                        Sign in to StorySnap
+                                        Sign in to SnapStory
                                     </a>
                                 </td>
                             </tr>
@@ -120,7 +120,7 @@ function html(params: { url: string }) {
                                     <p style="margin: 0; font-size: 14px; color: ${
                                       colors.lightText
                                     };">
-                                        © ${new Date().getFullYear()} StorySnap. All rights reserved.
+                                        © ${new Date().getFullYear()} SnapStory. All rights reserved.
                                     </p>
                                 </td>
                             </tr>

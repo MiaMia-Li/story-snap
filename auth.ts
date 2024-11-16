@@ -19,6 +19,11 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   session: {
     strategy: "jwt",
   },
+  pages: {
+    signIn: "/login",
+    verifyRequest: "/verify",
+    // error: "/auth/error",
+  },
   debug: process.env.NODE_ENV !== "production",
   callbacks: {
     async session({ session, user, token }) {

@@ -118,14 +118,14 @@ export default function LoginPage({
               By continuing, you agree to our{" "}
               <Link
                 href="terms-of-service"
-                className="underline hover:text-primary">
+                className="text-primary hover:text-primary/80">
                 Terms of Service
               </Link>{" "}
               and{" "}
               <Link
                 href="privacy-policy"
                 onClick={() => router.push("/privacy")}
-                className="underline hover:text-primary">
+                className="text-primary hover:text-primary/80">
                 Privacy Policy
               </Link>
             </p>
