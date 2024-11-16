@@ -45,7 +45,7 @@ export default function CheckEmailPage() {
             </Link>
 
             <p className="text-sm text-muted-foreground mt-6 text-center">
-              Didn't receive the email? Check your spam folder or{" "}
+              Didn&apos;t receive the email? Check your spam folder or{" "}
               <Link
                 href="/login"
                 className="text-primary hover:text-primary/80">
