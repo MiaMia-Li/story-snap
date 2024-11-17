@@ -1,8 +1,5 @@
-import { generateText, streamText } from "ai";
-import { z } from "zod";
+import { streamText } from "ai";
 import { openai } from "@ai-sdk/openai";
-import { generatePrompt } from "@/utils/promot";
-import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 

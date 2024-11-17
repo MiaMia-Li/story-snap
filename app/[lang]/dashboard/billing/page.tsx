@@ -57,6 +57,39 @@ export default function BillingPage() {
     },
   ];
 
+  const PACKAGE_PLANS = [
+    {
+      id: "basic",
+      name: "Starter Pack",
+      credits: 30,
+      price: 9,
+      pricePerCredit: "0.30",
+
+      popular: false,
+      priceId: process.env.NEXT_PUBLIC_PRICE_30,
+    },
+    {
+      id: "pro",
+      name: "Professional Pack",
+      credits: 100,
+      price: 19,
+      pricePerCredit: "0.19",
+
+      popular: true,
+      priceId: process.env.NEXT_PUBLIC_PRICE_100,
+    },
+    {
+      id: "business",
+      name: "Business Pack",
+      credits: 200,
+      price: 29,
+      pricePerCredit: "0.15",
+
+      popular: false,
+      priceId: process.env.NEXT_PUBLIC_PRICE_200,
+    },
+  ];
+
   return (
     <AuthProvider>
       <LoginDialog />
@@ -89,7 +122,7 @@ export default function BillingPage() {
         </Card>
 
         {/* Credit Packages */}
-        <CreditCards />
+        <CreditCards packagePlans={PACKAGE_PLANS} />
 
         {/* Transaction History */}
         {/* <Card>
