@@ -74,7 +74,6 @@ export function StyleSelector({
                   alt={style.name}
                   fill
                   className="object-cover rounded-lg"
-                  quality={100}
                   priority
                 />
               </div>

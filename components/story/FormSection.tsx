@@ -18,7 +18,7 @@ import ToneSelector from "./ToneSelector";
 import { StyleSelector } from "./ImageStyle";
 import { useParams } from "next/dist/client/components/navigation";
 import { TEMPLATE_IMAGES } from "@/config/story";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Locale } from "@/i18n/config";
 export function FormSection({
   onGenerate,
@@ -35,13 +35,13 @@ export function FormSection({
   >([]);
 
   const t = useTranslations("generateStory");
-  const { lang } = useParams();
+  const locale = useLocale();
   const [imageStyle, setImageStyle] = useState("");
-  const [language, setLanguage] = useState<Locale>(lang as Locale);
+  const [language, setLanguage] = useState<Locale>(locale as Locale);
   const [isUploading, setIsUploading] = useState(false);
   const { requireAuth } = useAuth();
   const [keyword, setKeyword] = useState("");
-  const [tone, setTone] = useState("professional");
+  const [tone, setTone] = useState("");
 
   // Define tone options
   const toneOptions = [
