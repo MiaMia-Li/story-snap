@@ -30,8 +30,8 @@ export default function NotFound() {
             {/* Elegant Message */}
             <div className="space-y-6 max-w-xl">
               <p className="text-xl md:text-2xl text-foreground/80 font-light leading-relaxed">
-                The page you're looking for seems to have wandered off into the
-                digital sunset.
+                The page you&apos;re looking for seems to have wandered off into
+                the digital sunset.
               </p>
               <p className="text-muted-foreground">
                 Let us guide you back to familiar territory.

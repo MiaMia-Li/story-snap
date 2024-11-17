@@ -1,5 +1,4 @@
 import { LANGUAGES_PROMPT } from "@/config/lang";
-import { Locale } from "@/types";
 import {
   Select,
   SelectItem,
@@ -7,6 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Locale } from "@/i18n/config";
 
 export const LanguageSelector = ({
   language,

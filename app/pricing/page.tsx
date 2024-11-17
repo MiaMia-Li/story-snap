@@ -1,5 +1,4 @@
 // app/pricing/page.tsx
-import { auth } from "@/auth";
 import { PricingCards } from "@/components/pricing/PricingCards";
 import { WhatsIncludes } from "@/components/pricing/WhatsIncludes";
 import { EMAIL_ADDRESS } from "@/config/site";
@@ -42,7 +41,7 @@ export default function PricingPage() {
 
         {/* Features Section */}
         <section className="px-4">
-          <WhatsIncludes t={t} />
+          <WhatsIncludes />
         </section>
 
         {/* FAQ Section (Optional) */}

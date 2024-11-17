@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Locale } from "@/types";
 const inter = Inter({ subsets: ["latin"] });
 import { ThemeProvider } from "@/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
@@ -11,6 +10,7 @@ import { AuthProvider } from "@/contexts/auth";
 import { Analytics } from "@vercel/analytics/react";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { Locale } from "@/i18n/config";
 
 export const metadata: Metadata = {
   title:

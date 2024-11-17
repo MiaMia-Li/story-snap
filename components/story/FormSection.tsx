@@ -8,7 +8,7 @@ import { useAuth } from "@/contexts/auth";
 // import { ImageStyleSelector } from "./ImageStyleSelector";
 import { ImageUploadSingle } from "./ImageUploadSingle";
 import { LanguageSelector } from "./LangSelector";
-import { Locale } from "@/types";
+
 import { motion } from "framer-motion";
 import { Loader2, Wand2 } from "lucide-react";
 import { toast } from "sonner";
@@ -19,6 +19,7 @@ import { StyleSelector } from "./ImageStyle";
 import { useParams } from "next/dist/client/components/navigation";
 import { TEMPLATE_IMAGES } from "@/config/story";
 import { useTranslations } from "next-intl";
+import { Locale } from "@/i18n/config";
 export function FormSection({
   onGenerate,
   isLoading,
