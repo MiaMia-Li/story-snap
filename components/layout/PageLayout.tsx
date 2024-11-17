@@ -31,13 +31,14 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { testimonials } from "@/config/home";
-import { PricingCards } from "@/components/pricing/PricingCards";
+// import { PricingCards } from "@/components/pricing/PricingCards";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { DiscordLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 import GalleryCard from "@/components/story/GalleryCard";
 import { EMAIL_ADDRESS } from "@/config/site";
-import { useDictionary } from "@/contexts/dictionary";
+import { useTranslations } from "next-intl";
+import { PricingCards } from "../pricing/PricingCards";
 
 const stories = [
   {
@@ -116,89 +117,88 @@ const stories = [
 ];
 
 export default function HomePage() {
-  const { data: session } = useSession();
-  const t = useDictionary();
+  const t = useTranslations("PageLayout");
   const FEATURES = [
     {
       icon: <Wand2 className="h-8 w-8" />,
-      title: t.home.features.item1Title,
-      description: t.home.features.item1Description,
+      title: `${t("features.item1Title")}`,
+      description: `${t("features.item1Description")}`,
     },
     {
       icon: <Globe2 className="h-8 w-8" />,
-      title: t.home.features.item2Title,
-      description: t.home.features.item2Description,
+      title: `${t("features.item2Title")}`,
+      description: `${t("features.item2Description")}`,
     },
     {
       icon: <MessageSquareText className="h-8 w-8" />,
-      title: t.home.features.item3Title,
-      description: t.home.features.item3Description,
+      title: `${t("features.item3Title")}`,
+      description: `${t("features.item3Description")}`,
     },
     {
       icon: <ImageIcon className="h-8 w-8" />,
-      title: t.home.features.item4Title,
-      description: t.home.features.item4Description,
+      title: `${t("features.item4Title")}`,
+      description: `${t("features.item4Description")}`,
     },
     {
       icon: <PenTool className="h-8 w-8" />,
-      title: t.home.features.item5Title,
-      description: t.home.features.item5Description,
+      title: `${t("features.item5Title")}`,
+      description: `${t("features.item5Description")}`,
     },
     {
       icon: <Share2 className="h-8 w-8" />,
-      title: t.home.features.item6Title,
-      description: t.home.features.item6Description,
+      title: `${t("features.item6Title")}`,
+      description: `${t("features.item6Description")}`,
     },
   ];
   const HOW_IT_WORKS = [
     {
       icon: <ImageIcon className="h-6 w-6" />,
-      title: t.home.howItWorks.step1Title,
-      description: t.home.howItWorks.step1Description,
+      title: `${t("howItWorks.step1Title")}`,
+      description: `${t("howItWorks.step1Description")}`,
     },
     {
       icon: <Wand2 className="h-6 w-6" />,
-      title: t.home.howItWorks.step2Title,
-      description: t.home.howItWorks.step2Description,
+      title: `${t("howItWorks.step2Title")}`,
+      description: `${t("howItWorks.step2Description")}`,
     },
     {
       icon: <MessageSquareText className="h-6 w-6" />,
-      title: t.home.howItWorks.step3Title,
-      description: t.home.howItWorks.step3Description,
+      title: `${t("howItWorks.step3Title")}`,
+      description: `${t("howItWorks.step3Description")}`,
     },
   ];
   const FAQ = [
     {
-      question: t.home.faq.question1,
-      answer: t.home.faq.answer1,
+      question: `${t("faq.question1")}`,
+      answer: `${t("faq.answer1")}`,
     },
     {
-      question: t.home.faq.question2,
-      answer: t.home.faq.answer2,
+      question: `${t("faq.question2")}`,
+      answer: `${t("faq.answer2")}`,
     },
     {
-      question: t.home.faq.question3,
-      answer: t.home.faq.answer3,
+      question: `${t("faq.question3")}`,
+      answer: `${t("faq.answer3")}`,
     },
     {
-      question: t.home.faq.question4,
-      answer: t.home.faq.answer4,
+      question: `${t("faq.question4")}`,
+      answer: `${t("faq.answer4")}`,
     },
     {
-      question: t.home.faq.question5,
-      answer: t.home.faq.answer5,
+      question: `${t("faq.question5")}`,
+      answer: `${t("faq.answer5")}`,
     },
     {
-      question: t.home.faq.question6,
-      answer: t.home.faq.answer6,
+      question: `${t("faq.question6")}`,
+      answer: `${t("faq.answer6")}`,
     },
     {
-      question: t.home.faq.question7,
-      answer: t.home.faq.answer7,
+      question: `${t("faq.question7")}`,
+      answer: `${t("faq.answer7")}`,
     },
     {
-      question: t.home.faq.question8,
-      answer: t.home.faq.answer8,
+      question: `${t("faq.question8")}`,
+      answer: `${t("faq.answer8")}`,
     },
   ];
 
@@ -221,7 +221,7 @@ export default function HomePage() {
                 <Badge
                   variant="outline"
                   className="rounded-full px-6 py-2 text-sm border-2">
-                  {t.home.hero.badge}
+                  {t("hero.badge")}
                 </Badge>
               </motion.div>
 
@@ -231,19 +231,19 @@ export default function HomePage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.2 }}>
-                  {t.home.hero.title}
+                  {t("hero.title")}
                   <motion.span
                     className="text-primary block mt-2"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.7, delay: 0.4 }}>
-                    {t.home.hero.title2}
+                    {t("hero.title2")}
                   </motion.span>
                 </motion.h1>
 
                 <FadeIn delay={0.6}>
                   <p className="text-xl text-muted-foreground max-w-[700px] mx-auto">
-                    {t.home.hero.description}
+                    {t("hero.description")}
                   </p>
                 </FadeIn>
 
@@ -254,7 +254,7 @@ export default function HomePage() {
                       whileTap={{ scale: 0.95 }}>
                       <Link href="/generate-story">
                         <Button size="lg" className="rounded-full px-8">
-                          {t.home.hero.startButton}
+                          {t("hero.startButton")}
                           <ArrowRight className="ml-2 h-4 w-4" />
                         </Button>
                       </Link>
@@ -267,11 +267,9 @@ export default function HomePage() {
 
           <section className="mb-32">
             <FadeIn className="text-center mb-16">
-              <h2 className="text-3xl font-bold mb-4">
-                {t.home.gallery.title}
-              </h2>
+              <h2 className="text-3xl font-bold mb-4">{t("gallery.title")}</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                {t.home.gallery.description}
+                {t("gallery.description")}
               </p>
             </FadeIn>
 
@@ -297,11 +295,9 @@ export default function HomePage() {
 
           <section className="mb-32">
             <FadeIn className="text-center mb-16">
-              <h2 className="text-3xl font-bold mb-4">
-                {t.home.features.title}
-              </h2>
+              <h2 className="text-3xl font-bold mb-4">{t("features.title")}</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                {t.home.features.description}
+                {t("features.description")}
               </p>
             </FadeIn>
 
@@ -328,10 +324,10 @@ export default function HomePage() {
           <section className="mb-32">
             <FadeIn className="text-center mb-16">
               <h2 className="text-3xl font-bold mb-4">
-                {t.home.howItWorks.title}
+                {t("howItWorks.title")}
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                {t.home.howItWorks.description}
+                {t("howItWorks.description")}
               </p>
             </FadeIn>
 
@@ -351,10 +347,10 @@ export default function HomePage() {
           <section className="mb-32">
             <FadeIn className="text-center mb-16">
               <h2 className="text-3xl font-bold mb-4">
-                {t.home.testimonials.title}
+                {t("testimonials.title")}
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                {t.home.testimonials.description}
+                {t("testimonials.description")}
               </p>
             </FadeIn>
 
@@ -366,23 +362,21 @@ export default function HomePage() {
           </section>
           <section className="mb-32">
             <FadeIn className="text-center mb-16">
-              <h2 className="text-3xl font-bold mb-4">
-                {t.home.pricing.title}
-              </h2>
+              <h2 className="text-3xl font-bold mb-4">{t("pricing.title")}</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                {t.home.pricing.description}
+                {t("pricing.description")}
               </p>
             </FadeIn>
-            <PricingCards userId={session?.user?.id} />
+            <PricingCards />
           </section>
 
           {/* FAQ Section */}
           <section className="mb-32">
             <FadeIn className="text-center mb-16">
-              <h2 className="text-3xl font-bold mb-4">{t.home.faq.title}</h2>
+              <h2 className="text-3xl font-bold mb-4">{t("faq.title")}</h2>
 
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                {t.home.faq.description}
+                {t("faq.description")}
               </p>
             </FadeIn>
 
@@ -404,26 +398,15 @@ export default function HomePage() {
                 </AccordionItem>
               ))}
             </Accordion>
-
-            <div className="text-center mt-8">
-              <p className="text-muted-foreground">
-                {t.home.faq.contact}
-                <a
-                  href={`mailto:${EMAIL_ADDRESS}`}
-                  className="text-primary hover:underline font-medium">
-                  {t.home.faq.contactLink}
-                </a>
-              </p>
-            </div>
           </section>
           {/* CTA Section */}
           <section>
             <Card className="relative overflow-hidden border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-background">
               <CardContent className="p-12">
                 <div className="max-w-3xl mx-auto text-center space-y-6">
-                  <h2 className="text-3xl font-bold">{t.home.cta.title}</h2>
+                  <h2 className="text-3xl font-bold">{t("cta.title")}</h2>
                   <p className="text-muted-foreground">
-                    {t.home.cta.description}
+                    {t("cta.description")}
                   </p>
                   <motion.div
                     className="z-10"
@@ -431,7 +414,7 @@ export default function HomePage() {
                     whileTap={{ scale: 0.95 }}>
                     <Link href="/generate-story">
                       <Button size="lg" className="rounded-full px-8">
-                        {t.home.cta.button}
+                        {t("cta.button")}
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
                     </Link>

@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+import createNextIntlPlugin from "next-intl/plugin";
+
+const withNextIntl = createNextIntlPlugin();
+const nextConfig = withNextIntl({
   images: {
     domains: [
       "github.com",
@@ -12,6 +15,6 @@ const nextConfig = {
     ],
   },
   /* config options here */
-};
+});
 
 export default nextConfig;

@@ -3,7 +3,7 @@ import { CheckIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { ShuffleIcon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
-import { useDictionary } from "@/contexts/dictionary";
+import { useTranslations } from "next-intl";
 
 // Image Style Selection Component
 export function StyleSelector({
@@ -15,7 +15,7 @@ export function StyleSelector({
   selectedStyle: string;
   onStyleSelect: (styleId: string) => void;
 }) {
-  const t = useDictionary();
+  const t = useTranslations("generateStory");
   const handleRandomStyle = () => {
     const randomIndex = Math.floor(Math.random() * styleOptions.length);
     onStyleSelect(styleOptions[randomIndex].id);
@@ -23,11 +23,11 @@ export function StyleSelector({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="font-semibold">{t.generateStory.imageStyle}</h3>
+        <h3 className="font-semibold">{t("imageStyle")}</h3>
         <div className="flex items-center gap-4">
           <Button onClick={handleRandomStyle} variant="outline">
             <ShuffleIcon className="w-4 h-4 mr-2" />
-            {t.generateStory.random}
+            {t("random")}
           </Button>
           {/* <span className="text-sm text-gray-500 dark:text-gray-400">
             Select a visual style for your story

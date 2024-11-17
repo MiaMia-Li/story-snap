@@ -119,5 +119,3 @@ export interface AuthContextType {
   updateCredits: (newCredits: number) => void;
   refreshCredits: () => void;
 }
-
-export type Locale = "en" | "zh";

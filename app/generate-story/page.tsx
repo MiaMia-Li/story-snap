@@ -19,12 +19,11 @@ import { z } from "zod";
 import { toast } from "sonner";
 import Link from "next/link";
 import { uploadFile } from "@/utils/image";
-import { useDictionary } from "@/contexts/dictionary";
-
+import { useTranslations } from "next-intl";
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export default function Home() {
-  const t = useDictionary();
+  const t = useTranslations("");
   const [prediction, setPrediction] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -237,13 +236,13 @@ export default function Home() {
           <div className="text-center max-w-2xl mx-auto mb-8">
             <h1 className="text-3xl md:text-4xl font-bold flex items-center justify-center gap-2 mb-4">
               <Sparkles className="w-6 h-6 text-primary" />
-              {t.generateStory.title}
+              {t("generateStory.title")}
               <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                {t.generateStory.title2}
+                {t("generateStory.title2")}
               </span>
             </h1>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              {t.generateStory.description}
+              {t("generateStory.description")}
             </p>
           </div>
         </div>
@@ -263,7 +262,7 @@ export default function Home() {
                 <div className="flex items-center gap-2 mb-3">
                   <BookOpen className="w-5 h-5 text-primary" />
                   <h3 className="font-medium text-gray-900 dark:text-gray-100">
-                    {t.generateStory.yourStory}
+                    {t("generateStory.yourStory")}
                   </h3>
                 </div>
                 {isLoading && !object?.content && (
@@ -310,14 +309,14 @@ export default function Home() {
 
                       <div className="space-y-1">
                         <h3 className="font-semibold text-lg text-primary">
-                          {t.generateStory.success} ✨
+                          {t("generateStory.success")} ✨
                         </h3>
                         <p className="text-sm text-muted-foreground">
-                          {t.generateStory.saved}
+                          {t("generateStory.saved")}
                           <Link
                             href="/dashboard/stories"
                             className="text-primary hover:underline font-medium transition-colors underline-offset-4">
-                            {t.nav.dashboard}
+                            {t("nav.dashboard")}
                           </Link>
                         </p>
                       </div>
@@ -331,12 +330,12 @@ export default function Home() {
                         disabled={isLoading}
                         className="group hover:bg-primary/5">
                         <Download className="w-4 h-4 mr-2 group-hover:-translate-y-0.5 transition-transform" />
-                        {t.button.download}
+                        {t("button.download")}
                       </Button>
 
                       <Button onClick={handleShare} className="group">
                         <Share2Icon className="w-4 h-4 mr-2 group-hover:-translate-y-0.5 transition-transform" />
-                        {t.button.share}
+                        {t("button.share")}
                       </Button>
                     </div>
                   </div>

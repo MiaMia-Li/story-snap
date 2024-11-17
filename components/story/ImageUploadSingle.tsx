@@ -1,6 +1,6 @@
 // ImageUpload.tsx
-import { useDictionary } from "@/contexts/dictionary";
 import { X, Upload, Trash2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { DropzoneInputProps, DropzoneRootProps } from "react-dropzone";
 
@@ -26,10 +26,10 @@ export function ImageUploadSingle({
   isDragActive,
   isUploading,
 }: ImageUploadSingleProps) {
-  const t = useDictionary();
+  const t = useTranslations("generateStory");
   return (
     <div className="space-y-2">
-      <h3 className="font-semibold">{t.generateStory.uploadImage}</h3>
+      <h3 className="font-semibold">{t("uploadImage")}</h3>
 
       <div
         {...getRootProps()}
@@ -46,13 +46,11 @@ export function ImageUploadSingle({
           <div className="text-center">
             <Upload className="w-8 h-8 mx-auto text-gray-400 mb-2" />
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              {isDragActive
-                ? t.generateStory.dropImage
-                : t.generateStory.dragDropImage}
+              {isDragActive ? t("dropImage") : t("dragDropImage")}
             </p>
             <ul className="text-xs text-gray-500 dark:text-gray-400 mt-2 space-y-1">
-              <li>{t.generateStory.uploadDescription}</li>
-              <li>{t.generateStory.uploadDescription2}</li>
+              <li>{t("uploadDescription")}</li>
+              <li>{t("uploadDescription2")}</li>
             </ul>
           </div>
         ) : (

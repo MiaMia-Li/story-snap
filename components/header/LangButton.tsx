@@ -7,53 +7,50 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LANGUAGES } from "@/config/lang";
-import { Locale } from "@/types";
-import { Languages } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { Languages, Check } from "lucide-react";
+import { useTransition } from "react";
+import { Locale } from "@/i18n/config";
+import { setUserLocale } from "@/actions/locale";
+import { useLocale } from "next-intl";
+
+const LANGUAGE_OPTIONS = [
+  { value: "en" as Locale, label: "English" },
+  { value: "zh" as Locale, label: "中文" },
+] as const;
 
 export function LangButton() {
-  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const locale = useLocale();
 
-  const handleLanguageChange = (locale: string) => {
-    // 设置 Cookie
-    document.cookie = `i18nlang=${locale}; path=/; max-age=31536000`;
+  const handleLanguageChange = (newLocale: Locale) => {
+    if (newLocale === locale) return;
 
-    // 获取当前路径并替换语言路径
-    const { pathname, search } = window.location;
-    const pathParts = pathname.split("/");
-
-    // 如果路径中包含语言标识，将其替换
-    if (LANGUAGES.map((lang) => lang.value).includes(pathParts[1] as Locale)) {
-      pathParts[1] = locale; // 替换语言路径
-    } else {
-      // 如果没有语言标识，添加新的语言前缀
-      pathParts.unshift(locale);
-    }
-
-    // 构造新的路径
-    const newPath = pathParts.join("/") + search;
-
-    // 跳转到新路径
-    router.push(newPath);
+    startTransition(() => {
+      setUserLocale(newLocale);
+    });
   };
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button
+          variant="ghost"
+          size="icon"
+          aria-label="切换语言"
+          disabled={isPending}>
           <Languages className="h-5 w-5" />
-          {/* <span className="sr-only">切换语言</span> */}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        {LANGUAGES.map((language) => (
+        {LANGUAGE_OPTIONS.map(({ value, label }) => (
           <DropdownMenuItem
-            key={language.value}
-            onClick={() => handleLanguageChange(language.value)}
-            className="cursor-pointer">
-            {/* <span className="mr-2">{language.flag}</span> */}
-            {language.label}
+            key={value}
+            onClick={() => handleLanguageChange(value)}
+            className="cursor-pointer flex items-center justify-between">
+            {label}
+            {value === locale && (
+              <Check className="ml-2 h-4 w-4" aria-hidden="true" />
+            )}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

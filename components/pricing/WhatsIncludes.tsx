@@ -12,63 +12,62 @@ import {
   Share2,
 } from "lucide-react";
 import Link from "next/link";
-
-export function WhatsIncludes({ t }: { t: any }) {
+import { useTranslations } from "next-intl";
+export function WhatsIncludes() {
+  const t = useTranslations("pricing");
   const features = [
     {
       icon: Wand2,
-      title: t.pricing.whatsIncluded.lable1,
-      description: t.pricing.whatsIncluded.item1,
+      title: t("whatsIncluded.lable1"),
+      description: t("whatsIncluded.item1"),
     },
     {
       icon: Palette,
-      title: t.pricing.whatsIncluded.lable2,
-      description: t.pricing.whatsIncluded.item2,
+      title: t("whatsIncluded.lable2"),
+      description: t("whatsIncluded.item2"),
     },
     {
       icon: BookOpen,
-      title: t.pricing.whatsIncluded.lable3,
-      description: t.pricing.whatsIncluded.item3,
+      title: t("whatsIncluded.lable3"),
+      description: t("whatsIncluded.item3"),
     },
     {
       icon: Settings,
-      title: t.pricing.whatsIncluded.lable4,
-      description: t.pricing.whatsIncluded.item4,
+      title: t("whatsIncluded.lable4"),
+      description: t("whatsIncluded.item4"),
     },
     {
       icon: Clock,
-      title: t.pricing.whatsIncluded.lable5,
-      description: t.pricing.whatsIncluded.item5,
+      title: t("whatsIncluded.lable5"),
+      description: t("whatsIncluded.item5"),
     },
     {
       icon: Download,
-      title: t.pricing.whatsIncluded.lable6,
-      description: t.pricing.whatsIncluded.item6,
+      title: t("whatsIncluded.lable6"),
+      description: t("whatsIncluded.item6"),
     },
     {
       icon: Share2,
-      title: t.pricing.whatsIncluded.lable7,
-      description: t.pricing.whatsIncluded.item7,
+      title: t("whatsIncluded.lable7"),
+      description: t("whatsIncluded.item7"),
     },
     {
       icon: MessageSquare,
-      title: t.pricing.whatsIncluded.lable8,
-      description: t.pricing.whatsIncluded.item8,
+      title: t("whatsIncluded.lable8"),
+      description: t("whatsIncluded.item8"),
     },
     {
       icon: Sparkles,
-      title: t.pricing.whatsIncluded.lable9,
-      description: t.pricing.whatsIncluded.item9,
+      title: t("whatsIncluded.lable9"),
+      description: t("whatsIncluded.item9"),
     },
   ];
   return (
     <div className="container max-w-6xl mx-auto">
       <div className="text-center mb-16">
-        <h2 className="text-3xl font-bold mb-3">
-          {t.pricing.whatsIncluded.title}
-        </h2>
+        <h2 className="text-3xl font-bold mb-3">{t("whatsIncluded.title")}</h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          {t.pricing.whatsIncluded.description}
+          {t("whatsIncluded.description")}
         </p>
       </div>
 
@@ -96,12 +95,12 @@ export function WhatsIncludes({ t }: { t: any }) {
             <div className="p-2 rounded-full bg-primary/5">
               <MessageSquare className="h-5 w-5 text-primary" />
             </div>
-            <p className="text-sm">{t.pricing.whatsIncluded.needHelp}</p>
+            <p className="text-sm">{t("whatsIncluded.needHelp")}</p>
           </div>
           <Link
             href={`mailto:${EMAIL_ADDRESS}`}
             className="px-4 py-2 rounded-full bg-primary/5 hover:bg-primary/10 transition-colors duration-200 text-sm font-medium">
-            {t.pricing.whatsIncluded.contact}
+            {t("whatsIncluded.contact")}
           </Link>
         </div>
       </div>

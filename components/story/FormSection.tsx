@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useDropzone } from "react-dropzone";
 import { useAuth } from "@/contexts/auth";
 
-import { ImageStyleSelector } from "./ImageStyleSelector";
+// import { ImageStyleSelector } from "./ImageStyleSelector";
 import { ImageUploadSingle } from "./ImageUploadSingle";
 import { LanguageSelector } from "./LangSelector";
 import { Locale } from "@/types";
@@ -16,9 +16,9 @@ import { Textarea } from "../ui/textarea";
 import ToneSelector from "./ToneSelector";
 
 import { StyleSelector } from "./ImageStyle";
-import { useDictionary } from "@/contexts/dictionary";
 import { useParams } from "next/dist/client/components/navigation";
 import { TEMPLATE_IMAGES } from "@/config/story";
+import { useTranslations } from "next-intl";
 export function FormSection({
   onGenerate,
   isLoading,
@@ -33,7 +33,7 @@ export function FormSection({
     }[]
   >([]);
 
-  const t = useDictionary();
+  const t = useTranslations("generateStory");
   const { lang } = useParams();
   const [imageStyle, setImageStyle] = useState("");
   const [language, setLanguage] = useState<Locale>(lang as Locale);
@@ -44,75 +44,75 @@ export function FormSection({
 
   // Define tone options
   const toneOptions = [
-    { value: "professional", label: t.generateStory.tone.professional },
-    { value: "friendly", label: t.generateStory.tone.friendly },
-    { value: "humorous", label: t.generateStory.tone.humorous },
-    { value: "formal", label: t.generateStory.tone.formal },
-    { value: "casual", label: t.generateStory.tone.casual },
-    { value: "enthusiastic", label: t.generateStory.tone.enthusiastic },
-    { value: "empathetic", label: t.generateStory.tone.empathetic },
-    { value: "direct", label: t.generateStory.tone.direct },
+    { value: "professional", label: t("tone.professional") },
+    { value: "friendly", label: t("tone.friendly") },
+    { value: "humorous", label: t("tone.humorous") },
+    { value: "formal", label: t("tone.formal") },
+    { value: "casual", label: t("tone.casual") },
+    { value: "enthusiastic", label: t("tone.enthusiastic") },
+    { value: "empathetic", label: t("tone.empathetic") },
+    { value: "direct", label: t("tone.direct") },
   ];
 
   const styleOptions = [
     {
       id: "realistic",
-      name: t.generateStory.imgStyle.realistic,
+      name: t("imgStyle.realistic"),
       thumbnail: TEMPLATE_IMAGES.get("realistic")?.images[0],
     },
     {
       id: "anime",
-      name: t.generateStory.imgStyle.anime,
+      name: t("imgStyle.anime"),
       thumbnail: TEMPLATE_IMAGES.get("anime")?.images[0],
     },
     {
       id: "digital_art",
-      name: t.generateStory.imgStyle.digital_art,
+      name: t("imgStyle.digital_art"),
       thumbnail: TEMPLATE_IMAGES.get("digital_art")?.images[0],
     },
     {
       id: "oil_painting",
-      name: t.generateStory.imgStyle.oil_painting,
+      name: t("imgStyle.oil_painting"),
       thumbnail: TEMPLATE_IMAGES.get("oil_painting")?.images[0],
     },
     {
       id: "watercolor",
-      name: t.generateStory.imgStyle.watercolor,
+      name: t("imgStyle.watercolor"),
       thumbnail: TEMPLATE_IMAGES.get("watercolor")?.images[0],
     },
     {
       id: "3d_render",
-      name: t.generateStory.imgStyle["3d_render"],
+      name: t("imgStyle.3d_render"),
       thumbnail: TEMPLATE_IMAGES.get("3d_render")?.images[0],
     },
     {
       id: "pixel_art",
-      name: t.generateStory.imgStyle.pixel_art,
+      name: t("imgStyle.pixel_art"),
       thumbnail: TEMPLATE_IMAGES.get("pixel_art")?.images[0],
     },
     {
       id: "comic",
-      name: t.generateStory.imgStyle.comic,
+      name: t("imgStyle.comic"),
       thumbnail: TEMPLATE_IMAGES.get("comic")?.images[0],
     },
     {
       id: "fantasy",
-      name: t.generateStory.imgStyle.fantasy,
+      name: t("imgStyle.fantasy"),
       thumbnail: TEMPLATE_IMAGES.get("fantasy")?.images[0],
     },
     {
       id: "cyberpunk",
-      name: t.generateStory.imgStyle.cyberpunk,
+      name: t("imgStyle.cyberpunk"),
       thumbnail: TEMPLATE_IMAGES.get("cyberpunk")?.images[0],
     },
     {
       id: "minimalist",
-      name: t.generateStory.imgStyle.minimalist,
+      name: t("imgStyle.minimalist"),
       thumbnail: TEMPLATE_IMAGES.get("minimalist")?.images[0],
     },
     {
       id: "cinematic",
-      name: t.generateStory.imgStyle.cinematic,
+      name: t("imgStyle.cinematic"),
       thumbnail: TEMPLATE_IMAGES.get("cinematic")?.images[0],
     },
   ];
@@ -210,14 +210,14 @@ export function FormSection({
         styleOptions={styleOptions}
       />
       <div className="space-y-2">
-        <h3 className="font-semibold">{t.generateStory.storyLanguage}</h3>
+        <h3 className="font-semibold">{t("storyLanguage")}</h3>
         <LanguageSelector
           language={language}
           handleLanguageChange={setLanguage}
         />
       </div>
       <div className="space-y-2">
-        <h3 className="font-semibold">{t.generateStory.storyTone}</h3>
+        <h3 className="font-semibold">{t("storyTone")}</h3>
         <ToneSelector
           toneOptions={toneOptions}
           tone={tone}
@@ -226,7 +226,7 @@ export function FormSection({
       </div>
 
       <div className="space-y-2">
-        <h3 className="font-semibold">{t.generateStory.storyKeywords}</h3>
+        <h3 className="font-semibold">{t("storyKeywords")}</h3>
         <Textarea
           placeholder="Enter a keyword"
           onChange={(e) => setKeyword(e.target.value)}
@@ -248,14 +248,12 @@ export function FormSection({
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                <span className="animate-pulse">
-                  {t.generateStory.craftingStory}
-                </span>
+                <span className="animate-pulse">{t("craftingStory")}</span>
               </>
             ) : (
               <>
                 <Wand2 className="mr-2 h-5 w-5 group-hover:animate-pulse" />
-                {t.generateStory.generateButton}
+                {t("generateButton")}
               </>
             )}
           </div>
@@ -278,7 +276,7 @@ export function FormSection({
           />
         </Button>
         <p className="text-sm text-gray-500 text-center">
-          {t.generateStory.creditConsumption}
+          {t("creditConsumption")}
         </p>
       </div>
     </div>

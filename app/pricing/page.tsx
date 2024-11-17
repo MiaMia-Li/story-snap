@@ -3,17 +3,12 @@ import { auth } from "@/auth";
 import { PricingCards } from "@/components/pricing/PricingCards";
 import { WhatsIncludes } from "@/components/pricing/WhatsIncludes";
 import { EMAIL_ADDRESS } from "@/config/site";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
-import React, { useEffect } from "react";
-import { getDictionary } from "../dictionaries";
+import React from "react";
 
-export default async function PricingPage({
-  params: { lang },
-}: {
-  params: { lang: string };
-}) {
-  const session = await auth();
-  const t = await getDictionary(lang);
+export default function PricingPage() {
+  const t = useTranslations("pricing");
   return (
     <main className="min-h-screen flex flex-col items-center justify-center">
       <div className="w-full">
@@ -26,19 +21,16 @@ export default async function PricingPage({
             {/* Header Content */}
             <div className="flex flex-col items-center justify-center text-center py-12 md:py-16">
               <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-                {t.pricing.title}
+                {t("title")}
               </h1>
               <p className="mt-4 max-w-xl text-muted-foreground md:text-lg">
-                {t.pricing.description}
+                {t("description")}
               </p>
             </div>
 
             {/* Pricing Cards */}
             <div className="pb-10 max-w-6xl mx-auto">
-              <PricingCards
-                userId={session?.user?.id}
-                subscriptionPlan={null}
-              />
+              <PricingCards subscriptionPlan={null} />
             </div>
           </div>
         </section>
@@ -57,15 +49,13 @@ export default async function PricingPage({
         <section className="px-4 py-12 md:py-16">
           <div className="flex flex-col items-center justify-center text-center">
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-              {t.pricing.faq.title}
+              {t("faq.title")}
             </h2>
-            <p className="mt-4 text-muted-foreground">
-              {t.pricing.faq.description}
-            </p>
+            <p className="mt-4 text-muted-foreground">{t("faq.description")}</p>
             <Link
               href={`mailto:${EMAIL_ADDRESS}`}
               className="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors duration-200">
-              {t.pricing.faq.contact}
+              {t("faq.contact")}
             </Link>
           </div>
         </section>
