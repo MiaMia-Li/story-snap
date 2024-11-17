@@ -17,7 +17,7 @@ export const LanguageSelector = ({
 }) => (
   <Select value={language} onValueChange={handleLanguageChange}>
     <SelectTrigger>
-      <SelectValue placeholder="Select a language" />
+      <SelectValue placeholder="Select a language" defaultValue={language} />
     </SelectTrigger>
     <SelectContent>
       {LANGUAGES_PROMPT.map(({ value, label }) => (
