@@ -8,18 +8,17 @@ import { useAuth } from "@/contexts/auth";
 import { ImageStyleSelector } from "./ImageStyleSelector";
 import { ImageUploadSingle } from "./ImageUploadSingle";
 import { LanguageSelector } from "./LangSelector";
-import { Language } from "@/types";
+import { Locale } from "@/types";
 import { motion } from "framer-motion";
 import { Loader2, Wand2 } from "lucide-react";
 import { toast } from "sonner";
 import { Textarea } from "../ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
+import ToneSelector from "./ToneSelector";
+
+import { StyleSelector } from "./ImageStyle";
+import { useDictionary } from "@/contexts/dictionary";
+import { useParams } from "next/dist/client/components/navigation";
+import { TEMPLATE_IMAGES } from "@/config/story";
 export function FormSection({
   onGenerate,
   isLoading,
@@ -33,12 +32,90 @@ export function FormSection({
       preview: string;
     }[]
   >([]);
+
+  const t = useDictionary();
+  const { lang } = useParams();
   const [imageStyle, setImageStyle] = useState("");
-  const [language, setLanguage] = useState<Language>("en");
+  const [language, setLanguage] = useState<Locale>(lang as Locale);
   const [isUploading, setIsUploading] = useState(false);
   const { requireAuth } = useAuth();
   const [keyword, setKeyword] = useState("");
-  const [storyType, setStoryType] = useState("fable");
+  const [tone, setTone] = useState("professional");
+
+  // Define tone options
+  const toneOptions = [
+    { value: "professional", label: t.generateStory.tone.professional },
+    { value: "friendly", label: t.generateStory.tone.friendly },
+    { value: "humorous", label: t.generateStory.tone.humorous },
+    { value: "formal", label: t.generateStory.tone.formal },
+    { value: "casual", label: t.generateStory.tone.casual },
+    { value: "enthusiastic", label: t.generateStory.tone.enthusiastic },
+    { value: "empathetic", label: t.generateStory.tone.empathetic },
+    { value: "direct", label: t.generateStory.tone.direct },
+  ];
+
+  const styleOptions = [
+    {
+      id: "realistic",
+      name: t.generateStory.imgStyle.realistic,
+      thumbnail: TEMPLATE_IMAGES.get("realistic")?.images[0],
+    },
+    {
+      id: "anime",
+      name: t.generateStory.imgStyle.anime,
+      thumbnail: TEMPLATE_IMAGES.get("anime")?.images[0],
+    },
+    {
+      id: "digital_art",
+      name: t.generateStory.imgStyle.digital_art,
+      thumbnail: TEMPLATE_IMAGES.get("digital_art")?.images[0],
+    },
+    {
+      id: "oil_painting",
+      name: t.generateStory.imgStyle.oil_painting,
+      thumbnail: TEMPLATE_IMAGES.get("oil_painting")?.images[0],
+    },
+    {
+      id: "watercolor",
+      name: t.generateStory.imgStyle.watercolor,
+      thumbnail: TEMPLATE_IMAGES.get("watercolor")?.images[0],
+    },
+    {
+      id: "3d_render",
+      name: t.generateStory.imgStyle["3d_render"],
+      thumbnail: TEMPLATE_IMAGES.get("3d_render")?.images[0],
+    },
+    {
+      id: "pixel_art",
+      name: t.generateStory.imgStyle.pixel_art,
+      thumbnail: TEMPLATE_IMAGES.get("pixel_art")?.images[0],
+    },
+    {
+      id: "comic",
+      name: t.generateStory.imgStyle.comic,
+      thumbnail: TEMPLATE_IMAGES.get("comic")?.images[0],
+    },
+    {
+      id: "fantasy",
+      name: t.generateStory.imgStyle.fantasy,
+      thumbnail: TEMPLATE_IMAGES.get("fantasy")?.images[0],
+    },
+    {
+      id: "cyberpunk",
+      name: t.generateStory.imgStyle.cyberpunk,
+      thumbnail: TEMPLATE_IMAGES.get("cyberpunk")?.images[0],
+    },
+    {
+      id: "minimalist",
+      name: t.generateStory.imgStyle.minimalist,
+      thumbnail: TEMPLATE_IMAGES.get("minimalist")?.images[0],
+    },
+    {
+      id: "cinematic",
+      name: t.generateStory.imgStyle.cinematic,
+      thumbnail: TEMPLATE_IMAGES.get("cinematic")?.images[0],
+    },
+  ];
 
   const toBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -104,6 +181,7 @@ export function FormSection({
       imageStyle,
       language,
       keyword,
+      tone,
     });
   };
 
@@ -121,42 +199,39 @@ export function FormSection({
       />
 
       {/* 图片风格选择 */}
-      <ImageStyleSelector
+      {/* <ImageStyleSelector
         selectedStyle={imageStyle}
         onStyleSelect={setImageStyle}
-      />
-      <LanguageSelector
-        language={language}
-        handleLanguageChange={setLanguage}
+      /> */}
+      {/* 图片风格选择 */}
+      <StyleSelector
+        selectedStyle={imageStyle}
+        onStyleSelect={setImageStyle}
+        styleOptions={styleOptions}
       />
       <div className="space-y-2">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-          Story Keyword
-        </h3>
+        <h3 className="font-semibold">{t.generateStory.storyLanguage}</h3>
+        <LanguageSelector
+          language={language}
+          handleLanguageChange={setLanguage}
+        />
+      </div>
+      <div className="space-y-2">
+        <h3 className="font-semibold">{t.generateStory.storyTone}</h3>
+        <ToneSelector
+          toneOptions={toneOptions}
+          tone={tone}
+          handleToneChange={setTone}
+        />
+      </div>
+
+      <div className="space-y-2">
+        <h3 className="font-semibold">{t.generateStory.storyKeywords}</h3>
         <Textarea
           placeholder="Enter a keyword"
           onChange={(e) => setKeyword(e.target.value)}
         />
       </div>
-
-      {/* <div className="space-y-2">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-          Story Type
-        </h3>
-        <Select value={storyType} onValueChange={setStoryType}>
-          <SelectTrigger>
-            <SelectValue placeholder="Select a story type" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="fable">Fable</SelectItem>
-            <SelectItem value="fairytale">Fairytale</SelectItem>
-            <SelectItem value="folktale">Folktale</SelectItem>
-            <SelectItem value="legend">Legend</SelectItem>
-            <SelectItem value="myth">Myth</SelectItem>
-            <SelectItem value="story">Story</SelectItem>
-          </SelectContent>
-        </Select>
-      </div> */}
 
       {/* 生成按钮区域 */}
       <div className="space-y-4">
@@ -173,12 +248,14 @@ export function FormSection({
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                <span className="animate-pulse">Crafting your story...</span>
+                <span className="animate-pulse">
+                  {t.generateStory.craftingStory}
+                </span>
               </>
             ) : (
               <>
                 <Wand2 className="mr-2 h-5 w-5 group-hover:animate-pulse" />
-                Generate Story
+                {t.generateStory.generateButton}
               </>
             )}
           </div>
@@ -201,7 +278,7 @@ export function FormSection({
           />
         </Button>
         <p className="text-sm text-gray-500 text-center">
-          This will consume 1 credit
+          {t.generateStory.creditConsumption}
         </p>
       </div>
     </div>

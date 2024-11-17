@@ -5,9 +5,15 @@ import { WhatsIncludes } from "@/components/pricing/WhatsIncludes";
 import { EMAIL_ADDRESS } from "@/config/site";
 import Link from "next/link";
 import React, { useEffect } from "react";
+import { getDictionary } from "../dictionaries";
 
-export default async function PricingPage() {
+export default async function PricingPage({
+  params: { lang },
+}: {
+  params: { lang: string };
+}) {
   const session = await auth();
+  const t = await getDictionary(lang);
   return (
     <main className="min-h-screen flex flex-col items-center justify-center">
       <div className="w-full">
@@ -20,11 +26,10 @@ export default async function PricingPage() {
             {/* Header Content */}
             <div className="flex flex-col items-center justify-center text-center py-12 md:py-16">
               <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-                Simple, Transparent Pricing
+                {t.pricing.title}
               </h1>
               <p className="mt-4 max-w-xl text-muted-foreground md:text-lg">
-                Every user starts with 5 free credits. Purchase credits once,
-                use them anytime. No subscriptions, no hidden fees.
+                {t.pricing.description}
               </p>
             </div>
 
@@ -45,22 +50,22 @@ export default async function PricingPage() {
 
         {/* Features Section */}
         <section className="px-4">
-          <WhatsIncludes />
+          <WhatsIncludes t={t} />
         </section>
 
         {/* FAQ Section (Optional) */}
         <section className="px-4 py-12 md:py-16">
           <div className="flex flex-col items-center justify-center text-center">
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-              Still have questions?
+              {t.pricing.faq.title}
             </h2>
             <p className="mt-4 text-muted-foreground">
-              Our team is here to help. Contact us anytime.
+              {t.pricing.faq.description}
             </p>
             <Link
               href={`mailto:${EMAIL_ADDRESS}`}
               className="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors duration-200">
-              Contact Support
+              {t.pricing.faq.contact}
             </Link>
           </div>
         </section>

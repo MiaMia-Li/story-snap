@@ -1,4 +1,5 @@
 // components/pricing.tsx
+"use client";
 import { Check, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -11,54 +12,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { UserSubscriptionPlan } from "@/types";
 import CheckoutButton from "./CheckoutButton";
-
-export const PACKAGE_PLANS = [
-  {
-    id: "basic",
-    name: "Starter Pack",
-    credits: 30,
-    price: 9,
-    pricePerCredit: "0.30",
-    features: [
-      "High Quality Generation",
-      "All Stories Available",
-      "No Time Limit",
-      "Email Support",
-    ],
-    popular: false,
-    priceId: process.env.NEXT_PUBLIC_PRICE_30,
-  },
-  {
-    id: "pro",
-    name: "Professional Pack",
-    credits: 100,
-    price: 19,
-    pricePerCredit: "0.19",
-    features: [
-      "High Quality Generation",
-      "All Stories Available",
-      "No Time Limit",
-      "Email Support",
-    ],
-    popular: true,
-    priceId: process.env.NEXT_PUBLIC_PRICE_100,
-  },
-  {
-    id: "business",
-    name: "Business Pack",
-    credits: 200,
-    price: 29,
-    pricePerCredit: "0.15",
-    features: [
-      "High Quality Generation",
-      "All Stories Available",
-      "No Time Limit",
-      "Email Support",
-    ],
-    popular: false,
-    priceId: process.env.NEXT_PUBLIC_PRICE_200,
-  },
-];
+import { useDictionary } from "@/contexts/dictionary";
 
 export function PricingCards({
   userId,
@@ -67,10 +21,60 @@ export function PricingCards({
   userId: string | undefined;
   subscriptionPlan?: UserSubscriptionPlan | null;
 }) {
+  const t = useDictionary();
+
+  const PACKAGE_PLANS = [
+    {
+      id: "basic",
+      name: "Starter Pack",
+      credits: 30,
+      price: 9,
+      pricePerCredit: "0.30",
+      features: [
+        t.pricing.features.highQualityGeneration,
+        t.pricing.features.allStoriesAvailable,
+        t.pricing.features.noTimeLimit,
+        t.pricing.features.emailSupport,
+      ],
+      popular: false,
+      priceId: process.env.NEXT_PUBLIC_PRICE_30,
+    },
+    {
+      id: "pro",
+      name: "Professional Pack",
+      credits: 100,
+      price: 19,
+      pricePerCredit: "0.19",
+      features: [
+        t.pricing.features.highQualityGeneration,
+        t.pricing.features.allStoriesAvailable,
+        t.pricing.features.noTimeLimit,
+        t.pricing.features.emailSupport,
+      ],
+      popular: true,
+      priceId: process.env.NEXT_PUBLIC_PRICE_100,
+    },
+    {
+      id: "business",
+      name: "Business Pack",
+      credits: 200,
+      price: 29,
+      pricePerCredit: "0.15",
+      features: [
+        t.pricing.features.highQualityGeneration,
+        t.pricing.features.allStoriesAvailable,
+        t.pricing.features.noTimeLimit,
+        t.pricing.features.emailSupport,
+      ],
+      popular: false,
+      priceId: process.env.NEXT_PUBLIC_PRICE_200,
+    },
+  ];
+
   const getButtonConfig = (planId: string) => {
     if (!userId) {
       return {
-        text: "Sign in to buy",
+        text: t.pricing.signButton,
         disabled: true,
         tooltip: "Please sign in to purchase credits",
       };
@@ -93,7 +97,7 @@ export function PricingCards({
     }
 
     return {
-      text: "Buy More Credits",
+      text: t.pricing.buyButton,
       disabled: false,
       tooltip: "Add additional credits to your account",
     };
@@ -118,11 +122,11 @@ export function PricingCards({
                   className="w-fit bg-primary/10 text-primary border-primary mb-2"
                   variant="outline">
                   <Zap className="mr-1 h-3 w-3 fill-primary" />
-                  BEST VALUE
+                  {t.pricing.best}
                 </Badge>
               )}
               <CardTitle className="text-2xl font-bold">
-                {plan.credits} Credits
+                {plan.credits} {t.pricing.credits}
               </CardTitle>
             </CardHeader>
             <CardContent className="flex-1">
@@ -136,16 +140,16 @@ export function PricingCards({
                     </span>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    ${plan.pricePerCredit} per credit
+                    {t.pricing.per} {plan.pricePerCredit} {t.pricing.credits}
                   </p>
                 </div>
 
                 {/* Credits Badge */}
                 <div className="flex items-center gap-2 text-primary font-medium">
                   <Badge variant="secondary" className="px-3 py-1">
-                    {plan.credits} Credits
+                    {plan.credits} {t.pricing.credits}
                   </Badge>
-                  <span className="text-sm">One-time purchase</span>
+                  <span className="text-sm">{t.pricing.onetime}</span>
                 </div>
 
                 {/* Features */}

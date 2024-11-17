@@ -20,12 +20,14 @@ import {
 } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
 import { useSession, signOut } from "next-auth/react";
-import useUserStore from "@/app/hooks/useUserStore";
+import useUserStore from "@/hooks/useUserStore";
 import Link from "next/link";
 import { motion } from "framer-motion"; // 可选：添加动画效果
 import { Button } from "../ui/button";
 import Credits from "./Credits";
 import { MessageSquare } from "lucide-react";
+import { LangButton } from "./LangButton";
+import ThemeButton from "./ThemeButton";
 
 interface User {
   id: string | undefined;
@@ -177,6 +179,10 @@ export default function UserMenu() {
           onClick={handleSignOut}
           variant="danger"
         />
+        {/* <div className="md:hidden block">
+          <ThemeButton />
+          <LangButton />
+        </div> */}
       </DropdownMenuContent>
     </DropdownMenu>
   );

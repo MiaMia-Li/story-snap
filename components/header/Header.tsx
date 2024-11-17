@@ -7,9 +7,14 @@ import UserMenu from "./UserMenu";
 import { auth } from "@/auth";
 import { Separator } from "@/components/ui/separator";
 import Credits from "./Credits";
+import { LangButton } from "./LangButton";
+import { cookies } from "next/headers";
 
 const Header = async () => {
   const session = await auth();
+  const handleLanguageChange = (locale: string) => {
+    cookies().set("i18nlang", locale);
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-blue-100/20 bg-white/80 backdrop-blur-md transition-all duration-300 dark:border-blue-900/20 dark:bg-gray-900/80">
@@ -58,14 +63,10 @@ const Header = async () => {
             )}
           </div>
           {/* Theme Toggle Button */}
-          <div className="hidden md:flex relative h-9 w-9 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors hover:bg-blue-100 dark:bg-blue-950 dark:text-blue-400 dark:hover:bg-blue-900">
+          <div className="hidden md:flex ">
             <ThemeButton />
+            <LangButton />
           </div>
-          {/* <Link
-            href="/feedback"
-            className="relative flex h-9 w-9 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors hover:bg-blue-100 dark:bg-blue-950 dark:text-blue-400 dark:hover:bg-blue-900">
-            <HelpCircle />
-          </Link> */}
         </div>
       </div>
     </header>

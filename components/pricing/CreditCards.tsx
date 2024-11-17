@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Package } from "lucide-react";
-import { PACKAGE_PLANS } from "./PricingCards";
+// import { PACKAGE_PLANS } from "./PricingCards";
 import CheckoutButton from "./CheckoutButton";
 
 export default function CreditCards() {
@@ -15,7 +15,7 @@ export default function CreditCards() {
     <div className="space-y-4">
       <h2 className="text-xl font-semibold">Purchase Credits</h2>
       <div className="grid gap-4 md:grid-cols-3">
-        {PACKAGE_PLANS.map((pkg) => (
+        {[].map((pkg) => (
           <Card
             key={pkg.id}
             className={`relative ${pkg.popular ? "border-primary" : ""}`}>

@@ -1,4 +1,5 @@
 // components/DisplaySection.jsx
+import { useDictionary } from "@/contexts/dictionary";
 import { Share2, Download, ImageIcon, Sparkles, BookOpen } from "lucide-react";
 import Image from "next/image";
 
@@ -10,6 +11,7 @@ export function DisplaySection({
   error?: string;
   isLoading: boolean;
 }) {
+  const t = useDictionary();
   return (
     <div className="space-y-8">
       {/* 故事内容展示区块 */}
@@ -24,7 +26,7 @@ export function DisplaySection({
           {isLoading && !prediction?.output && (
             <div className="text-center">
               <p className="text-sm text-gray-500 dark:text-gray-400 animate-pulse">
-                Please wait while we process your request...
+                {t.generateStory.waiting}
               </p>
             </div>
           )}
@@ -54,13 +56,13 @@ export function DisplaySection({
                 {isLoading ? (
                   <div className="flex flex-col items-center">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mb-2" />
-                    <p className="text-sm">Creating your masterpiece...</p>
+                    <p className="text-sm">{t.generateStory.craftingImage}</p>
                   </div>
                 ) : (
                   <>
                     <ImageIcon className="w-8 h-8 mb-2 stroke-[1.5]" />
                     <p className="text-xs text-center px-4">
-                      Your image will appear here
+                      {t.generateStory.yourImage}
                     </p>
                   </>
                 )}

@@ -13,64 +13,62 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-const features = [
-  {
-    icon: Wand2,
-    title: "AI Story Generation",
-    description: "Create unique stories with advanced AI technology",
-  },
-  {
-    icon: Palette,
-    title: "Style Customization",
-    description: "Choose from various writing styles and tones",
-  },
-  {
-    icon: BookOpen,
-    title: "All Story Types",
-    description: "Access every category and genre available",
-  },
-  {
-    icon: Settings,
-    title: "Character Control",
-    description: "Full control over character development",
-  },
-  {
-    icon: Clock,
-    title: "Lifetime Access",
-    description: "Credits never expire, use at your own pace",
-  },
-  {
-    icon: Download,
-    title: "Export Options",
-    description: "Download stories in multiple formats",
-  },
-  {
-    icon: Share2,
-    title: "Easy Sharing",
-    description: "Share your stories with others instantly",
-  },
-  {
-    icon: MessageSquare,
-    title: "Priority Support",
-    description: "Get help whenever you need it",
-  },
-  {
-    icon: Sparkles,
-    title: "Regular Updates",
-    description: "Access to new features as they launch",
-  },
-];
-
-export function WhatsIncludes() {
+export function WhatsIncludes({ t }: { t: any }) {
+  const features = [
+    {
+      icon: Wand2,
+      title: t.pricing.whatsIncluded.lable1,
+      description: t.pricing.whatsIncluded.item1,
+    },
+    {
+      icon: Palette,
+      title: t.pricing.whatsIncluded.lable2,
+      description: t.pricing.whatsIncluded.item2,
+    },
+    {
+      icon: BookOpen,
+      title: t.pricing.whatsIncluded.lable3,
+      description: t.pricing.whatsIncluded.item3,
+    },
+    {
+      icon: Settings,
+      title: t.pricing.whatsIncluded.lable4,
+      description: t.pricing.whatsIncluded.item4,
+    },
+    {
+      icon: Clock,
+      title: t.pricing.whatsIncluded.lable5,
+      description: t.pricing.whatsIncluded.item5,
+    },
+    {
+      icon: Download,
+      title: t.pricing.whatsIncluded.lable6,
+      description: t.pricing.whatsIncluded.item6,
+    },
+    {
+      icon: Share2,
+      title: t.pricing.whatsIncluded.lable7,
+      description: t.pricing.whatsIncluded.item7,
+    },
+    {
+      icon: MessageSquare,
+      title: t.pricing.whatsIncluded.lable8,
+      description: t.pricing.whatsIncluded.item8,
+    },
+    {
+      icon: Sparkles,
+      title: t.pricing.whatsIncluded.lable9,
+      description: t.pricing.whatsIncluded.item9,
+    },
+  ];
   return (
     <div className="container max-w-6xl mx-auto">
       <div className="text-center mb-16">
         <h2 className="text-3xl font-bold mb-3">
-          Everything You Need to Create Amazing Stories
+          {t.pricing.whatsIncluded.title}
         </h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Every plan includes access to our full suite of features. No
-          restrictions, no hidden costs.
+          {t.pricing.whatsIncluded.description}
         </p>
       </div>
 
@@ -98,12 +96,12 @@ export function WhatsIncludes() {
             <div className="p-2 rounded-full bg-primary/5">
               <MessageSquare className="h-5 w-5 text-primary" />
             </div>
-            <p className="text-sm">Need help choosing? We are here to help</p>
+            <p className="text-sm">{t.pricing.whatsIncluded.needHelp}</p>
           </div>
           <Link
             href={`mailto:${EMAIL_ADDRESS}`}
             className="px-4 py-2 rounded-full bg-primary/5 hover:bg-primary/10 transition-colors duration-200 text-sm font-medium">
-            Contact Sales Team
+            {t.pricing.whatsIncluded.contact}
           </Link>
         </div>
       </div>

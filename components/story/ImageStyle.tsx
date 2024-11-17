@@ -1,4 +1,4 @@
-import { STYLE_PRESETS } from "@/config/story";
+// import { STYLE_PRESETS } from "@/config/story";
 import { CheckIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { ShuffleIcon } from "@radix-ui/react-icons";
@@ -6,17 +6,19 @@ import { Button } from "../ui/button";
 import { useDictionary } from "@/contexts/dictionary";
 
 // Image Style Selection Component
-export function ImageStyleSelector({
+export function StyleSelector({
+  styleOptions,
   selectedStyle,
   onStyleSelect,
 }: {
+  styleOptions: any[];
   selectedStyle: string;
   onStyleSelect: (styleId: string) => void;
 }) {
   const t = useDictionary();
   const handleRandomStyle = () => {
-    const randomIndex = Math.floor(Math.random() * STYLE_PRESETS.length);
-    onStyleSelect(STYLE_PRESETS[randomIndex].id);
+    const randomIndex = Math.floor(Math.random() * styleOptions.length);
+    onStyleSelect(styleOptions[randomIndex].id);
   };
   return (
     <div className="space-y-4">
@@ -33,8 +35,8 @@ export function ImageStyleSelector({
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-4">
-        {STYLE_PRESETS.map((style: any) => (
+      <div className="flex flex-wrap gap-4 max-h-[400px] overflow-y-auto">
+        {styleOptions.map((style: any) => (
           <div
             key={style.id}
             onClick={() => onStyleSelect(style.id)}

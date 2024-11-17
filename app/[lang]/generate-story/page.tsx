@@ -6,7 +6,12 @@ import { FormSection } from "@/components/story/FormSection";
 import { DisplaySection } from "@/components/story/DisplaySection";
 import { AuthProvider, useAuth } from "@/contexts/auth";
 import { useEffect, useRef, useState } from "react";
-import { STYLE_PRESETS, TEMPLATE_IMAGES } from "@/config/story";
+import {
+  STYLE_PRESETS,
+  STYLE_PROMOT,
+  TEMPLATE_IMAGES,
+  TONE_PROMPTS,
+} from "@/config/story";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Download, Share2Icon, Sparkles } from "lucide-react";
 import { experimental_useObject as useObject } from "ai/react";
@@ -14,10 +19,12 @@ import { z } from "zod";
 import { toast } from "sonner";
 import Link from "next/link";
 import { uploadFile } from "@/utils/image";
+import { useDictionary } from "@/contexts/dictionary";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export default function Home() {
+  const t = useDictionary();
   const [prediction, setPrediction] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -155,17 +162,18 @@ export default function Home() {
   });
 
   const handleGenerate = async (formData: any) => {
+    console.log("formData", formData);
+
     if (credits <= 0) {
       setError("You have no credits left. Please buy more credits.");
       return;
     }
-    const { images, imageStyle, language, keyword } = formData;
+    const { images, imageStyle, language, keyword, tone } = formData;
     if (!images || images.length === 0) {
       setError("Please reupload images");
       return;
     }
-
-    const style = STYLE_PRESETS.find((style) => style.id === imageStyle);
+    const style = STYLE_PROMOT.find((style) => style.id === imageStyle);
     if (!style) {
       setError("Selected style is invalid. Please choose another style.");
       return;
@@ -184,11 +192,12 @@ export default function Home() {
       ).filter((url) => url !== undefined);
 
       console.log("-imagesUrls", imagesUrls);
-      await submit({
+      submit({
         style: style.promptText,
         images: imagesUrls.map((i: any) => i.url),
         language: language,
         keyword: keyword,
+        tone: TONE_PROMPTS.find((t: any) => t.value === tone)?.prompt,
       });
     } catch (err) {
       console.error("handleGenerate error", err);
@@ -228,19 +237,13 @@ export default function Home() {
           <div className="text-center max-w-2xl mx-auto mb-8">
             <h1 className="text-3xl md:text-4xl font-bold flex items-center justify-center gap-2 mb-4">
               <Sparkles className="w-6 h-6 text-primary" />
-              Transform Your Ideas into
+              {t.generateStory.title}
               <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                Magic
+                {t.generateStory.title2}
               </span>
             </h1>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Watch as AI turns your stories into stunning visuals. Each image
-              is
-              <span className="text-primary font-medium">
-                {" "}
-                uniquely crafted{" "}
-              </span>
-              just for you ✨
+              {t.generateStory.description}
             </p>
           </div>
         </div>
@@ -260,7 +263,7 @@ export default function Home() {
                 <div className="flex items-center gap-2 mb-3">
                   <BookOpen className="w-5 h-5 text-primary" />
                   <h3 className="font-medium text-gray-900 dark:text-gray-100">
-                    Your Story
+                    {t.generateStory.yourStory}
                   </h3>
                 </div>
                 {isLoading && !object?.content && (
@@ -307,14 +310,14 @@ export default function Home() {
 
                       <div className="space-y-1">
                         <h3 className="font-semibold text-lg text-primary">
-                          Story Created Successfully! ✨
+                          {t.generateStory.success} ✨
                         </h3>
                         <p className="text-sm text-muted-foreground">
-                          Your story has been saved. View it in your{" "}
+                          {t.generateStory.saved}
                           <Link
                             href="/dashboard/stories"
                             className="text-primary hover:underline font-medium transition-colors underline-offset-4">
-                            dashboard
+                            {t.nav.dashboard}
                           </Link>
                         </p>
                       </div>
@@ -328,12 +331,12 @@ export default function Home() {
                         disabled={isLoading}
                         className="group hover:bg-primary/5">
                         <Download className="w-4 h-4 mr-2 group-hover:-translate-y-0.5 transition-transform" />
-                        Download
+                        {t.button.download}
                       </Button>
 
                       <Button onClick={handleShare} className="group">
                         <Share2Icon className="w-4 h-4 mr-2 group-hover:-translate-y-0.5 transition-transform" />
-                        Share
+                        {t.button.share}
                       </Button>
                     </div>
                   </div>

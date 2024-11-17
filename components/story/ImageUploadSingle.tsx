@@ -1,4 +1,5 @@
 // ImageUpload.tsx
+import { useDictionary } from "@/contexts/dictionary";
 import { X, Upload, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { DropzoneInputProps, DropzoneRootProps } from "react-dropzone";
@@ -25,11 +26,10 @@ export function ImageUploadSingle({
   isDragActive,
   isUploading,
 }: ImageUploadSingleProps) {
+  const t = useDictionary();
   return (
     <div className="space-y-2">
-      <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-        Upload Reference Image
-      </h3>
+      <h3 className="font-semibold">{t.generateStory.uploadImage}</h3>
 
       <div
         {...getRootProps()}
@@ -47,12 +47,12 @@ export function ImageUploadSingle({
             <Upload className="w-8 h-8 mx-auto text-gray-400 mb-2" />
             <p className="text-sm text-gray-600 dark:text-gray-400">
               {isDragActive
-                ? "Drop the image here..."
-                : "Drag & drop an image here, or click to select"}
+                ? t.generateStory.dropImage
+                : t.generateStory.dragDropImage}
             </p>
             <ul className="text-xs text-gray-500 dark:text-gray-400 mt-2 space-y-1">
-              <li>Accepts JPG, PNG, WEBP </li>
-              <li>Max 5MB per file, Up to 5 images</li>
+              <li>{t.generateStory.uploadDescription}</li>
+              <li>{t.generateStory.uploadDescription2}</li>
             </ul>
           </div>
         ) : (

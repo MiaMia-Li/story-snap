@@ -1,11 +1,16 @@
 {
   "home": {
     "hero": {
-      "title": "将您的图片转化为引人入胜的故事",
+      "title": "将您的图片转化为",
+      "title2": "引人入胜的故事",
       "description": "上传任何图片，观看我们的AI如何将其转化为一个引人入胜的故事。完美适合内容创作者、教育工作者和讲故事的人。",
       "badge": "✨ 用AI将图片转化为故事",
       "startButton": "立即开始",
       "examplesButton": "查看示例"
+    },
+    "gallery": {
+      "title": "AI故事画廊",
+      "description": "探索由我们的AI生成的引人入胜的故事"
     },
     "features": {
       "title": "为什么选择我们的平台？",
@@ -37,22 +42,28 @@
       "title": "用户评价",
       "description": "加入已经在使用我们平台的数千名满意用户"
     },
+
     "faq": {
       "title": "常见问题",
-      "description": "找到关于StorySnap的常见问题答案",
-      "item1-question": "StorySnap是如何工作的？",
-      "item1-answer": "StorySnap使用先进的AI算法分析您的图片并根据其内容生成故事。",
-      "item2-question": "我可以使用什么类型的图片？",
-      "item2-answer": "StorySnap支持广泛的图片类型，包括照片、插图和图形。图片越详细和描述性强，生成的故事就越好。",
-      "item3-question": "我可以自定义故事风格吗？",
-      "item3-answer": "是的，StorySnap提供从专业到休闲的多种写作风格，确保故事符合您的需求。",
-      "item4-question": "StorySnap支持多少种语言？",
-      "item4-answer": "StorySnap目前支持英语、中文、日语、韩语和西班牙语。我们正在不断扩展以支持更多语言。",
-      "item5-question": "我的图片是私密的吗？",
-      "item5-answer": "是的，您的图片是私密且安全的。未经您的许可，我们不会与任何人分享您的图片或故事。",
-      "item6-question": "我可以导出我的故事吗？",
-      "item6-answer": "是的，StorySnap允许您以多种格式导出故事，包括PDF、HTML等。"
+      "description": "查找有关 SnapStory 的常见问题解答",
+      "question1": "什么是 SnapStory？",
+      "answer1": "SnapStory 是一个由 AI 驱动的平台，可以将您的照片转化为引人入胜的故事。通过先进的人工智能，我们帮助您从图像中轻松创建引人入胜的叙述。无论您是内容创作者、企业主，还是喜欢分享故事的人，SnapStory 都能让您的照片焕发光彩。",
+      "question2": "SnapStory 是如何工作的？",
+      "answer2": "SnapStory 使用先进的 AI 算法分析您的图像，并根据其内容生成一个故事。",
+      "question3": "SnapStory 是免费的吗？",
+      "answer3": "SnapStory 提供免费和高级计划。在免费计划中，您可以创建基本故事并访问核心功能。高级计划解锁高级功能，例如自定义品牌、高分辨率输出、优先处理和无限制的故事生成。访问我们的价格页面了解更多信息，选择最适合您的计划。",
+      "question4": "哪些类型的照片最适合 SnapStory？",
+      "answer4": "SnapStory 几乎适用于任何类型的照片，但最好的效果来自清晰、高质量的图像，这些图像能够讲述一个故事或捕捉一个瞬间。这可以包括旅行照片、活动图片、产品图片或个人记忆。我们的 AI 能识别并解读多种主题、场景和情感。",
+      "question5": "我的图片是私密的吗？",
+      "answer5": "是的，您的图片是私密且安全的。未经您的许可，我们不会与任何人分享您的图片或故事。",
+      "question6": "我可以导出我的故事吗？",
+      "answer6": "可以，SnapStory 支持以多种格式导出故事，包括 PDF、HTML 等。",
+      "question7": "我可以将 SnapStory 用于商业用途吗？",
+      "answer7": "可以！SnapStory 为企业提供商业许可证。我们的企业计划包括批量处理、API 访问和白标选项等功能。请联系销售团队获取定制的商业解决方案。",
+      "question8": "免费计划和高级计划有什么区别？",
+      "answer8": "免费计划允许您每天生成最多 5 个故事。高级计划解锁其他功能，例如自定义品牌、高分辨率输出、优先处理和无限制的故事生成。"
     },
+
     "cta": {
       "title": "准备开始您的故事了吗？",
       "description": "加入已经在使用我们平台让图片栩栩如生的数千名创作者",
@@ -60,6 +71,119 @@
     },
     "footer": {
       "description": "借助AI的力量将您的图片转化为引人入胜的故事。"
+    },
+    "pricing": {
+      "title": "计划比较",
+      "description": "每个用户开始时都有5个免费积分。选择最适合您讲故事需求的计划"
     }
+  },
+
+  "generateStory": {
+    "title": "将你的创意转化为",
+    "title2": "魔法",
+    "description": "观看 AI 如何将你的故事变成令人惊叹的视觉效果。每一张图片都是为你独家打造 ✨",
+    "uploadImage": "上传参考图片",
+    "dropImage": "拖放图片到此处",
+    "dragDropImage": "拖放图片到此处或点击上传",
+    "uploadDescription": "支持 JPG、PNG 和 WebP 格式",
+    "uploadDescription2": "每张图片最大 5MB，最多上传 5 张图片",
+    "generateButton": "生成故事",
+    "imageStyle": "图片风格",
+    "storyLanguage": "故事语言",
+    "storyTone": "故事语气",
+    "storyKeywords": "故事关键词",
+    "creditConsumption": "这将消耗 1 个积分",
+    "craftingStory": "正在生成你的故事...",
+    "yourStory": "你的故事",
+    "yourImage": "你的图片将显示在这里",
+    "random": "随机",
+    "success": "故事创建成功！",
+    "saved": "你的故事已保存。在您的",
+    "waiting": "请稍候，我们正在处理您的请求...",
+    "craftingImage": "正在生成你的图片...",
+    "tone": {
+      "professional": "专业",
+      "friendly": "友好",
+      "humorous": "幽默",
+      "formal": "正式",
+      "casual": "休闲",
+      "enthusiastic": "热情",
+      "empathetic": "同理心",
+      "direct": "直接"
+    },
+    "imgStyle": {
+      "realistic": "现实主义",
+      "anime": "动漫风格",
+      "digital_art": "数字艺术",
+      "oil_painting": "油画",
+      "watercolor": "水彩画",
+      "3d_render": "3D渲染",
+      "pixel_art": "像素艺术",
+      "comic": "漫画风格",
+      "fantasy": "奇幻艺术",
+      "cyberpunk": "赛博朋克",
+      "minimalist": "极简主义",
+      "cinematic": "电影风格"
+    }
+  },
+  "pricing": {
+    "features": {
+      "highQualityGeneration": "高质量生成",
+      "allStoriesAvailable": "所有故事可用",
+      "noTimeLimit": "无时间限制",
+      "emailSupport": "电子邮件支持"
+    },
+    "buyButton": "立即购买",
+    "credits": "积分",
+    "per": "每",
+    "onetime": "一次性购买",
+    "best": "最佳价值",
+    "signButton": "登录以购买",
+    "title": "简单透明的定价",
+    "description": "每个用户开始时都有5个免费积分。购买积分一次，随时使用。没有订阅，没有隐藏费用。",
+    "whatsIncluded": {
+      "title": "您需要的一切来创建精彩的故事",
+      "description": "使用 SnapStory，您拥有创建精彩故事所需的一切。我们的平台提供一系列功能，帮助您创建令人惊叹的视觉效果和引人入胜的叙述。",
+      "lable1": "AI故事生成",
+      "item1": "使用先进的AI技术创建独特的故事",
+      "lable2": "风格定制",
+      "item2": "从多种写作风格和语气中选择",
+      "lable3": "所有故事类型",
+      "item3": "访问所有可用类别和类型",
+      "lable4": "角色控制",
+      "item4": "完全控制角色发展",
+      "lable5": "终身访问",
+      "item5": "积分永不过期，按需使用",
+      "lable6": "导出选项",
+      "item6": "以多种格式下载故事",
+      "lable7": "轻松分享",
+      "item7": "与他人即时分享您的故事",
+      "lable8": "优先支持",
+      "item8": "随时获取帮助",
+      "lable9": "定期更新",
+      "item9": "访问新功能",
+      "needHelp": "需要帮助选择？我们随时为您提供帮助",
+      "contact": "联系销售团队"
+    },
+    "faq": {
+      "title": "仍有疑问？",
+      "description": "我们的团队随时为您提供帮助。随时联系我们。",
+      "contact": "联系支持"
+    }
+  },
+  "nav": {
+    "home": "首页",
+    "generateStory": "生成故事",
+    "pricing": "价格",
+    "dashboard": "仪表盘",
+    "feedback": "反馈",
+    "signIn": "登录",
+    "signUp": "注册",
+    "signOut": "登出",
+    "faq": "常见问题"
+  },
+  "button": {
+    "download": "下载",
+    "share": "分享"
   }
 }

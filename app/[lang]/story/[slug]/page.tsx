@@ -5,10 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { HeartIcon, ShareIcon } from "lucide-react";
 import Link from "next/link";
-import { getStory } from "@/app/actions";
 import { redirect } from "next/navigation";
 import TwitterShareButton from "@/components/story/TwitterShareButton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { getStory } from "@/actions";
 
 // Generate metadata for SEO
 export async function generateMetadata({

@@ -1,25 +1,11 @@
 // app/example/page.tsx
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
-import { getExampleStories } from "../actions";
-import {
-  ArrowRight,
-  ArrowRightIcon,
-  Heart,
-  HeartIcon,
-  MessageCircle,
-  MessageCircleIcon,
-} from "lucide-react";
+import { Heart } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { getExampleStories } from "@/actions";
 
 export default async function ExamplePage() {
   const stories = await getExampleStories();

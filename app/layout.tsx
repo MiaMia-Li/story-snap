@@ -1,13 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Locale } from "@/types";
 import "./globals.css";
-import { ThemeProvider } from "@/providers/theme-provider";
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import Header from "@/components/header/Header";
-import SessionWrapper from "@/components/header/SessionWrapper";
-import { AuthProvider } from "@/contexts/auth";
-import { Analytics } from "@vercel/analytics/react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -61,62 +55,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-
-  other: {
-    // 将结构化数据转换为字符串
-    "script:ld+json": JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      name: "SnapStory",
-      applicationCategory: "Photography & Story Creation",
-      description:
-        "Transform photos into engaging stories with SnapStory's AI technology. Create, customize, and share memorable narratives from your images instantly.",
-      offers: {
-        "@type": "Offer",
-        price: "0",
-        priceCurrency: "USD",
-      },
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: "4.8",
-        ratingCount: "1250",
-      },
-      creator: {
-        "@type": "Organization",
-        name: "SnapStory Inc.",
-        url: "https://snapstoryai.com",
-      },
-      faq: {
-        "@type": "FAQPage",
-        mainEntity: [
-          {
-            "@type": "Question",
-            name: "What is SnapStory?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "SnapStory is an AI-powered platform that transforms photos into engaging stories. Upload any image and our AI technology will generate a compelling narrative around it.",
-            },
-          },
-          {
-            "@type": "Question",
-            name: "How does SnapStory work?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Simply upload your photo, and our AI analyzes the image to generate a unique story. You can then customize and edit the story before sharing it with your audience.",
-            },
-          },
-          {
-            "@type": "Question",
-            name: "Is SnapStory free to use?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "SnapStory offers both free and premium plans. You can start creating stories for free, with advanced features available in our premium plans.",
-            },
-          },
-        ],
-      },
-    }),
-  },
 };
 
 export const viewport = {
@@ -126,45 +64,34 @@ export const viewport = {
   userScalable: 1,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params: { lang },
 }: Readonly<{
   children: React.ReactNode;
+  params: { lang: Locale };
 }>) {
   return (
-    <SessionWrapper>
-      <html lang="en">
-        <head>
-          <link
-            rel="icon"
-            type="image/png"
-            href="/favicon-96x96.png"
-            sizes="96x96"
-          />
-          <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-          <link rel="shortcut icon" href="/favicon.ico" />
-          <link
-            rel="apple-touch-icon"
-            sizes="180x180"
-            href="/apple-touch-icon.png"
-          />
-          <meta name="apple-mobile-web-app-title" content="MyWebSite" />
-          <meta content="text/html; charset=UTF-8" name="Content-Type" />
-          <link rel="manifest" href="/site.webmanifest" />
-        </head>
-        <body className={inter.className}>
-          <ThemeProvider attribute="class">
-            <TooltipProvider>
-              <AuthProvider>
-                <Header />
-                {children}
-                <Toaster />
-              </AuthProvider>
-            </TooltipProvider>
-          </ThemeProvider>
-          {process.env.NODE_ENV === "production" && <Analytics />}
-        </body>
-      </html>
-    </SessionWrapper>
+    <html lang={lang}>
+      <head>
+        <link
+          rel="icon"
+          type="image/png"
+          href="/favicon-96x96.png"
+          sizes="96x96"
+        />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+        <meta content="text/html; charset=UTF-8" name="Content-Type" />
+        <link rel="manifest" href="/site.webmanifest" />
+      </head>
+      <body className={inter.className}>{children}</body>
+    </html>
   );
 }

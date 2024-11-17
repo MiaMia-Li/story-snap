@@ -1,12 +1,31 @@
 // config/lang.ts
-import { Language, Length, StoryConfig, Style, Tone, StoryType } from "@/types";
+import {
+  Language,
+  Length,
+  StoryConfig,
+  Style,
+  Tone,
+  StoryType,
+  Locale,
+} from "@/types";
 
 export const LANGUAGES = [
-  { value: "en" as Language, label: "English" },
-  { value: "zh" as Language, label: "中文" },
-  { value: "ja" as Language, label: "日本語" },
-  { value: "ko" as Language, label: "한국어" },
-  { value: "es" as Language, label: "Español" },
+  { value: "en" as Locale, label: "English" },
+  { value: "zh" as Locale, label: "中文" },
+  // { value: "ja" as Locale, label: "日本語" },
+  // { value: "ko" as Locale, label: "한국어" },
+  // { value: "es" as Locale, label: "Español" },
+] as const;
+
+export const LANGUAGES_PROMPT = [
+  { value: "en" as Locale, label: "English" },
+  { value: "zh" as Locale, label: "中文" },
+  { value: "fr" as Locale, label: "Français" },
+  { value: "de" as Locale, label: "Deutsch" },
+  { value: "it" as Locale, label: "Italiano" },
+  { value: "ja" as Locale, label: "日本語" },
+  { value: "ko" as Locale, label: "한국어" },
+  { value: "es" as Locale, label: "Español" },
 ] as const;
 
 // 基础配置选项

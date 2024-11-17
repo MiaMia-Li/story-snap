@@ -79,9 +79,6 @@ export type PlansRow = { feature: string; tooltip?: string } & {
   [key in (typeof plansColumns)[number]]: ColumnType;
 };
 
-// 添加语言选择类型
-export type Language = "en" | "zh" | "ja" | "ko" | "es";
-
 export type StoryType = "article" | "story" | "poem" | "novel";
 export type Length = "short" | "medium" | "long";
 export type Style = "casual" | "formal" | "narrative" | "descriptive";
@@ -122,3 +119,5 @@ export interface AuthContextType {
   updateCredits: (newCredits: number) => void;
   refreshCredits: () => void;
 }
+
+export type Locale = "en" | "zh";

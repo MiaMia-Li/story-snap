@@ -10,10 +10,10 @@ import Image from "next/image";
 import { BotIcon, CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { getStories, shareStory } from "@/app/actions";
 import ShareButton from "@/components/story/ShareButton";
 import { CopyButton } from "@/components/story/CopyButton";
 import DownloadButton from "@/components/story/DownloadButton";
+import { getStories } from "@/actions";
 export const revalidate = false;
 
 export default async function StoriesPage() {
