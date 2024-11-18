@@ -34,10 +34,7 @@ export async function POST(request: NextRequest) {
 
     console.log("Story created:", story);
 
-    return NextResponse.json(
-      { message: "OK", storyId: story.storyId },
-      { status: 200 }
-    );
+    return NextResponse.json({ message: "OK", story: story }, { status: 200 });
   } catch (error) {
     console.error("Error creating story:", error);
     return NextResponse.json({ message: "Error" }, { status: 500 });

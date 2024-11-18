@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description:
     "Transform photos into captivating stories with SnapStory, the AI platform that brings your memories to life. Create engaging narratives from any image in one click.",
   keywords:
-    "AI story generator, photo story creator, image storytelling, AI writing assistant, visual storytelling platform, photo narrative creator, AI story maker, digital storytelling tool",
+    "Snap AI,AI IMAGE, AI Art Generator,AI picture,AI photo,AI story generator, photo story creator, image storytelling, AI writing assistant, visual storytelling platform, photo narrative creator, AI story maker, digital storytelling tool",
 
   authors: [{ name: "SnapStory Team" }],
   creator: "SnapStory",

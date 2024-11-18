@@ -5,21 +5,18 @@ import { LoginDialog } from "@/components/header/LoginDialog";
 import { FormSection } from "@/components/story/FormSection";
 import { DisplaySection } from "@/components/story/DisplaySection";
 import { AuthProvider, useAuth } from "@/contexts/auth";
-import { useEffect, useRef, useState } from "react";
-import {
-  STYLE_PRESETS,
-  STYLE_PROMOT,
-  TEMPLATE_IMAGES,
-  TONE_PROMPTS,
-} from "@/config/story";
+import { useRef, useState } from "react";
+import { STYLE_PROMOT, TEMPLATE_IMAGES, TONE_PROMPTS } from "@/config/story";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Download, Share2Icon, Sparkles } from "lucide-react";
+import { BookOpen, Sparkles } from "lucide-react";
 import { experimental_useObject as useObject } from "ai/react";
 import { z } from "zod";
 import { toast } from "sonner";
 import Link from "next/link";
 import { uploadFile } from "@/utils/image";
 import { useTranslations } from "next-intl";
+import { DashboardIcon } from "@radix-ui/react-icons";
+import TwitterShareButton from "@/components/story/TwitterShareButton";
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export default function Home() {
@@ -29,13 +26,8 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const currentStyle = useRef<any>(null);
-  const storyId = useRef<string | null>(null);
+  const story = useRef<any>(null);
   const { refreshCredits, credits } = useAuth();
-
-  const handleDownload = () => {
-    const imageUrl = prediction?.output[prediction.output.length - 1];
-    window.open(imageUrl, "_blank");
-  };
 
   const saveStory = async (payload: {
     title: string;
@@ -49,7 +41,7 @@ export default function Home() {
       });
       const data = await response.json();
       refreshCredits();
-      storyId.current = data.storyId;
+      story.current = data.story;
     } catch (error) {
       console.error("saveStory error", error);
     }
@@ -206,7 +198,7 @@ export default function Home() {
   };
 
   const handleShare = async () => {
-    if (!storyId.current) {
+    if (!story.current?.storyId) {
       setError("Please generate a story first.");
       return;
     }
@@ -214,14 +206,14 @@ export default function Home() {
       await fetch(`/api/story/share`, {
         method: "POST",
         body: JSON.stringify({
-          storyId: storyId.current,
+          storyId: story.current.storyId,
           isPublic: true,
         }),
       });
-      const shareUrl = `${window.location.origin}/story/${storyId.current}`;
-      await navigator.clipboard.writeText(shareUrl);
+      // const shareUrl = `${window.location.origin}/story/${story.current.storyId}`;
+      // await navigator.clipboard.writeText(shareUrl);
 
-      toast.success("✨ Copied!,Share it with your friends~");
+      // toast.success("✨ Copied!,Share it with your friends~");
     } catch (e) {
       console.error("handleShare error", e);
     }
@@ -293,52 +285,36 @@ export default function Home() {
             {/* 按钮区域 */}
 
             {prediction?.output && (
-              <div className="space-y-6 mt-10">
-                {/* 成功提示 */}
-                <div className="relative overflow-hidden rounded-xl border bg-primary/5 border-primary/10 p-6">
-                  {/* 装饰元素 */}
-                  <div className="absolute -top-6 -left-6 w-12 h-12 bg-primary/10 rounded-full blur-xl" />
-                  <div className="absolute -bottom-6 -right-6 w-12 h-12 bg-primary/10 rounded-full blur-xl" />
+              <div className="mt-8 flex flex-col items-center">
+                {/* Success Message */}
+                <div className="text-center mb-6">
+                  <h3 className="text-lg font-medium">
+                    Story Generated Successfully ✨
+                  </h3>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Your story has been saved and ready to share
+                  </p>
+                </div>
 
-                  <div className="relative space-y-4">
-                    {/* 图标和文字 */}
-                    <div className="flex flex-col items-center gap-3 text-center">
-                      <div className="p-3 rounded-full bg-primary/10 animate-bounce">
-                        <Sparkles className="w-6 h-6 text-primary" />
-                      </div>
-
-                      <div className="space-y-1">
-                        <h3 className="font-semibold text-lg text-primary">
-                          {t("generateStory.success")} ✨
-                        </h3>
-                        <p className="text-sm text-muted-foreground">
-                          {t("generateStory.saved")}
-                          <Link
-                            href="/dashboard/stories"
-                            className="text-primary hover:underline font-medium transition-colors underline-offset-4">
-                            {t("nav.dashboard")}
-                          </Link>
-                        </p>
-                      </div>
+                {/* Action Buttons */}
+                <div className="flex items-center gap-4">
+                  <Link href="/dashboard/stories">
+                    <Button
+                      variant="outline"
+                      className="flex items-center gap-2">
+                      <DashboardIcon className="h-4 w-4" />
+                      View in Dashboard
+                    </Button>
+                  </Link>
+                  {story?.current && (
+                    <div onClick={handleShare}>
+                      <TwitterShareButton
+                        text={`I just created a story on SnapyStory, so amazing✨! Check it out: ${story?.current?.title}`}
+                        hashtags={"SnapyStory,AIStory,AIArt"}
+                        image={`https://www.snapstoryai.com/story/${story?.current?.storyId}`}
+                      />
                     </div>
-
-                    {/* 操作按钮 */}
-                    <div className="flex justify-center gap-4 pt-2">
-                      <Button
-                        variant="outline"
-                        onClick={handleDownload}
-                        disabled={isLoading}
-                        className="group hover:bg-primary/5">
-                        <Download className="w-4 h-4 mr-2 group-hover:-translate-y-0.5 transition-transform" />
-                        {t("button.download")}
-                      </Button>
-
-                      <Button onClick={handleShare} className="group">
-                        <Share2Icon className="w-4 h-4 mr-2 group-hover:-translate-y-0.5 transition-transform" />
-                        {t("button.share")}
-                      </Button>
-                    </div>
-                  </div>
+                  )}
                 </div>
               </div>
             )}
