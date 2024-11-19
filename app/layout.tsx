@@ -10,6 +10,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import "./globals.css";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -117,6 +118,11 @@ export default async function BaseLayout({
             {process.env.NODE_ENV === "production" && <Analytics />}
           </SessionWrapper>
         </NextIntlClientProvider>
+        <Script
+          defer
+          src="https://umami-memfree.fly.dev/script.js"
+          data-website-id="9278ab73-50d8-4f61-89ea-82caad7bcf36"
+          data-domains="snapstoryai.com,www.snapstoryai.com"></Script>
       </body>
     </html>
   );
