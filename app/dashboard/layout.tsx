@@ -20,9 +20,9 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   const session = await auth();
-  // if (!session) {
-  //   redirect("/login");
-  // }
+  if (!session) {
+    redirect("/login");
+  }
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="space-y-6 md:flex md:space-y-0 md:space-x-6">
