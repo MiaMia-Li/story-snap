@@ -119,3 +119,32 @@ export interface AuthContextType {
   updateCredits: (newCredits: number) => void;
   refreshCredits: () => void;
 }
+
+export interface Prediction {
+  status?: "starting" | "processing" | "succeeded" | "failed";
+  output: string[];
+  error?: string;
+  styleId: string;
+  [key: string]: any;
+}
+
+export interface StoryPayload {
+  title: string;
+  content: string;
+  image: string;
+  count: number;
+  additionalImages?: string[];
+  styleIds?: string[];
+}
+
+export interface FrameResponse {
+  frames: string;
+  title: string;
+  content: string;
+}
+
+export interface StoryObject {
+  title?: string;
+  content?: string;
+  frames?: string;
+}

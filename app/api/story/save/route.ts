@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
     console.log(body, "body");
-    const { title, content, image } = body;
+    const { title, content, image, count } = body;
 
     console.log("Received body:", body);
 
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     // 扣除积分
     await prisma.user.update({
       where: { id: session.user.id },
-      data: { credits: { decrement: 1 } },
+      data: { credits: { decrement: count } },
     });
 
     console.log("Story created:", story);

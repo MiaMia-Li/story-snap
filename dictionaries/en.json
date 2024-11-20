@@ -90,7 +90,7 @@
     "storyLanguage": "Story Language",
     "storyTone": "Story Tone",
     "storyKeywords": "Story Keywords",
-    "creditConsumption": "This will consume 1 credit",
+    "creditConsumption": "This will consume {credits} credits",
     "craftingStory": "Crafting your story...",
     "yourStory": "Your Story",
     "yourImage": "Your Image will appear here",
@@ -99,6 +99,7 @@
     "saved": "Your story has been saved. View it in your",
     "waiting": "Please wait while we process your request...",
     "craftingImage": "Crafting your image...",
+    "enterKeyword": "Enter keywords to guide the story",
     "tone": {
       "professional": "Professional",
       "friendly": "Friendly",

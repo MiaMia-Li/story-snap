@@ -92,7 +92,7 @@
     "storyLanguage": "故事语言",
     "storyTone": "故事语气",
     "storyKeywords": "故事关键词",
-    "creditConsumption": "这将消耗 1 个积分",
+    "creditConsumption": "这将消耗 {credits} 个积分",
     "craftingStory": "正在生成你的故事...",
     "yourStory": "你的故事",
     "yourImage": "你的图片将显示在这里",
@@ -101,6 +101,7 @@
     "saved": "你的故事已保存。在您的",
     "waiting": "请稍候，我们正在处理您的请求...",
     "craftingImage": "正在生成你的图片...",
+    "enterKeyword": "输入关键词以引导故事",
     "tone": {
       "professional": "专业",
       "friendly": "友好",

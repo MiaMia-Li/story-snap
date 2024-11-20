@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 interface TwitterShareButtonProps {
+  storyId: string;
   text: string;
   hashtags: string;
   image?: string;
@@ -14,6 +15,7 @@ interface TwitterShareButtonProps {
 }
 
 const TwitterShareButton: React.FC<TwitterShareButtonProps> = ({
+  storyId,
   text,
   hashtags,
   className,
@@ -28,10 +30,37 @@ const TwitterShareButton: React.FC<TwitterShareButtonProps> = ({
 
   const url = `https://twitter.com/intent/tweet?text=${encodedText}&hashtags=${encodedHashtags}&url=${encodedUrl}`;
 
+  const updateStoryPublicStatus = async () => {
+    if (!storyId) return;
+
+    try {
+      const response = await fetch(`/api/story/share`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          storyId: storyId,
+          isPublic: true,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update story status");
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error("Failed to update story status:", error);
+      throw error;
+    }
+  };
+
   return (
     <Button
       size="default"
-      onClick={() => {
+      onClick={async () => {
+        await updateStoryPublicStatus();
         window.open(url, "_blank", "noopener,noreferrer");
       }}
       className={cn(styleVariants["3d"], className)}>

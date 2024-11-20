@@ -65,6 +65,7 @@ export async function getStory(slug: string) {
       image: story.image,
       isPublic: story.isPublic,
       createdAt: story.createdAt.toISOString(),
+      userId: story.userId,
       author: {
         name: author?.name || "Anonymous",
         avatar: author?.image || "",
