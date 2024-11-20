@@ -42,6 +42,7 @@ export async function POST(request: Request) {
         userId: session.user.id,
       },
       automatic_tax: { enabled: true },
+      customer_email: session?.user?.email || "",
     });
 
     return NextResponse.json({ url: checkoutSession.url });
