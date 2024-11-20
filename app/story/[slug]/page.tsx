@@ -8,7 +8,6 @@ import { redirect } from "next/navigation";
 import TwitterShareButton from "@/components/story/TwitterShareButton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getStory } from "@/actions";
-import { auth } from "@/auth";
 import { cn } from "@/lib/utils";
 
 export async function generateMetadata({
@@ -17,14 +16,9 @@ export async function generateMetadata({
   params: { slug: string };
 }): Promise<Metadata> {
   const story = await getStory(params.slug);
-  const session = await auth();
-  if (!story || session?.user?.id !== story.userId) {
-    redirect("/");
-  }
 
   const images = story.image.split(",").filter(Boolean);
   const firstImage = images[0];
-  console.log("firstImage", firstImage); // 获取第一张图片
 
   return {
     title: `${story.title} | SnapyStory`,
@@ -41,8 +35,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: story.title,
       description: story.content.substring(0, 155),
-      images: [firstImage], // 只使用第一张图片作为 Twitter 预览
-      creator: story.author.name,
+      images: [firstImage],
     },
   };
 }
@@ -129,12 +122,8 @@ export default async function StoryPage({
   params: { slug: string };
 }) {
   const story = await getStory(params.slug);
-  const session = await auth();
   const images = story.image.split(",").filter(Boolean);
   const firstImage = images[0];
-  if (!story || session?.user?.id !== story.userId) {
-    redirect("/");
-  }
 
   return (
     <>

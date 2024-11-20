@@ -30,37 +30,10 @@ const TwitterShareButton: React.FC<TwitterShareButtonProps> = ({
 
   const url = `https://twitter.com/intent/tweet?text=${encodedText}&hashtags=${encodedHashtags}&url=${encodedUrl}`;
 
-  const updateStoryPublicStatus = async () => {
-    if (!storyId) return;
-
-    try {
-      const response = await fetch(`/api/story/share`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          storyId: storyId,
-          isPublic: true,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to update story status");
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error("Failed to update story status:", error);
-      throw error;
-    }
-  };
-
   return (
     <Button
       size="default"
-      onClick={async () => {
-        await updateStoryPublicStatus();
+      onClick={() => {
         window.open(url, "_blank", "noopener,noreferrer");
       }}
       className={cn(styleVariants["3d"], className)}>
@@ -111,15 +84,5 @@ const styleVariants = {
     transform-gpu
   `,
 };
-
-// 使用示例：
-{
-  /* <TwitterShareButton
-  text="Check this out!"
-  hashtags="awesome"
-  image="https://example.com/image.jpg"
-  className={styleVariants.dark}
-/> */
-}
 
 export default TwitterShareButton;

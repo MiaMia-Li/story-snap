@@ -1,9 +1,6 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { ExternalLinkIcon, Globe2Icon, LinkIcon, LockIcon } from "lucide-react";
-import { useState } from "react";
+import { ExternalLinkIcon, LinkIcon } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -23,63 +20,9 @@ interface ShareButtonProps {
   onUpdatePublicStatus?: (isPublic: boolean) => void;
 }
 
-const ShareButton = ({
-  story,
-  size = "default",
-  onUpdatePublicStatus,
-}: ShareButtonProps) => {
-  const [isLoading, setIsLoading] = useState(false);
-
+const ShareButton = ({ story, size = "default" }: ShareButtonProps) => {
   // 构建分享URL
   const getShareUrl = () => `${window.location.origin}/story/${story.storyId}`;
-
-  // API调用函数
-  const updateStoryPublicStatus = async (newPublicStatus: boolean) => {
-    if (!story.storyId) return;
-
-    try {
-      const response = await fetch(`/api/story/share`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          storyId: story.storyId,
-          isPublic: newPublicStatus,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to update story status");
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error("Failed to update story status:", error);
-      throw error;
-    }
-  };
-
-  // 处理公开/私有状态切换
-  const handleTogglePublic = async () => {
-    if (isLoading) return;
-
-    setIsLoading(true);
-    try {
-      await updateStoryPublicStatus(!story.isPublic);
-      onUpdatePublicStatus?.(!story.isPublic);
-
-      toast(story.isPublic ? "Story is now private" : "Story is now public", {
-        description: story.isPublic
-          ? "Only you can view this story now"
-          : "Anyone with the link can view this story",
-      });
-    } catch (error) {
-      toast.error("Failed to update story status");
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   // 复制链接
   const handleCopyLink = async () => {
@@ -91,14 +34,9 @@ const ShareButton = ({
     }
   };
 
-  // Twitter分享
+  // // Twitter分享
   const handleTwitterShare = async () => {
     try {
-      if (!story.isPublic) {
-        await updateStoryPublicStatus(true);
-        onUpdatePublicStatus?.(true);
-      }
-
       const shareText = `Check out my story "${story.title}" on SnapyStory ✨`;
       const shareUrl = getShareUrl();
       const hashtags = "SnapyStory,AIStory,AIArt";
@@ -147,27 +85,6 @@ const ShareButton = ({
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-
-      {/* Public/Private Toggle Button */}
-      <Button
-        variant={story.isPublic ? "default" : "outline"}
-        size="sm"
-        className={`gap-2 transition-all`}
-        onClick={handleTogglePublic}
-        disabled={isLoading}>
-        {isLoading ? (
-          <div className="animate-spin h-4 w-4 border-2 border-current border-t-transparent rounded-full" />
-        ) : (
-          <>
-            {story.isPublic ? (
-              <Globe2Icon className="h-4 w-4" />
-            ) : (
-              <LockIcon className="h-4 w-4" />
-            )}
-          </>
-        )}
-        {story.isPublic ? "Public" : "Make Public"}
-      </Button>
     </div>
   );
 };
