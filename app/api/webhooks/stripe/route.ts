@@ -62,6 +62,7 @@ export async function POST(req: Request) {
 
       // 获取用户ID (从session的metadata中)
       const userId = session.metadata?.userId;
+      console.log("userId", userId);
 
       if (!userId) {
         throw new Error("User ID not found in session metadata");
@@ -76,10 +77,13 @@ export async function POST(req: Request) {
           stripePriceId: true,
         },
       });
+      console.log("user", user);
 
       const updatedStripePriceId = user?.stripePriceId
         ? `${user.stripePriceId},${priceId}` // 如果已有值，添加逗号和新值
         : priceId; // 如果是第一个值，直接使用
+
+      console.log("updatedStripePriceId", updatedStripePriceId);
 
       await prisma.user.update({
         where: {

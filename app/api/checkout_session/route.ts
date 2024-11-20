@@ -28,6 +28,8 @@ export async function POST(request: Request) {
     const price = await stripe.prices.retrieve(priceId);
     const product = await stripe.products.retrieve(price.product as string);
 
+    console.log("userId", session.user.id);
+
     const checkoutSession = await stripe.checkout.sessions.create({
       line_items: [
         {
