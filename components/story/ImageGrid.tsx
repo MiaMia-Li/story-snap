@@ -117,7 +117,7 @@ export function ImageGrid({ predictions, isLoading }: ImageGridProps) {
         );
 
       default:
-        return <EmptyState message={t("generateStory.yourImage")} />;
+        return <EmptyState message="" />;
     }
   };
 
@@ -126,7 +126,7 @@ export function ImageGrid({ predictions, isLoading }: ImageGridProps) {
   if (!predictions || !predictions.length) {
     return (
       <div className="flex justify-center">
-        <div className="relative aspect-square w-1/2 rounded-xl overflow-hidden border border-border flex items-center justify-center bg-muted">
+        <div className="relative aspect-video w-full rounded-xl overflow-hidden border border-border flex items-center justify-center bg-muted">
           <EmptyState message={t("generateStory.yourImage")} />
         </div>
       </div>

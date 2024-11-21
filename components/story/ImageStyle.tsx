@@ -60,7 +60,10 @@ export function StyleSelector({
     <div className="space-y-2">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h3 className="font-semibold">{t("imageStyle")}</h3>
+          <h3 className="font-semibold flex items-center gap-2">
+            <span className="text-red-500">*</span>
+            <span>{t("imageStyle")}</span>
+          </h3>
           <span className="text-sm text-muted-foreground">(up to 4)</span>
         </div>
         <div className="flex items-center gap-4">

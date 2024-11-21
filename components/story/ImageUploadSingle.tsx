@@ -29,7 +29,10 @@ export function ImageUploadSingle({
   const t = useTranslations("generateStory");
   return (
     <div className="space-y-2">
-      <h3 className="font-semibold">{t("uploadImage")}</h3>
+      <h3 className="font-semibold flex items-center gap-2">
+        <span className="text-red-500">*</span>
+        <span>{t("uploadImage")}</span>
+      </h3>
 
       <div
         {...getRootProps()}
