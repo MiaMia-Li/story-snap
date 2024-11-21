@@ -73,19 +73,7 @@ export async function getStory(slug: string) {
     };
   } catch (error) {
     console.error("Error getting story:", error);
-    return {
-      id: "",
-      storyId: "",
-      title: "",
-      content: "",
-      image: "",
-      isPublic: false,
-      createdAt: "",
-      author: {
-        name: "",
-        avatar: "",
-      },
-    };
+    return null;
   }
 }
 

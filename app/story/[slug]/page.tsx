@@ -8,6 +8,7 @@ import TwitterShareButton from "@/components/story/TwitterShareButton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getStory } from "@/actions";
 import { cn } from "@/lib/utils";
+import { redirect } from "next/navigation";
 
 export async function generateMetadata({
   params,
@@ -15,9 +16,12 @@ export async function generateMetadata({
   params: { slug: string };
 }): Promise<Metadata> {
   const story = await getStory(params.slug);
+  if (!story) {
+    redirect("/404");
+  }
 
   const images = story.image.split(",").filter(Boolean);
-  const firstImage = images[0];
+  // const firstImage = images[0];
 
   return {
     title: `${story.title} | SnapyStory`,
@@ -25,7 +29,7 @@ export async function generateMetadata({
     openGraph: {
       title: story.title,
       description: story.content.substring(0, 155),
-      images: [firstImage],
+      images: images,
       type: "article",
       publishedTime: story.createdAt,
       authors: [story.author.name],
@@ -34,7 +38,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: story.title,
       description: story.content.substring(0, 155),
-      images: [firstImage],
+      images: images,
     },
   };
 }
@@ -121,6 +125,9 @@ export default async function StoryPage({
   params: { slug: string };
 }) {
   const story = await getStory(params.slug);
+  if (!story) {
+    redirect("/404");
+  }
   const images = story.image.split(",").filter(Boolean);
   const firstImage = images[0];
 
