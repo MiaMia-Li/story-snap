@@ -45,6 +45,7 @@ export async function POST(request: Request) {
       },
       automatic_tax: { enabled: true },
       customer_email: session?.user?.email || "",
+      allow_promotion_codes: true,
     });
 
     return NextResponse.json({ url: checkoutSession.url });
