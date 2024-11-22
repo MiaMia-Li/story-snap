@@ -123,6 +123,19 @@ export default async function BaseLayout({
           src="https://umami-memfree.fly.dev/script.js"
           data-website-id="9278ab73-50d8-4f61-89ea-82caad7bcf36"
           data-domains="snapstoryai.com,www.snapstoryai.com"></Script>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-MJT6974BC1"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-MJT6974BC1');
+        `}
+        </Script>
       </body>
     </html>
   );
