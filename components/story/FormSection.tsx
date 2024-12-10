@@ -118,7 +118,7 @@ export function FormSection({
             );
             break;
           default:
-            toast.error(`Error uploading ${file.name}: ${error.message}`);
+            toast.error(`Error uploading ${file.name}`);
         }
       });
     });
