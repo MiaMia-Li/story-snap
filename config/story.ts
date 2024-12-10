@@ -215,118 +215,222 @@ export const STYLE_PROMOT = [
   },
 ];
 
+// export const TEMPLATE_IMAGES: Map<string, { images: string[] }> = new Map(
+//   Object.entries({
+//     animated_sticker: {
+//       images: [
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7794-hM7qKTw8Jr8zcxrvqLGgeClH82dHhI.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7819-LbTgCyW84hj2FXqFTL4ZBImP86xeC0.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7821-8fm9x9hibOTEIWPi4RNOEnBLViQPHf.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7822-Z7TCRrWU0tSOBd47HoaRCmeB2HHVSV.JPG",
+//       ],
+//     },
+//     dynamic_sketch: {
+//       images: [
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7798-fDXJ0rCHvFNxRGrVSzbaKWFKQPWhFw.jpg",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7816-rAjuazw1OsMD50ByfrytDREmWIDWuQ.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7817-6wDhm7ZTl7F2CNMsSOdTB7303IAoBe.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7818-kKQmxdYrqDYLq70RlKyjtOzZh7IPVF.JPG",
+//       ],
+//     },
+//     romantic_anime: {
+//       images: [
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7797-SX0XMQHTEwn3p1mHn5XsIcFPn0UV5h.jpg",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7832-ZO7CJF6R7J4tDkCW1fbM9s15UBxxrw.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7833-1iky3lqcydtPVkz3aCqaDD1vW8uHlh.JPG",
+//       ],
+//     },
+//     fairy_tale: {
+//       images: [
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7796%202-N2kh3iAnfwGNeTNltivs9WhK9HpTNS.jpg",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7836-RBTnRTeV2lpthXXjOljSLShHjg2qZ1.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7837-q3aZDrJrrgkGTOY7oXi8CVk0XuEw0s.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7842-SZEWtDR0u9atCk0Q9ntGk26IycDAYt.JPG",
+//       ],
+//     },
+//     cyberpunk: {
+//       images: [
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7824-QMxeqDZYJaM8MuvMjpLyb63wNPc4tz.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7825-bxQZyASQAFpCX79yDGmbazOgWJQuyJ.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7826-hx6Y67FgDO0D0FQpDJ8R343Qm2dsH8.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7827-Khy3f22KvuCkpV2Kj8CiZkBoOUJZZD.JPG",
+//       ],
+//     },
+//     fantasy_adventure: {
+//       images: [
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7835-Ja9S0EiWpmvCUwdOt0bu6VUKKKTPKV.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7839-6yExouRskOLKf4T71ZyP7JZcfBqdVa.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7840-IYq0FRujY472hDU2z23vIvwMAjz5QL.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7841-xQbsmlZ1zpnTrwkqcaL4ZJlzMwgpny.JPG",
+//       ],
+//     },
+//     realistic: {
+//       images: [
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7929-KhtIGGGi45LLQ1GN85GL5KvAunbXOP.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7797-SX0XMQHTEwn3p1mHn5XsIcFPn0UV5h.jpg",
+//       ],
+//     },
+//     anime: {
+//       images: [
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7794-hM7qKTw8Jr8zcxrvqLGgeClH82dHhI.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7819-LbTgCyW84hj2FXqFTL4ZBImP86xeC0.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7821-8fm9x9hibOTEIWPi4RNOEnBLViQPHf.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7822-Z7TCRrWU0tSOBd47HoaRCmeB2HHVSV.JPG",
+//       ],
+//     },
+//     digital_art: {
+//       images: [
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7910-eHylLAUpw38Pn5JacAG8kaWKCzsvuz.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7911-8qTKCqFNWPE3afNfG9A8RdWIli3MLx.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7913-lIfUWLVPOXlUtIlRRa2PoUqUVz86fi.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7914-Wu16oIWxQqqCMMpRwa8wuiX11uXbh5.JPG",
+//       ],
+//     },
+//     oil_painting: {
+//       images: [
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7892-shKzyE1YnL4EQwy4SCynL34Fb150j9.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7893-asntJioj38Z5Dcckk5FYv5Tbbn0pM7.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7894-fcBTHDNTGHlfSHotQFqHbYTSxJgiie.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7896-fIQiB0kpZNTkEqge47gTSY4tyVlc7h.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7897-yVmTRrYcBH6EmoMvRH9tRYDgc2AsaP.JPG",
+//       ],
+//     },
+//     watercolor: {
+//       images: [
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7898-qSl8O0wmtG7P9Lls7c8IFQbyULERoA.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7903-4cq6up5XnR3ly2Xxcfn9XV2JYXRnMj.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7904-Mbip4YMdni7Jo3i1PBCW6vXdda7yLH.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7905-4bF9slfuvpcYOQlLpOzEYj7QOcIclp.JPG",
+//       ],
+//     },
+//     "3d_render": {
+//       images: [
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7934-3YccjfFGEidLuSOkcNxS8jWSX6ZrSv.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7935-klBI4wkugmeyReiJNIeuRfg6fIA4sI.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7936-lAFUR1ZXGM5aMs2hjQKHjbmd5MAyrs.JPG",
+//       ],
+//     },
+//     pixel_art: {
+//       images: [
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7909-XtXcjoxc9AbETevuQ4U1ayj9hgUW6J.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7920-x9zP1AbkS0eMhYew9psAXrObt2A3m7.JPG",
+//       ],
+//     },
+//     comic: {
+//       images: [
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7907-u63I7W5ICETCbjwDSb8O7DzeClvn2a.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7912-dvtopeluCgp7wBomehQIq8x5wUbI7u.JPG",
+//       ],
+//     },
+//     fantasy: {
+//       images: [
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7908-D8AmB9OGxwOCNIjSibSFF4gANM4avO.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7917-v3cFPMjFQ58bmTxgYIInh49vjqWGRw.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7927-gmfeaPY1bLfimrvkAQOnXKEvVDLim2.JPG",
+//       ],
+//     },
+//     // cyberpunk: {
+//     //   images: [],
+//     // },
+//     minimalist: {
+//       images: [
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7798-fDXJ0rCHvFNxRGrVSzbaKWFKQPWhFw.jpg",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7816-rAjuazw1OsMD50ByfrytDREmWIDWuQ.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7817-6wDhm7ZTl7F2CNMsSOdTB7303IAoBe.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7818-kKQmxdYrqDYLq70RlKyjtOzZh7IPVF.JPG",
+//       ],
+//     },
+//     cinematic: {
+//       images: [
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7921-Pv3GIVgwj3x8BdwoF170c0v5Yluucj.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7933-ddUd150FyPuhtDuxFjOoVyLV7K9yFq.JPG",
+//         "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7932-vFK7Ikm8PhNgJxq43dByuvu4hPBr4o.JPG",
+//       ],
+//     },
+//   })
+// );
+
 export const TEMPLATE_IMAGES: Map<string, { images: string[] }> = new Map(
   Object.entries({
     animated_sticker: {
       images: [
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7794-hM7qKTw8Jr8zcxrvqLGgeClH82dHhI.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7819-LbTgCyW84hj2FXqFTL4ZBImP86xeC0.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7821-8fm9x9hibOTEIWPi4RNOEnBLViQPHf.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7822-Z7TCRrWU0tSOBd47HoaRCmeB2HHVSV.JPG",
+        "https://storysnap.support-0bf.workers.dev/template/1733819070452-IMG_7914.JPG",
       ],
     },
     dynamic_sketch: {
       images: [
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7798-fDXJ0rCHvFNxRGrVSzbaKWFKQPWhFw.jpg",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7816-rAjuazw1OsMD50ByfrytDREmWIDWuQ.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7817-6wDhm7ZTl7F2CNMsSOdTB7303IAoBe.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7818-kKQmxdYrqDYLq70RlKyjtOzZh7IPVF.JPG",
+        "https://storysnap.support-0bf.workers.dev/template/1733818739762-IMG_7909.JPG",
+        "https://storysnap.support-0bf.workers.dev/template/1733819175765-IMG_7925.JPG",
       ],
     },
     romantic_anime: {
       images: [
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7797-SX0XMQHTEwn3p1mHn5XsIcFPn0UV5h.jpg",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7832-ZO7CJF6R7J4tDkCW1fbM9s15UBxxrw.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7833-1iky3lqcydtPVkz3aCqaDD1vW8uHlh.JPG",
+        "https://storysnap.support-0bf.workers.dev/template/1733818904000-eg_2.jpg",
       ],
     },
     fairy_tale: {
       images: [
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7796%202-N2kh3iAnfwGNeTNltivs9WhK9HpTNS.jpg",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7836-RBTnRTeV2lpthXXjOljSLShHjg2qZ1.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7837-q3aZDrJrrgkGTOY7oXi8CVk0XuEw0s.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7842-SZEWtDR0u9atCk0Q9ntGk26IycDAYt.JPG",
+        "https://storysnap.support-0bf.workers.dev/template/1733818841290-IMG_7917.JPG",
       ],
     },
     cyberpunk: {
       images: [
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7824-QMxeqDZYJaM8MuvMjpLyb63wNPc4tz.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7825-bxQZyASQAFpCX79yDGmbazOgWJQuyJ.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7826-hx6Y67FgDO0D0FQpDJ8R343Qm2dsH8.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7827-Khy3f22KvuCkpV2Kj8CiZkBoOUJZZD.JPG",
+        "https://storysnap.support-0bf.workers.dev/template/1733819407147-out-0__20_.webp",
       ],
     },
     fantasy_adventure: {
       images: [
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7835-Ja9S0EiWpmvCUwdOt0bu6VUKKKTPKV.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7839-6yExouRskOLKf4T71ZyP7JZcfBqdVa.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7840-IYq0FRujY472hDU2z23vIvwMAjz5QL.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7841-xQbsmlZ1zpnTrwkqcaL4ZJlzMwgpny.JPG",
+        "https://storysnap.support-0bf.workers.dev/template/1733819138134-IMG_7919.JPG",
       ],
     },
     realistic: {
       images: [
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7929-KhtIGGGi45LLQ1GN85GL5KvAunbXOP.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7797-SX0XMQHTEwn3p1mHn5XsIcFPn0UV5h.jpg",
+        "https://storysnap.support-0bf.workers.dev/template/1733819309020-IMG_7929.JPG",
       ],
     },
     anime: {
       images: [
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7794-hM7qKTw8Jr8zcxrvqLGgeClH82dHhI.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7819-LbTgCyW84hj2FXqFTL4ZBImP86xeC0.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7821-8fm9x9hibOTEIWPi4RNOEnBLViQPHf.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7822-Z7TCRrWU0tSOBd47HoaRCmeB2HHVSV.JPG",
+        "https://storysnap.support-0bf.workers.dev/template/1733818864421-IMG_7903.JPG",
+        "https://storysnap.support-0bf.workers.dev/template/1733818936500-out-0__11_.webp",
+        "https://storysnap.support-0bf.workers.dev/template/1733819257928-IMG_7931.JPG",
+        "https://storysnap.support-0bf.workers.dev/template/1733819376415-image-1731739685578.png",
       ],
     },
     digital_art: {
       images: [
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7910-eHylLAUpw38Pn5JacAG8kaWKCzsvuz.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7911-8qTKCqFNWPE3afNfG9A8RdWIli3MLx.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7913-lIfUWLVPOXlUtIlRRa2PoUqUVz86fi.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7914-Wu16oIWxQqqCMMpRwa8wuiX11uXbh5.JPG",
+        "https://storysnap.support-0bf.workers.dev/template/1733818757882-IMG_7904.JPG",
+        "https://storysnap.support-0bf.workers.dev/template/1733819039299-IMG_7910.JPG",
       ],
     },
     oil_painting: {
       images: [
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7892-shKzyE1YnL4EQwy4SCynL34Fb150j9.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7893-asntJioj38Z5Dcckk5FYv5Tbbn0pM7.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7894-fcBTHDNTGHlfSHotQFqHbYTSxJgiie.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7896-fIQiB0kpZNTkEqge47gTSY4tyVlc7h.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7897-yVmTRrYcBH6EmoMvRH9tRYDgc2AsaP.JPG",
+        "https://storysnap.support-0bf.workers.dev/template/1733818478354-IMG_7892.JPG",
       ],
     },
     watercolor: {
       images: [
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7898-qSl8O0wmtG7P9Lls7c8IFQbyULERoA.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7903-4cq6up5XnR3ly2Xxcfn9XV2JYXRnMj.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7904-Mbip4YMdni7Jo3i1PBCW6vXdda7yLH.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7905-4bF9slfuvpcYOQlLpOzEYj7QOcIclp.JPG",
+        "https://storysnap.support-0bf.workers.dev/template/1733818672201-IMG_7905.JPG",
       ],
     },
     "3d_render": {
       images: [
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7934-3YccjfFGEidLuSOkcNxS8jWSX6ZrSv.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7935-klBI4wkugmeyReiJNIeuRfg6fIA4sI.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7936-lAFUR1ZXGM5aMs2hjQKHjbmd5MAyrs.JPG",
+        "https://storysnap.support-0bf.workers.dev/template/1733819229092-IMG_7934.JPG",
       ],
     },
     pixel_art: {
       images: [
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7909-XtXcjoxc9AbETevuQ4U1ayj9hgUW6J.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7920-x9zP1AbkS0eMhYew9psAXrObt2A3m7.JPG",
+        "https://storysnap.support-0bf.workers.dev/template/1733819464594-IMG_7920.JPG",
       ],
     },
     comic: {
       images: [
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7907-u63I7W5ICETCbjwDSb8O7DzeClvn2a.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7912-dvtopeluCgp7wBomehQIq8x5wUbI7u.JPG",
+        "https://storysnap.support-0bf.workers.dev/template/1733818520374-IMG_7796.JPG",
+        "https://storysnap.support-0bf.workers.dev/template/1733818579875-out-0__2_.webp",
       ],
     },
     fantasy: {
       images: [
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7908-D8AmB9OGxwOCNIjSibSFF4gANM4avO.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7917-v3cFPMjFQ58bmTxgYIInh49vjqWGRw.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7927-gmfeaPY1bLfimrvkAQOnXKEvVDLim2.JPG",
+        "https://storysnap.support-0bf.workers.dev/template/1733818651270-IMG_7898.JPG",
       ],
     },
     // cyberpunk: {
@@ -334,17 +438,13 @@ export const TEMPLATE_IMAGES: Map<string, { images: string[] }> = new Map(
     // },
     minimalist: {
       images: [
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7798-fDXJ0rCHvFNxRGrVSzbaKWFKQPWhFw.jpg",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7816-rAjuazw1OsMD50ByfrytDREmWIDWuQ.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7817-6wDhm7ZTl7F2CNMsSOdTB7303IAoBe.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7818-kKQmxdYrqDYLq70RlKyjtOzZh7IPVF.JPG",
+        "https://storysnap.support-0bf.workers.dev/template/1733818603386-eg_1.jpg",
+        "https://storysnap.support-0bf.workers.dev/template/1733818813491-out-0__16_.webp",
       ],
     },
     cinematic: {
       images: [
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7921-Pv3GIVgwj3x8BdwoF170c0v5Yluucj.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7933-ddUd150FyPuhtDuxFjOoVyLV7K9yFq.JPG",
-        "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/IMG_7932-vFK7Ikm8PhNgJxq43dByuvu4hPBr4o.JPG",
+        "https://storysnap.support-0bf.workers.dev/template/1733818991051-IMG_7932.JPG",
       ],
     },
   })
