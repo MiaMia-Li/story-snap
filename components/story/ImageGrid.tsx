@@ -121,8 +121,6 @@ export function ImageGrid({ predictions, isLoading }: ImageGridProps) {
     }
   };
 
-  console.log("ImageGrid", predictions);
-
   if (!predictions || !predictions.length) {
     return (
       <div className="flex justify-center">

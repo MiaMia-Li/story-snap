@@ -5,8 +5,8 @@ export const uploadFile = async (file: File) => {
   formData.append("file", file);
 
   try {
-    const response = await fetch("/api/images/upload", {
-      method: "POST",
+    const response = await fetch("/api/images/worker", {
+      method: "PUT",
       body: formData,
     });
 

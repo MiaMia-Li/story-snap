@@ -1,6 +1,5 @@
 import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
-import { writeFile } from "node:fs/promises";
 import Replicate from "replicate";
 
 const replicate = new Replicate({
@@ -29,7 +28,6 @@ export async function POST(request: NextRequest) {
 
   try {
     const { prompt, image } = await request.json();
-    console.log(prompt, "--prediction--prompt");
 
     if (!prompt || !image) {
       return NextResponse.json(
@@ -49,7 +47,8 @@ export async function POST(request: NextRequest) {
     };
 
     const options: any = {
-      model: "stability-ai/stable-diffusion-3",
+      // model: "stability-ai/stable-diffusion-3",
+      model: "stability-ai/stable-diffusion-3.5-large",
       // version:
       //   "5599ed30703defd1d160a25a63321b4dec97101d98b4674bcc56e41f62f35637",
       input: input,

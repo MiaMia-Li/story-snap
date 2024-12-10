@@ -20,7 +20,7 @@ export default async function StoriesPage() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6">
         {stories.length === 0 ? (
           <div className="col-span-full flex flex-col items-center justify-center py-12 text-center">
             <div className="text-muted-foreground mb-4">

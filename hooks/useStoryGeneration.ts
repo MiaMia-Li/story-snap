@@ -158,7 +158,7 @@ export function useStoryGeneration({
     // 初始化predictions
     const initialPredictions = styleIds.map((styleId) => ({
       id: "",
-      status: "starting" as const,
+      status: "processing" as const,
       output: [],
       styleId,
     }));
@@ -198,6 +198,13 @@ export function useStoryGeneration({
       setPredictions(updatedPredictions);
       onSuccess?.();
     } catch (error) {
+      const errorPredictions = styleIds.map((styleId) => ({
+        id: "",
+        status: "failed" as const,
+        output: [],
+        styleId,
+      }));
+      setPredictions(errorPredictions);
       onError?.("Failed to generate images, please try again.");
     }
   };
@@ -222,7 +229,7 @@ export function useStoryGeneration({
     try {
       const initialPredictions = imageStyles.map((styleId: string) => ({
         styleId,
-        status: "starting",
+        status: "processing",
       }));
       setPredictions(initialPredictions);
 

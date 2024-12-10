@@ -102,6 +102,7 @@
     "waiting": "请稍候，我们正在处理您的请求...",
     "craftingImage": "正在生成你的图片...",
     "enterKeyword": "输入关键词以引导故事",
+    "generationFailed": "出错了",
     "tone": {
       "professional": "专业",
       "friendly": "友好",

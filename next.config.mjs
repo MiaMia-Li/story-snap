@@ -12,6 +12,7 @@ const nextConfig = withNextIntl({
       "replicate.delivery",
       "replicate.com",
       "story-snap.vercel.app",
+      "storysnap.support-0bf.workers.dev",
     ],
   },
   /* config options here */

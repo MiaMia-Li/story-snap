@@ -106,10 +106,19 @@ export function FormSection({
   );
 
   const handleDropRejected = useCallback((fileRejections: any[]) => {
-    fileRejections.forEach(({ errors }) => {
+    fileRejections.forEach(({ file, errors }) => {
       errors.forEach((error: { code: string }) => {
-        if (error.code === "file-too-large") {
-          toast.error("File size cannot exceed 5MB");
+        switch (error.code) {
+          case "file-too-large":
+            toast.error(`${file.name} is too large. Max size is 5MB`);
+            break;
+          case "file-invalid-type":
+            toast.error(
+              `${file.name} is not a valid file type. Only JPG, PNG and WebP are allowed`
+            );
+            break;
+          default:
+            toast.error(`Error uploading ${file.name}: ${error.message}`);
         }
       });
     });
@@ -121,7 +130,9 @@ export function FormSection({
     onDropRejected: handleDropRejected,
     maxSize: MAX_FILE_SIZE,
     accept: {
-      "image/*": [".jpeg", ".jpg", ".png", ".webp"],
+      "image/jpeg": [".jpg", ".jpeg"],
+      "image/png": [".png"],
+      "image/webp": [".webp"],
     },
     multiple: true,
     maxFiles: MAX_IMAGES,

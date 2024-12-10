@@ -1,17 +1,26 @@
-import { put } from "@vercel/blob";
-import axios from "axios";
 import { NextResponse } from "next/server";
+import axios from "axios";
 import Replicate from "replicate";
 
 const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
 });
 
-// Prevent Next.js / Vercel from caching responses
-// See https://github.com/replicate/replicate-javascript/issues/136#issuecomment-1728053102
+// Worker 配置
+const WORKER_URL = "https://storysnap.support-0bf.workers.dev";
+const AUTH_KEY_SECRET = process.env.AUTH_KEY_SECRET;
+
+export const runtime = "edge";
+
+// 防止 Next.js / Vercel 缓存响应
 replicate.fetch = (url, options) => {
   return fetch(url, { cache: "no-store", ...options });
 };
+
+function generateSafeFileName(index: number): string {
+  const timestamp = Date.now();
+  return `${timestamp}_output_${index}.png`;
+}
 
 export async function GET(
   request: Request,
@@ -23,32 +32,45 @@ export async function GET(
   if (prediction?.error) {
     return NextResponse.json({ detail: prediction.error }, { status: 500 });
   }
+
   if (prediction.output) {
-    // Loop through each output with async handling
+    // 处理每个输出图片
     const uploadResponses = await Promise.all(
       prediction.output.map(async (imageUrl: string, index: number) => {
         try {
-          // 1. Download the image as an array buffer
           const imageResponse = await axios.get(imageUrl, {
             responseType: "arraybuffer",
           });
 
-          // Convert the array buffer to a Buffer (Node.js environment)
-          const fileBuffer = Buffer.from(imageResponse.data);
-          const filename = `output_${index}.png`;
+          const safeFileName = generateSafeFileName(index);
 
-          // 2. Upload to Vercel Blob Storage using Buffer directly
-          const uploadResponse = await put(`download/${filename}`, fileBuffer, {
-            access: "public",
+          const headers = new Headers({
+            "X-CF-Secret": AUTH_KEY_SECRET ?? "",
+            "Content-Type": "image/png",
           });
 
-          return uploadResponse.url; // Collect upload response data
+          // 4. 上传到 Cloudflare Worker
+          const workerResponse = await fetch(
+            `${WORKER_URL}/download/${safeFileName}`,
+            {
+              method: "PUT",
+              headers: headers,
+              body: imageResponse.data,
+            }
+          );
+
+          if (!workerResponse.ok) {
+            throw new Error(`Upload failed: ${workerResponse.statusText}`);
+          }
+
+          return `${WORKER_URL}/download/${safeFileName}`;
         } catch (error) {
           console.error(`Error uploading image at index ${index}:`, error);
-          return null; // Or handle error accordingly
+          return null;
         }
       })
     );
+
     return NextResponse.json({
       ...prediction,
       output: uploadResponses,

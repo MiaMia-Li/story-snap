@@ -100,6 +100,7 @@
     "waiting": "Please wait while we process your request...",
     "craftingImage": "Crafting your image...",
     "enterKeyword": "Enter keywords to guide the story",
+    "generationFailed": "opps~failed",
     "tone": {
       "professional": "Professional",
       "friendly": "Friendly",
