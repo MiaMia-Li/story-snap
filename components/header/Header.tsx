@@ -14,7 +14,7 @@ const Header = async () => {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-blue-100/20 bg-white/80 backdrop-blur-md transition-all duration-300 dark:border-blue-900/20 dark:bg-gray-900/80">
-      <div className="mx-auto flex h-16 items-center justify-between px-4">
+      <div className="mx-auto  max-w-7xl flex h-16 items-center justify-between px-4">
         {/* Logo Section */}
         <Link
           href="/"

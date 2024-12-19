@@ -46,7 +46,7 @@ const stories = [
     id: "1",
     title: "A New Beginning",
     image:
-      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/download/output_0-TTlzDRT5p47awZWL3WtH1ciB28pjXr.png",
+      "https://storysnap.support-0bf.workers.dev/template/1734592613878-out-0__6_.webp",
     authorAvatar:
       "https://cdn.jsdelivr.net/gh/alohe/avatars/png/vibrent_10.png",
     authorName: "John",
@@ -58,7 +58,7 @@ const stories = [
     id: "2",
     title: "A Penguin's Journey",
     image:
-      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/download/output_0-7XJ7dxbN93HfQX5ZwSYC7a0cwxzria.png",
+      "https://storysnap.support-0bf.workers.dev/template/1734594595799-out-0__16_.webp",
     authorAvatar:
       "https://cdn.jsdelivr.net/gh/alohe/avatars/png/vibrent_11.png",
     authorName: "Emily",
@@ -71,7 +71,7 @@ const stories = [
     id: "3",
     title: "A Spring Evening with My Feline Friends",
     image:
-      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/out-0%20(10)-bVJsXAgxiNkNmFvYwEzG9BZx5nJDBc.webp",
+      "https://storysnap.support-0bf.workers.dev/template/1734592748749-out-0__12_.webp",
     authorAvatar:
       "https://cdn.jsdelivr.net/gh/alohe/avatars/png/vibrent_12.png",
     authorName: "Alice",
@@ -83,7 +83,7 @@ const stories = [
     id: "4",
     title: "A Peaceful Afternoon with My Furry Friends",
     image:
-      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/out-0%20(5)-K6A2A7cREdgX2J4R3U9O3gQOi2jLkp.webp",
+      "https://storysnap.support-0bf.workers.dev/template/1734592556848-out-0__5_.webp",
     authorAvatar:
       "https://cdn.jsdelivr.net/gh/alohe/avatars/png/vibrent_13.png",
     authorName: "Charlie",
@@ -95,7 +95,7 @@ const stories = [
     id: "5",
     title: "The First Day at the Iceberg Conference",
     image:
-      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/out-0%20(14)-Or4ItfgHTZ7dgdaPjp1uT3CuXXalXs.webp",
+      "https://storysnap.support-0bf.workers.dev/template/1734592392675-out-0__14_.webp",
     authorAvatar:
       "https://cdn.jsdelivr.net/gh/alohe/avatars/png/vibrent_14.png",
     authorName: "Percy",
@@ -107,7 +107,7 @@ const stories = [
     id: "6",
     title: "In Awe of the Mountains",
     image:
-      "https://yggd8boz08mj0dzm.public.blob.vercel-storage.com/template/out-0%20(8)-kqmmbBBY10RG6zO9kRg6i6G1PVmAyF.webp",
+      "https://storysnap.support-0bf.workers.dev/template/1734592437903-out-0__8_.webp",
     authorAvatar:
       "https://cdn.jsdelivr.net/gh/alohe/avatars/png/vibrent_15.png",
     authorName: "Fiona",
@@ -267,7 +267,7 @@ export default function HomePage() {
           </section>
 
           {/* Reviews Scroll */}
-          <div className="relative overflow-hidden mb-32">
+          <div className="relative overflow-hidden mb-24">
             <FadeIn>
               <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-background to-transparent z-10"></div>
               <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-background  to-transparent z-10"></div>
@@ -280,8 +280,8 @@ export default function HomePage() {
             </FadeIn>
           </div>
 
-          <section className="mb-32">
-            <FadeIn className="text-center mb-16">
+          <section className="mb-24">
+            <FadeIn className="text-center mb-10">
               <h2 className="text-3xl font-bold mb-4">{t("gallery.title")}</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 {t("gallery.description")}
@@ -289,7 +289,7 @@ export default function HomePage() {
             </FadeIn>
 
             <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto"
               variants={{
                 hidden: { opacity: 0 },
                 show: {
@@ -308,8 +308,8 @@ export default function HomePage() {
             </motion.div>
           </section>
 
-          <section className="mb-32">
-            <FadeIn className="text-center mb-16">
+          <section className="mb-24">
+            <FadeIn className="text-center mb-10">
               <h2 className="text-3xl font-bold mb-4">{t("features.title")}</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 {t("features.description")}
@@ -317,7 +317,7 @@ export default function HomePage() {
             </FadeIn>
 
             <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto"
               variants={{
                 hidden: { opacity: 0 },
                 show: {
@@ -336,8 +336,8 @@ export default function HomePage() {
             </motion.div>
           </section>
           {/* How It Works Section */}
-          <section className="mb-32">
-            <FadeIn className="text-center mb-16">
+          <section className="mb-24">
+            <FadeIn className="text-center mb-10">
               <h2 className="text-3xl font-bold mb-4">
                 {t("howItWorks.title")}
               </h2>
@@ -375,8 +375,8 @@ export default function HomePage() {
               ))}
             </div>
           </section> */}
-          <section className="mb-32">
-            <FadeIn className="text-center mb-16">
+          <section className="mb-24">
+            <FadeIn className="text-center mb-10">
               <h2 className="text-3xl font-bold mb-4">{t("pricing.title")}</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 {t("pricing.description")}
@@ -386,8 +386,8 @@ export default function HomePage() {
           </section>
 
           {/* FAQ Section */}
-          <section className="mb-32">
-            <FadeIn className="text-center mb-16">
+          <section className="mb-24">
+            <FadeIn className="text-center mb-10">
               <h2 className="text-3xl font-bold mb-4">{t("faq.title")}</h2>
 
               <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -460,7 +460,7 @@ export default function HomePage() {
         </div>
       </div>
       <footer className="border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-10">
-        <div className="mx-auto max-w-7xl justify-between px-4 lg:px-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
+        <div className="mx-auto max-w-7xl justify-between px-4 grid grid-cols-1 gap-8 sm:grid-cols-2">
           {/* Logo and Description Column */}
           <div className="space-y-4">
             <Link
@@ -473,9 +473,7 @@ export default function HomePage() {
                 height={50}
                 className="object-contain"
               />
-              <span className="md:text-2xl text-xl font-bold font-mono">
-                SnapStory
-              </span>
+              <span className="md:text-2xl text-xl font-bold">SnapStory</span>
             </Link>
             <p className="text-sm text-muted-foreground">
               Built with{" "}
@@ -526,8 +524,6 @@ export default function HomePage() {
             <div className="space-y-2">
               <h4 className="font-semibold">Product</h4>
               <ul className="flex space-x-6 text-sm">
-                {" "}
-                {/* 改用 space-x-6 控制水平间距 */}
                 <li>
                   <Link
                     href="/generate-story"
