@@ -80,7 +80,7 @@ export function TestimonialCard({
   return (
     <FadeIn>
       <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-        <Card className="h-full group hover:border-primary/50 transition-all duration-300">
+        <Card className="h-full group transition-all duration-300 w-80 border-none shadow-sm">
           <CardContent className="p-6 space-y-4">
             <div className="text-primary flex items-center gap-2">
               <Star className="h-6 w-6 fill-current text-amber-300" />
@@ -89,7 +89,7 @@ export function TestimonialCard({
               <Star className="h-6 w-6 fill-current text-amber-300" />
               <Star className="h-6 w-6 fill-current text-amber-300" />
             </div>
-            <p className="text-lg">{quote}</p>
+            <p className="text-base">{quote}</p>
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full overflow-hidden">
                 <Image

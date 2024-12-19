@@ -14,7 +14,7 @@ const Header = async () => {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-blue-100/20 bg-white/80 backdrop-blur-md transition-all duration-300 dark:border-blue-900/20 dark:bg-gray-900/80">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 lg:px-8">
+      <div className="mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo Section */}
         <Link
           href="/"
@@ -26,8 +26,8 @@ const Header = async () => {
             height={50}
             className="object-contain"
           />
-          <span className="md:text-2xl text-xl font-bold font-mono">
-            SnapStory
+          <span className="md:text-2xl text-xl font-bold">
+            Snap<span className="text-primary">Story</span>
           </span>
         </Link>
 

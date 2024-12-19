@@ -14,7 +14,6 @@ export async function POST(req: Request) {
   }
 
   const context = await req.json();
-  console.log("--context", context);
   const { images, language, keyword, tone } = context;
   const images_message = images.map((url: string) => {
     return {
@@ -45,8 +44,6 @@ Frame 4: [Detailed and imaginative description of the fourth storyboard frame]
   "frames": "Detailed and imaginative description of the first storyboard frame", "Detailed and imaginative description of the second storyboard frame", "Detailed and imaginative description of the third storyboard frame", "Detailed and imaginative description of the fourth storyboard frame"
 }
 `;
-
-  console.log("--prompt", prompt);
 
   // Create a new StreamData object
   const result = await streamObject({

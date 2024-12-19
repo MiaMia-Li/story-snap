@@ -39,6 +39,7 @@ import GalleryCard from "@/components/story/GalleryCard";
 import { EMAIL_ADDRESS } from "@/config/site";
 import { useTranslations } from "next-intl";
 import { PricingCards } from "../pricing/PricingCards";
+import { InfiniteScroll } from "./InfiniteScroll";
 
 const stories = [
   {
@@ -211,7 +212,7 @@ export default function HomePage() {
 
         <div className="container mx-auto px-4 py-12">
           {/* Hero Section */}
-          <section className="relative mb-32">
+          <section className="relative mb-12">
             <FadeIn className="space-y-8" duration={0.7}>
               <motion.div
                 initial={{ scale: 0.5, opacity: 0 }}
@@ -227,7 +228,7 @@ export default function HomePage() {
 
               <div className="text-center space-y-6">
                 <motion.h1
-                  className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight"
+                  className="text-4xl sm:text-4xl lg:text-5xl font-bold tracking-tight"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.2 }}>
@@ -241,13 +242,13 @@ export default function HomePage() {
                   </motion.span>
                 </motion.h1>
 
-                <FadeIn delay={0.6}>
-                  <p className="text-xl text-muted-foreground max-w-[700px] mx-auto">
+                <FadeIn delay={0.3}>
+                  <p className="text-lg text-muted-foreground max-w-[700px] mx-auto">
                     {t("hero.description")}
                   </p>
                 </FadeIn>
 
-                <FadeIn delay={0.8} className="pt-4">
+                <FadeIn delay={0.6} className="pt-4">
                   <div className="flex flex-wrap items-center justify-center gap-4">
                     <motion.div
                       whileHover={{ scale: 1.05 }}
@@ -264,6 +265,20 @@ export default function HomePage() {
               </div>
             </FadeIn>
           </section>
+
+          {/* Reviews Scroll */}
+          <div className="relative overflow-hidden mb-32">
+            <FadeIn>
+              <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-background to-transparent z-10"></div>
+              <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-background  to-transparent z-10"></div>
+              {/* Scrolling Reviews */}
+              <InfiniteScroll>
+                {testimonials.map((testimonial, index) => (
+                  <TestimonialCard key={index} {...testimonial} />
+                ))}
+              </InfiniteScroll>
+            </FadeIn>
+          </div>
 
           <section className="mb-32">
             <FadeIn className="text-center mb-16">
@@ -344,7 +359,7 @@ export default function HomePage() {
             </div>
           </section>
           {/* Testimonials Section */}
-          <section className="mb-32">
+          {/* <section className="mb-32">
             <FadeIn className="text-center mb-16">
               <h2 className="text-3xl font-bold mb-4">
                 {t("testimonials.title")}
@@ -359,7 +374,7 @@ export default function HomePage() {
                 <TestimonialCard key={index} {...testimonial} />
               ))}
             </div>
-          </section>
+          </section> */}
           <section className="mb-32">
             <FadeIn className="text-center mb-16">
               <h2 className="text-3xl font-bold mb-4">{t("pricing.title")}</h2>

@@ -60,14 +60,14 @@ export function StyleSelector({
     <div className="space-y-2">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h3 className="font-semibold flex items-center gap-2">
+          <h3 className="font-medium text-sm flex items-center gap-2">
             <span className="text-red-500">*</span>
             <span>{t("imageStyle")}</span>
           </h3>
           <span className="text-sm text-muted-foreground">(up to 4)</span>
         </div>
         <div className="flex items-center gap-4">
-          <Button onClick={handleRandomStyle} variant="outline">
+          <Button onClick={handleRandomStyle} variant="outline" size="sm">
             <ShuffleIcon className="w-4 h-4 mr-2" />
             {t("random")}
           </Button>
@@ -75,9 +75,7 @@ export function StyleSelector({
       </div>
 
       <div className="relative">
-        <div
-          ref={scrollContainerRef}
-          className="grid grid-cols-2 gap-4 max-h-[400px] overflow-y-auto p-2">
+        <div ref={scrollContainerRef} className="grid grid-cols-3 gap-4 p-2">
           {STYLE_OPTIONS.map((style: any) => {
             const isSelected = selectedStyles.includes(style.id);
             const isDisabled =
@@ -127,11 +125,11 @@ export function StyleSelector({
           })}
         </div>
         {/* Scroll Indicator */}
-        {hasOverflow && (
+        {/* {hasOverflow && (
           <div className="absolute bottom-0 left-0 right-0 flex flex-col items-center justify-center bg-gradient-to-t from-background via-background/80 to-transparent h-10 pointer-events-none">
             <div className="flex flex-col items-center gap-1"></div>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
