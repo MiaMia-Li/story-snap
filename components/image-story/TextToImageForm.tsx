@@ -1,7 +1,9 @@
-// components/generation/text-to-image-form.tsx
 "use client";
 
+import { useForm, Controller } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
+import { useLocale, useTranslations } from "next-intl";
+import { Locale } from "@/i18n/config";
 import {
   Select,
   SelectContent,
@@ -9,22 +11,31 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useLocale, useTranslations } from "next-intl";
-import { useAuth } from "@/contexts/auth";
-import { StyleSelector } from "../story/ImageStyle";
-import { useCallback, useState } from "react";
-import { Locale } from "@/i18n/config";
-import { LanguageSelector } from "../story/LangSelector";
-import ToneSelector from "../story/ToneSelector";
+import { LANGUAGES_PROMPT } from "@/config/lang";
+import ImageTheme from "./ImageTheme";
+import { StoryFormData } from "@/types";
 
-export function TextToImageForm() {
-  // Hooks
+interface TextToImageFormProps {
+  onChange?: (formData: StoryFormData) => void;
+}
+
+export function TextToImageForm({ onChange }: TextToImageFormProps) {
   const t = useTranslations("generateStory");
-  const [imageStyles, setImageStyles] = useState<string[]>([]);
-  const [language, setLanguage] = useState<Locale>(useLocale() as Locale);
-  const [keyword, setKeyword] = useState("");
-  const [tone, setTone] = useState("friendly");
-  // Constants
+  const defaultLocale = useLocale() as Locale;
+
+  const {
+    control,
+    formState: { errors },
+    getValues,
+  } = useForm<StoryFormData>({
+    defaultValues: {
+      keyword: "",
+      imageStyles: [],
+      language: defaultLocale,
+      tone: "friendly",
+    },
+  });
+
   const toneOptions = [
     { value: "professional", label: t("tone.professional") },
     { value: "friendly", label: t("tone.friendly") },
@@ -35,42 +46,124 @@ export function TextToImageForm() {
     { value: "empathetic", label: t("tone.empathetic") },
     { value: "direct", label: t("tone.direct") },
   ];
-  const handleStyleChange = useCallback((styleIds: string[]) => {
-    setImageStyles(styleIds);
-  }, []);
+
+  // 使用 Controller 的 onChange 来触发父组件更新
+  const notifyChange = () => {
+    const currentValues = getValues();
+    onChange?.(currentValues);
+  };
 
   return (
-    <div className="space-y-4 mx-4">
+    <form className="space-y-4 w-full" onSubmit={(e) => e.preventDefault()}>
+      {/* Prompt Input */}
       <div className="space-y-2">
-        <label className="text-sm font-medium">Prompt</label>
-        <Textarea
-          placeholder={t("enterKeyword")}
-          onChange={(e) => setKeyword(e.target.value)}
-          value={keyword}
-          className="min-h-[200px]"
+        <label className="text-sm font-medium">
+          <span className="text-red-500">*</span> Prompt
+        </label>
+        <Controller
+          name="keyword"
+          control={control}
+          rules={{
+            required: "Prompt is required",
+            minLength: {
+              value: 3,
+              message: "Prompt must be at least 3 characters",
+            },
+          }}
+          render={({ field }) => (
+            <Textarea
+              {...field}
+              placeholder={t("enterKeyword")}
+              className="min-h-[200px]"
+              onChange={(e) => {
+                field.onChange(e.target.value);
+                notifyChange();
+              }}
+            />
+          )}
+        />
+        {errors.keyword && (
+          <p className="text-sm text-destructive">{errors.keyword.message}</p>
+        )}
+      </div>
+
+      {/* Image Styles */}
+      <div className="space-y-2">
+        <Controller
+          name="imageStyles"
+          control={control}
+          render={({ field }) => (
+            <ImageTheme
+              selectedStyles={field.value}
+              onStyleSelect={(styles) => {
+                field.onChange(styles);
+                notifyChange();
+              }}
+            />
+          )}
+        />
+        {errors.imageStyles && (
+          <p className="text-sm text-destructive">
+            {errors.imageStyles.message}
+          </p>
+        )}
+      </div>
+
+      {/* Language Selection */}
+      <div className="space-y-2">
+        <label className="text-sm font-medium">{t("storyLanguage")}</label>
+        <Controller
+          name="language"
+          control={control}
+          render={({ field }) => (
+            <Select
+              value={field.value}
+              onValueChange={(value) => {
+                field.onChange(value);
+                notifyChange();
+              }}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select a language" />
+              </SelectTrigger>
+              <SelectContent>
+                {LANGUAGES_PROMPT.map(({ value, label }) => (
+                  <SelectItem key={value} value={value}>
+                    {label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
         />
       </div>
 
-      <StyleSelector
-        selectedStyles={imageStyles}
-        onStyleSelect={handleStyleChange}
-      />
+      {/* Tone Selection */}
       <div className="space-y-2">
-        <label className="text-sm font-medium ">{t("storyLanguage")}</label>
-        <LanguageSelector
-          language={language}
-          handleLanguageChange={setLanguage}
+        <label className="text-sm font-medium">{t("storyTone")}</label>
+        <Controller
+          name="tone"
+          control={control}
+          render={({ field }) => (
+            <Select
+              value={field.value}
+              onValueChange={(value) => {
+                field.onChange(value);
+                notifyChange();
+              }}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select a tone" />
+              </SelectTrigger>
+              <SelectContent>
+                {toneOptions.map(({ value, label }) => (
+                  <SelectItem key={value} value={value}>
+                    {label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
         />
       </div>
-
-      <div className="space-y-2">
-        <label className="text-sm font-medium ">{t("storyTone")}</label>
-        <ToneSelector
-          toneOptions={toneOptions}
-          tone={tone}
-          handleToneChange={setTone}
-        />
-      </div>
-    </div>
+    </form>
   );
 }

@@ -216,11 +216,9 @@ export function useStoryGeneration({
       return;
     }
 
-    const { images, imageStyles, language, keyword, tone } = formData;
-    if (!images?.length) {
-      onError?.("Please reupload images");
-      return;
-    }
+    const { image, imageStyles, language, keyword, tone } = formData;
+    console.log("--formData", formData);
+
     if (!imageStyles?.length) {
       onError?.("Please select styles");
       return;
@@ -233,16 +231,14 @@ export function useStoryGeneration({
       }));
       setPredictions(initialPredictions);
 
-      const imagesUrls = (
-        await Promise.all(images.map((image: any) => uploadFile(image.file)))
-      ).filter(Boolean);
-
-      submit({
-        images: imagesUrls.map((i: any) => i.url),
+      const parmas = {
         language,
         keyword,
         tone: TONE_PROMPTS.find((t: any) => t.value === tone)?.prompt,
-      });
+        images: image ? [image] : null,
+      };
+
+      submit(parmas);
     } catch (err) {
       console.error("handleGenerate error:", err);
       onError?.("Generation failed. Please try again.");

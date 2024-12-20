@@ -114,7 +114,7 @@ export default async function BaseLayout({
               <TooltipProvider>
                 <AuthProvider>
                   <Header />
-                  {children}
+                  <div className="mt-[64px]">{children}</div>
                   <Toaster />
                 </AuthProvider>
               </TooltipProvider>

@@ -9,7 +9,7 @@ interface ImageUploaderProps {
   onImageChange: (imageUrl: string | null) => void;
 }
 
-export function ImageUploader({ onImageChange }: ImageUploaderProps) {
+export default function ImageUploader({ onImageChange }: ImageUploaderProps) {
   const [image, setImage] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

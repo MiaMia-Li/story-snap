@@ -148,3 +148,11 @@ export interface StoryObject {
   content?: string;
   frames?: string;
 }
+
+export interface StoryFormData {
+  image?: string | null;
+  keyword: string;
+  imageStyles: string[];
+  language: Locale;
+  tone: string;
+}

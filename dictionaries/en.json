@@ -101,6 +101,7 @@
     "craftingImage": "Crafting your image...",
     "enterKeyword": "Enter keywords to guide the story",
     "generationFailed": "opps~failed",
+    "imageStyleGuide": "Image Guide",
     "tone": {
       "professional": "Professional",
       "friendly": "Friendly",
@@ -111,6 +112,7 @@
       "empathetic": "Empathetic",
       "direct": "Direct"
     },
+
     "imgStyle": {
       "realistic": "Realistic Photo",
       "anime": "Anime Style",
@@ -123,7 +125,20 @@
       "fantasy": "Fantasy Art",
       "cyberpunk": "Cyberpunk",
       "minimalist": "Minimalist",
-      "cinematic": "Cinematic"
+      "cinematic": "Cinematic",
+
+      "realisticDesc": "Photorealistic style that captures true-to-life details, textures, and lighting. Perfect for creating images that look like professional photographs with natural compositions and accurate representations.",
+      "animeDesc": "Japanese animation-inspired style featuring vibrant colors, expressive characters, and distinctive artistic elements characteristic of anime and manga aesthetics.",
+      "digital_artDesc": "Modern digital artwork style combining contemporary design elements with digital techniques, offering clean, precise, and highly customizable visual effects.",
+      "oil_paintingDesc": "Classical oil painting style with rich textures, deep colors, and visible brushstrokes, mimicking traditional canvas artwork with a timeless artistic quality.",
+      "watercolorDesc": "Soft and flowing watercolor style with transparent layers, gentle color bleeding, and delicate brush effects, creating ethereal and atmospheric imagery.",
+      "3d_renderDesc": "Three-dimensional computer-generated imagery with depth, lighting, and textures that create realistic or stylized 3D visualizations with a modern aesthetic.",
+      "pixel_artDesc": "Retro-style digital art using precisely placed pixels, creating nostalgic imagery reminiscent of classic video games and early computer graphics.",
+      "comicDesc": "Bold, graphic style inspired by comic books, featuring strong outlines, dynamic compositions, and expressive character designs with narrative elements.",
+      "fantasyDesc": "Imaginative and magical style incorporating mythical elements, surreal landscapes, and otherworldly creatures to create enchanting supernatural scenes.",
+      "cyberpunkDesc": "Futuristic style blending high-tech and low-life elements, featuring neon colors, urban dystopia, and advanced technology with a gritty, noir atmosphere.",
+      "minimalistDesc": "Clean and simplified style focusing on essential elements, using limited color palettes and geometric shapes to create elegant, uncluttered compositions.",
+      "cinematicDesc": "Movie-inspired visual style with dramatic lighting, compelling compositions, and atmospheric effects that capture the essence of film cinematography."
     }
   },
   "pricing": {

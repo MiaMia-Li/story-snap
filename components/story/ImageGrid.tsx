@@ -124,7 +124,7 @@ export function ImageGrid({ predictions, isLoading }: ImageGridProps) {
   if (!predictions || !predictions.length) {
     return (
       <div className="flex justify-center">
-        <div className="relative aspect-video w-full rounded-xl overflow-hidden border border-border flex items-center justify-center bg-muted">
+        <div className="aspect-square rounded-lg bg-muted animate-pulse flex items-center justify-center relative">
           <EmptyState message={t("generateStory.yourImage")} />
         </div>
       </div>
@@ -135,7 +135,7 @@ export function ImageGrid({ predictions, isLoading }: ImageGridProps) {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {predictions.map((prediction, index) => (
         <div key={`${prediction.styleId}-${index}`} className="space-y-3">
-          <div className="relative aspect-square rounded-xl overflow-hidden border border-border flex items-center justify-center bg-muted">
+          <div className="aspect-square rounded-lg bg-muted animate-pulse flex items-center justify-center relative">
             {renderImageContent(prediction, index)}
           </div>
           <div className="text-center">

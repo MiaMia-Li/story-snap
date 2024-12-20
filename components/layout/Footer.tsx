@@ -79,7 +79,7 @@ export default function Footer() {
             <h4 className="font-semibold">Product</h4>
             <ul className="flex space-x-6 text-sm">
               {navLinks.map((nav) => (
-                <li>
+                <li key={nav.label}>
                   <Link
                     href={nav.href}
                     className="text-muted-foreground hover:text-primary">
@@ -94,7 +94,6 @@ export default function Footer() {
           <div className="space-y-2">
             <h4 className="font-semibold">Legal</h4>
             <ul className="flex space-x-6 text-sm">
-              {" "}
               <li>
                 <Link
                   href="/privacy-policy"
@@ -109,20 +108,6 @@ export default function Footer() {
                   Terms of Service
                 </Link>
               </li>
-              {/* <li>
-                  <Link
-                    href="/terms-of-service"
-                    className="text-muted-foreground hover:text-primary">
-                    Cookie Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/terms-of-service"
-                    className="text-muted-foreground hover:text-primary">
-                    Licenses
-                  </Link>
-                </li> */}
             </ul>
           </div>
         </div>
