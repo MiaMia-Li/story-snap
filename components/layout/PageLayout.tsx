@@ -10,7 +10,6 @@ import {
   MessageSquareText,
   Share2,
   PenTool,
-  MessageSquare,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -31,15 +30,11 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { testimonials } from "@/config/home";
-// import { PricingCards } from "@/components/pricing/PricingCards";
-import { useSession } from "next-auth/react";
-import Image from "next/image";
-import { DiscordLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 import GalleryCard from "@/components/story/GalleryCard";
-import { EMAIL_ADDRESS } from "@/config/site";
 import { useTranslations } from "next-intl";
 import { PricingCards } from "../pricing/PricingCards";
 import { InfiniteScroll } from "./InfiniteScroll";
+import Footer from "./Footer";
 
 const stories = [
   {
@@ -228,7 +223,7 @@ export default function HomePage() {
 
               <div className="text-center space-y-6">
                 <motion.h1
-                  className="text-4xl sm:text-4xl lg:text-5xl font-bold tracking-tight"
+                  className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.2 }}>
@@ -358,23 +353,6 @@ export default function HomePage() {
               ))}
             </div>
           </section>
-          {/* Testimonials Section */}
-          {/* <section className="mb-32">
-            <FadeIn className="text-center mb-16">
-              <h2 className="text-3xl font-bold mb-4">
-                {t("testimonials.title")}
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                {t("testimonials.description")}
-              </p>
-            </FadeIn>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              {testimonials.map((testimonial, index) => (
-                <TestimonialCard key={index} {...testimonial} />
-              ))}
-            </div>
-          </section> */}
           <section className="mb-24">
             <FadeIn className="text-center mb-10">
               <h2 className="text-3xl font-bold mb-4">{t("pricing.title")}</h2>
@@ -438,161 +416,9 @@ export default function HomePage() {
               </CardContent>
             </Card>
           </section>
-          {/* Newsletter Signup */}
-          {/* <section className="bg-muted py-12 mt-12">
-            <div className="container mx-auto px-4 max-w-4xl text-center">
-              <h3 className="text-2xl font-bold mb-4">
-                Subscribe to Our Newsletter
-              </h3>
-              <p className="text-muted-foreground mb-6">
-                Get the latest stories delivered to your inbox
-              </p>
-              <div className="flex gap-4 max-w-md mx-auto">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 rounded-md border px-4 py-2"
-                />
-                <Button>Subscribe</Button>
-              </div>
-            </div>
-          </section> */}
         </div>
       </div>
-      <footer className="border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-10">
-        <div className="mx-auto max-w-7xl justify-between px-4 grid grid-cols-1 gap-8 sm:grid-cols-2">
-          {/* Logo and Description Column */}
-          <div className="space-y-4">
-            <Link
-              href="/"
-              className="flex items-center gap-2 transition-opacity hover:opacity-90">
-              <Image
-                src="/penguin.png"
-                alt="Logo"
-                width={50}
-                height={50}
-                className="object-contain"
-              />
-              <span className="md:text-2xl text-xl font-bold">SnapStory</span>
-            </Link>
-            <p className="text-sm text-muted-foreground">
-              Built with{" "}
-              <Link
-                href="https://pagegen.ai"
-                target="_blank"
-                className="text-primary hover:text-primary/80 transition-colors mr-6">
-                pagegen
-              </Link>
-              {/* © {new Date().getFullYear()} All Rights Reserved */}
-            </p>
-            <p className="text-sm text-muted-foreground">
-              Transform your images into engaging stories with the power of AI.
-            </p>
-            <div className="flex space-x-4">
-              <Link
-                href="https://x.com/snapstoryAI"
-                target="_blank"
-                rel="noopener noreferrer">
-                <Button variant="ghost" size="icon">
-                  <TwitterLogoIcon className="h-4 w-4" />
-                </Button>
-              </Link>
-              <Link
-                href="https://discord.gg/z5NbSzm9"
-                target="_blank"
-                rel="noopener noreferrer">
-                <Button variant="ghost" size="icon">
-                  <DiscordLogoIcon className="h-4 w-4" />
-                </Button>
-              </Link>
-              <Link href="/feedback">
-                <Button variant="ghost" size="icon">
-                  <MessageSquare className="h-4 w-4" />
-                </Button>
-              </Link>
-
-              {/* <Button variant="ghost" size="icon">
-                <Linkedin className="h-4 w-4" />
-              </Button>
-              <Button variant="ghost" size="icon">
-                <Github className="h-4 w-4" />
-              </Button> */}
-            </div>
-          </div>
-          <div className="space-y-4">
-            {/* Product Column */}
-            <div className="space-y-2">
-              <h4 className="font-semibold">Product</h4>
-              <ul className="flex space-x-6 text-sm">
-                <li>
-                  <Link
-                    href="/generate-story"
-                    className="text-muted-foreground hover:text-primary">
-                    Features
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/pricing"
-                    className="text-muted-foreground hover:text-primary">
-                    Pricing
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/examples"
-                    className="text-muted-foreground hover:text-primary">
-                    Examples
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/dashboard"
-                    className="text-muted-foreground hover:text-primary">
-                    Dashboard
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Legal Column */}
-            <div className="space-y-2">
-              <h4 className="font-semibold">Legal</h4>
-              <ul className="flex space-x-6 text-sm">
-                {" "}
-                <li>
-                  <Link
-                    href="/privacy-policy"
-                    className="text-muted-foreground hover:text-primary">
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/terms-of-service"
-                    className="text-muted-foreground hover:text-primary">
-                    Terms of Service
-                  </Link>
-                </li>
-                {/* <li>
-                  <Link
-                    href="/terms-of-service"
-                    className="text-muted-foreground hover:text-primary">
-                    Cookie Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/terms-of-service"
-                    className="text-muted-foreground hover:text-primary">
-                    Licenses
-                  </Link>
-                </li> */}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }
