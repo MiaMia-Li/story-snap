@@ -1,26 +1,21 @@
 "use client";
 
-import { AuthProvider } from "@/contexts/auth";
-import { StoryGenerator } from "@/components/story/StoryGenerator";
+import { useAuth } from "@/contexts/auth";
 import GenerationForm from "@/components/image-story/GenerationForm";
 import { useState } from "react";
-import GenerationResult from "@/components/image-story/GenerationResult";
-import ImageGallery from "@/components/image-story/ImageGallery";
 import { LoginDialog } from "@/components/header/LoginDialog";
 import { useStoryGeneration } from "@/hooks/useStoryGeneration";
 import { toast } from "sonner";
 import { StoryFormData } from "@/types";
-import { StoryDisplay } from "@/components/story/StoryDisplay";
-import { ImageGrid } from "@/components/story/ImageGrid";
 import { ActionButtons } from "@/components/story/ActionButtons";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { cn } from "@/lib/utils";
-import StoryContent from "@/components/image-story/StoryBox";
 import StoryBox from "@/components/image-story/StoryBox";
 
 export default function Home() {
   const [isGenerating, setIsGenerating] = useState(false);
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false); // State to track sidebar expansion
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
+  const { requireAuth } = useAuth();
 
   const { predictions, story, object, isLoadingFrame, handleGenerate } =
     useStoryGeneration({
@@ -31,8 +26,27 @@ export default function Home() {
       },
     });
 
-  const handleGenerateStory = (data: StoryFormData) => {
-    console.log("--data", data);
+  console.log("--story", story);
+
+  // Create a wrapper function that adheres to the AuthContextType interface
+  const handleGenerateStory = (data: StoryFormData, type: string) => {
+    console.log("--data", data, type);
+    if (!data.imageStyles || !data.imageStyles.length) {
+      toast.info("Please select image style");
+      return;
+    }
+    if (type === "image-to-image") {
+      if (!data.image) {
+        toast.info("Please upload image");
+        return;
+      }
+    } else {
+      if (!data.keyword) {
+        toast.info("Please input promot");
+        return;
+      }
+    }
+
     handleGenerate(data);
     setIsGenerating(true);
   };
@@ -43,15 +57,15 @@ export default function Home() {
   };
 
   return (
-    <div className="flex">
-      <Sidebar onToggle={handleSidebarToggle} className="hidden lg:flex" />
-      <main
-        className={cn(
-          "flex-1 transition-all duration-300",
-          isSidebarExpanded ? "lg:ml-64" : "lg:ml-16"
-        )}>
-        <AuthProvider>
-          <LoginDialog />
+    <>
+      <LoginDialog />
+      <div className="flex">
+        <Sidebar onToggle={handleSidebarToggle} className="hidden lg:flex" />
+        <main
+          className={cn(
+            "flex-1 transition-all duration-300",
+            isSidebarExpanded ? "lg:ml-64" : "lg:ml-16"
+          )}>
           <div className="flex flex-col lg:flex-row relative">
             <div
               className={cn(
@@ -59,7 +73,7 @@ export default function Home() {
               )}>
               <GenerationForm
                 isLoading={isGenerating}
-                onGenerate={(data) => handleGenerateStory(data)}
+                onGenerate={(data, type) => handleGenerateStory(data, type)}
               />
             </div>
 
@@ -73,8 +87,8 @@ export default function Home() {
               <ActionButtons story={story} predictions={predictions} />
             </div>
           </div>
-        </AuthProvider>
-      </main>
-    </div>
+        </main>
+      </div>
+    </>
   );
 }

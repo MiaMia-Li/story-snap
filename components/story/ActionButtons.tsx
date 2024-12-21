@@ -37,14 +37,14 @@ export function ActionButtons({ story, predictions }: ActionButtonsProps) {
           </Button>
         </Link>
 
-        {/* {story && (
+        {story && (
           <TwitterShareButton
             storyId={story?.storyId || ""}
             text={`I just created a story on SnapyStory, so amazing✨! Check it out: ${story?.title}`}
             hashtags="SnapyStory,AIStory,AIArt"
             image={`https://www.snapstoryai.com/story/${story?.storyId}`}
           />
-        )} */}
+        )}
       </div>
     </div>
   );

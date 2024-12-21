@@ -102,6 +102,7 @@
     "enterKeyword": "Enter keywords to guide the story",
     "generationFailed": "opps~failed",
     "imageStyleGuide": "Image Guide",
+    "generateTip": "Your magical story will appear here shortly...",
     "tone": {
       "professional": "Professional",
       "friendly": "Friendly",

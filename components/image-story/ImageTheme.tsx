@@ -12,6 +12,7 @@ import {
 } from "../ui/dialog";
 import Image from "next/image";
 import { useEffect } from "react";
+import { useAuth } from "@/contexts/auth";
 
 const MAX_SELECTIONS = 3;
 
@@ -24,6 +25,8 @@ export default function ImageTheme({
 }) {
   const t = useTranslations("generateStory");
   const { setStyleIds } = useStyleStore();
+
+  const { requireAuth } = useAuth();
 
   const handleStyleClick = (styleId: string) => {
     if (selectedStyles.includes(styleId)) {
@@ -100,7 +103,7 @@ export default function ImageTheme({
           </Dialog>
         </div>
         <Button
-          onClick={handleRandomStyle}
+          onClick={() => requireAuth(() => handleRandomStyle())}
           variant="ghost"
           size="sm"
           className="h-7 text-xs">
@@ -118,7 +121,11 @@ export default function ImageTheme({
           return (
             <button
               key={style.id}
-              onClick={() => !isDisabled && handleStyleClick(style.id)}
+              onClick={() =>
+                requireAuth(() => {
+                  !isDisabled && handleStyleClick(style.id);
+                })
+              }
               disabled={isDisabled}
               className={`
                 group relative h-10 px-4

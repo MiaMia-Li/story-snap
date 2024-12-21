@@ -14,6 +14,9 @@ import {
 import { LANGUAGES_PROMPT } from "@/config/lang";
 import ImageTheme from "./ImageTheme";
 import { StoryFormData } from "@/types";
+import { useAuth } from "@/contexts/auth";
+import useStyleStore from "@/hooks/useStyleStore";
+import { useEffect } from "react";
 
 interface TextToImageFormProps {
   onChange?: (formData: StoryFormData) => void;

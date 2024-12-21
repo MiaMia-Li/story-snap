@@ -12,9 +12,10 @@ import { useLocale } from "next-intl";
 import { Wand2, Image as ImageIcon, Loader2 } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
+import useStyleStore from "@/hooks/useStyleStore";
 
 interface GenerationFormProps {
-  onGenerate: (data: StoryFormData) => void;
+  onGenerate: (data: StoryFormData, type: string) => void;
   isLoading: boolean;
 }
 
@@ -31,6 +32,9 @@ export default function GenerationForm({
   });
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [activeTab, setActiveTab] = useState<string>("text-to-image");
+  const { requireAuth } = useAuth();
+  const defaultLang = useLocale();
 
   const currentCost = useMemo(() => {
     return formData?.imageStyles.length || 0;
@@ -41,15 +45,26 @@ export default function GenerationForm({
     console.log("Form data changed:", formData);
   };
 
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    setFormData({
+      language: defaultLang,
+      tone: "friendly",
+      keyword: "",
+      imageStyles: [],
+    });
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+    }
+  };
+
   return (
     <>
       <Tabs
-        defaultValue="text-to-image"
+        value={activeTab}
         className="flex flex-col h-full"
-        onValueChange={() => {
-          if (scrollContainerRef.current) {
-            scrollContainerRef.current.scrollTop = 0;
-          }
+        onValueChange={(value: string) => {
+          handleTabChange(value);
         }}>
         {/* Fixed Header */}
         <div className="flex-none">
@@ -71,20 +86,19 @@ export default function GenerationForm({
           </div>
         </div>
 
-        {/* Scrollable Content */}
         <div
           ref={scrollContainerRef}
           className="flex-1 overflow-y-auto min-h-0">
           <div className="px-6 py-4">
-            <TabsContent
-              value="text-to-image"
-              className="mt-0 data-[state=inactive]:hidden">
-              <TextToImageForm onChange={handleFormChange} />
+            <TabsContent value="text-to-image" className="mt-0">
+              {activeTab === "text-to-image" && (
+                <TextToImageForm onChange={handleFormChange} />
+              )}
             </TabsContent>
-            <TabsContent
-              value="image-to-image"
-              className="mt-0 data-[state=inactive]:hidden">
-              <ImageToImageForm onChange={handleFormChange} />
+            <TabsContent value="image-to-image" className="mt-0">
+              {activeTab === "image-to-image" && (
+                <ImageToImageForm onChange={handleFormChange} />
+              )}
             </TabsContent>
           </div>
         </div>
@@ -109,7 +123,9 @@ export default function GenerationForm({
             <Button
               onClick={() => {
                 if (!formData) return;
-                onGenerate(formData);
+                requireAuth(() => {
+                  onGenerate(formData, activeTab);
+                });
               }}
               className="w-full"
               variant="default"

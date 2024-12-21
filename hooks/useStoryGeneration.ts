@@ -269,7 +269,7 @@ export function useStoryGeneration({
 
   return {
     predictions,
-    story,
+    story: story.current,
     object,
     isLoadingFrame,
     handleGenerate,

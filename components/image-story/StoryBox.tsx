@@ -48,12 +48,10 @@ const WelcomeState = () => (
   </div>
 );
 
-const StoryLoadingSkeleton = () => (
+const StoryLoadingSkeleton = ({ message }: { message: string }) => (
   <div className="space-y-6">
     {/* Description text */}
-    <p className="text-sm text-muted-foreground italic">
-      Your magical story will appear here shortly...
-    </p>
+    <p className="text-sm text-muted-foreground italic">{message}</p>
 
     {/* Loading skeleton */}
     <div className="space-y-6 animate-pulse">
@@ -223,7 +221,9 @@ export default function StoryBox({
       {/* Story Section */}
       <div className="flex-1 p-4">
         <div className="space-y-6">
-          {!object?.content && <StoryLoadingSkeleton />}
+          {!object?.content && (
+            <StoryLoadingSkeleton message={t("generateStory.generateTip")} />
+          )}
 
           {(object?.content || object?.title) && (
             <div className="space-y-4 bg-card rounded-lg">

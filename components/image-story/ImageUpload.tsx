@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Trash2, Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { useAuth } from "@/contexts/auth";
 
 interface ImageUploaderProps {
   onImageChange: (imageUrl: string | null) => void;
@@ -13,6 +14,7 @@ export default function ImageUploader({ onImageChange }: ImageUploaderProps) {
   const [image, setImage] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { requireAuth } = useAuth();
 
   const uploadImage = async (file: File) => {
     // 验证文件类型
@@ -97,13 +99,14 @@ export default function ImageUploader({ onImageChange }: ImageUploaderProps) {
           ? "border-primary bg-primary/5"
           : "border-border hover:bg-muted/50"
       } transition-colors`}
-      onDrop={handleDrop}
-      onDragOver={handleDragOver}
-      onDragLeave={handleDragLeave}>
+      onDrop={(e) => requireAuth(() => handleDrop(e))}
+      onDragOver={(e) => requireAuth(() => handleDragOver(e))}
+      onDragLeave={(e) => requireAuth(() => handleDragLeave(e))}>
       <input
+        onFocus={() => requireAuth(() => {})}
         type="file"
         accept="image/*"
-        onChange={handleFileInput}
+        onChange={(e) => handleFileInput(e)}
         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
         style={{ display: image ? "none" : "block" }}
         disabled={isLoading}
