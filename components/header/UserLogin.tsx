@@ -10,12 +10,30 @@ import {
 import { useState } from "react";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 import { useSession, signIn } from "next-auth/react";
+
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
 import EmailSign from "./EmailSign";
 
-export default function UserLogin() {
+interface UserLoginProps {
+  buttonText?: string;
+  buttonClassName?: string;
+  buttonVariant?:
+    | "default"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | "link";
+}
+
+export default function UserLogin({
+  buttonText = "Sign in",
+  buttonClassName,
+  buttonVariant = "default",
+}: UserLoginProps) {
   const [isLoading, setIsLoading] = useState<string | null>(null);
   const { data: session } = useSession();
   const router = useRouter();
@@ -41,14 +59,19 @@ export default function UserLogin() {
     <Dialog>
       <DialogTrigger asChild>
         <Button
-          variant="default"
-          className="rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 dark:from-blue-500 dark:to-indigo-500">
-          Sign in
+          variant={buttonVariant}
+          className={cn(
+            "rounded-full bg-gradient-to-r from-primary to-primary/80",
+            "text-primary-foreground hover:from-primary/90 hover:to-primary/70",
+            "dark:from-primary/90 dark:to-primary/70",
+            buttonClassName
+          )}>
+          {buttonText}
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[420px] border-blue-100/20 dark:border-blue-900/20">
+      <DialogContent className="sm:max-w-[420px] border-border/20 dark:border-border/20">
         <DialogHeader className="text-center space-y-2">
-          <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent dark:from-blue-400 dark:to-indigo-400">
+          <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent dark:from-primary/90 dark:to-primary/70">
             Welcome Back
           </DialogTitle>
           <p className="text-sm text-muted-foreground">
@@ -62,14 +85,22 @@ export default function UserLogin() {
             variant="outline"
             disabled={isLoading !== null}
             onClick={() => handleSignIn("google")}
-            className="h-11 rounded-lg border-blue-100 bg-white/50 hover:bg-blue-50/50 hover:border-blue-200 dark:border-blue-900/50 dark:bg-white/5 dark:hover:bg-blue-900/20 dark:hover:border-blue-800 transition-all duration-200">
+            className={cn(
+              "h-11 rounded-lg border-border",
+              "bg-background/50 hover:bg-accent/50",
+              "hover:border-border/80",
+              "dark:border-border/50 dark:bg-background/5",
+              "dark:hover:bg-accent/20 dark:hover:border-border/80",
+              "transition-all duration-200"
+            )}>
             <div className="flex items-center justify-center gap-3">
               <FaGoogle
-                className={`w-5 h-5 ${
+                className={cn(
+                  "w-5 h-5",
                   isLoading === "google"
-                    ? "text-blue-400"
-                    : "text-blue-600 dark:text-blue-400"
-                }`}
+                    ? "text-primary/40"
+                    : "text-primary dark:text-primary/90"
+                )}
               />
               <span className="text-sm font-medium">
                 {isLoading === "google"
@@ -84,14 +115,22 @@ export default function UserLogin() {
             variant="outline"
             disabled={isLoading !== null}
             onClick={() => handleSignIn("github")}
-            className="h-11 rounded-lg border-blue-100 bg-white/50 hover:bg-blue-50/50 hover:border-blue-200 dark:border-blue-900/50 dark:bg-white/5 dark:hover:bg-blue-900/20 dark:hover:border-blue-800 transition-all duration-200">
+            className={cn(
+              "h-11 rounded-lg border-border",
+              "bg-background/50 hover:bg-accent/50",
+              "hover:border-border/80",
+              "dark:border-border/50 dark:bg-background/5",
+              "dark:hover:bg-accent/20 dark:hover:border-border/80",
+              "transition-all duration-200"
+            )}>
             <div className="flex items-center justify-center gap-3">
               <FaGithub
-                className={`w-5 h-5 ${
+                className={cn(
+                  "w-5 h-5",
                   isLoading === "github"
-                    ? "text-gray-400"
-                    : "text-gray-900 dark:text-white"
-                }`}
+                    ? "text-foreground/40"
+                    : "text-foreground dark:text-foreground/90"
+                )}
               />
               <span className="text-sm font-medium">
                 {isLoading === "github"
@@ -100,6 +139,7 @@ export default function UserLogin() {
               </span>
             </div>
           </Button>
+
           <div className="flex items-center justify-center gap-2">
             <span className="text-sm text-muted-foreground">
               OR Sign in with Email{" "}
@@ -107,18 +147,17 @@ export default function UserLogin() {
           </div>
           <EmailSign />
 
-          {/* 可选：添加隐私政策提示 */}
           <p className="text-center text-xs text-muted-foreground mt-4">
             By continuing, you agree to our{" "}
             <button
               onClick={() => window.open("/terms-of-service", "_blank")}
-              className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors">
+              className="text-primary hover:text-primary/90 dark:text-primary/90 dark:hover:text-primary/80 transition-colors">
               Terms of Service
             </button>{" "}
             and{" "}
             <button
               onClick={() => window.open("/privacy-policy", "_blank")}
-              className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors">
+              className="text-primary hover:text-primary/90 dark:text-primary/90 dark:hover:text-primary/80 transition-colors">
               Privacy Policy
             </button>
           </p>

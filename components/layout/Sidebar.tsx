@@ -1,4 +1,3 @@
-// components/Sidebar.tsx
 "use client";
 
 import { cn } from "@/lib/utils";
@@ -14,6 +13,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { DiscordLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
+import { useSidebarStore } from "@/hooks/useSidebarStore";
 
 interface SidebarProps {
   className?: string;
@@ -65,36 +65,32 @@ const footerLinks = [
   { label: `@SnapStory ${currentYear}`, href: "/" },
 ];
 
-const SIDEBAR_STATE_KEY = "sidebar-expanded";
-
 export function Sidebar({ className, onToggle }: SidebarProps) {
-  const [expanded, setExpanded] = useState<boolean>(() => {
-    // 在客户端运行时才读取 localStorage
-    if (typeof window !== "undefined") {
-      const savedState = localStorage.getItem(SIDEBAR_STATE_KEY);
-      return savedState ? JSON.parse(savedState) : false;
-    }
-    return false;
-  });
-
   const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
 
-  // 监听状态变化，保存到 localStorage
-  useEffect(() => {
-    localStorage.setItem(SIDEBAR_STATE_KEY, JSON.stringify(expanded));
-  }, [expanded]);
+  const { expanded, setExpanded, toggleExpanded } = useSidebarStore();
 
-  // 在组件挂载时通知父组件初始状态
+  // 处理客户端水合
   useEffect(() => {
-    onToggle(expanded);
+    setMounted(true);
   }, []);
 
-  const handleToggle = () => {
-    const newExpandedState = !expanded;
-    setExpanded(newExpandedState);
-    onToggle(newExpandedState);
-  };
+  // 通知父组件状态变化
+  useEffect(() => {
+    if (mounted) {
+      onToggle(expanded);
+    }
+  }, [expanded, onToggle, mounted]);
 
+  // 在客户端水合之前显示默认状态
+  if (!mounted) {
+    return (
+      <aside className={cn("h-screen", className)}>
+        {/* 骨架屏或加载状态 */}
+      </aside>
+    );
+  }
   return (
     <div
       className={cn(
@@ -160,7 +156,7 @@ export function Sidebar({ className, onToggle }: SidebarProps) {
             </Link>
           ))}
           <button
-            onClick={handleToggle}
+            onClick={toggleExpanded}
             className={cn(
               "p-2 rounded-lg",
               "hover:bg-accent hover:text-accent-foreground",
