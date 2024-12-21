@@ -12,7 +12,7 @@ import {
 } from "lucide-react"; // Import icons for toggle
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DiscordLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 
 interface SidebarProps {
@@ -27,7 +27,7 @@ const navLinks = [
     icon: <Sparkles className="w-5 h-5" />,
   },
   {
-    href: "/dashboard",
+    href: "/mine",
     label: "Mine",
     icon: <LayoutDashboard className="w-5 h-5" />,
   },
@@ -65,14 +65,34 @@ const footerLinks = [
   { label: `@SnapStory ${currentYear}`, href: "/" },
 ];
 
+const SIDEBAR_STATE_KEY = "sidebar-expanded";
+
 export function Sidebar({ className, onToggle }: SidebarProps) {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState<boolean>(() => {
+    // 在客户端运行时才读取 localStorage
+    if (typeof window !== "undefined") {
+      const savedState = localStorage.getItem(SIDEBAR_STATE_KEY);
+      return savedState ? JSON.parse(savedState) : false;
+    }
+    return false;
+  });
+
   const pathname = usePathname();
+
+  // 监听状态变化，保存到 localStorage
+  useEffect(() => {
+    localStorage.setItem(SIDEBAR_STATE_KEY, JSON.stringify(expanded));
+  }, [expanded]);
+
+  // 在组件挂载时通知父组件初始状态
+  useEffect(() => {
+    onToggle(expanded);
+  }, []);
 
   const handleToggle = () => {
     const newExpandedState = !expanded;
     setExpanded(newExpandedState);
-    onToggle(newExpandedState); // Notify parent component
+    onToggle(newExpandedState);
   };
 
   return (

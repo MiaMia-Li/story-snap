@@ -15,7 +15,6 @@ import StoryBox from "@/components/image-story/StoryBox";
 export default function Home() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
-  const { requireAuth } = useAuth();
 
   const { predictions, story, object, isLoadingFrame, handleGenerate } =
     useStoryGeneration({
@@ -25,8 +24,6 @@ export default function Home() {
         setIsGenerating(false);
       },
     });
-
-  console.log("--story", story);
 
   // Create a wrapper function that adheres to the AuthContextType interface
   const handleGenerateStory = (data: StoryFormData, type: string) => {
@@ -63,7 +60,7 @@ export default function Home() {
         <Sidebar onToggle={handleSidebarToggle} className="hidden lg:flex" />
         <main
           className={cn(
-            "flex-1 transition-all duration-300",
+            "flex-1 transition-all duration-200",
             isSidebarExpanded ? "lg:ml-64" : "lg:ml-16"
           )}>
           <div className="flex flex-col lg:flex-row relative">

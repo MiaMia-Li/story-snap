@@ -30,10 +30,10 @@ export function ActionButtons({ story, predictions }: ActionButtonsProps) {
 
       {/* Action Buttons */}
       <div className="flex items-center gap-4">
-        <Link href="/dashboard/stories">
+        <Link href="/mine">
           <Button variant="outline" className="flex items-center gap-2">
             <DashboardIcon className="h-4 w-4" />
-            View in Dashboard
+            View My Story
           </Button>
         </Link>
 

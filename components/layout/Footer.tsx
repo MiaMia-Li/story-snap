@@ -36,8 +36,8 @@ export default function Footer() {
       label: "Examples",
     },
     {
-      href: "/dashboard",
-      label: "Dashboard",
+      href: "/mine",
+      label: "My Story",
     },
   ];
 

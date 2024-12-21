@@ -155,8 +155,8 @@ export default function UserMenu() {
             />
             <MenuItem
               icon={<MixIcon className="h-4 w-4" />}
-              label="Dashboard"
-              href="/dashboard"
+              label="My Story"
+              href="/mine"
             />
             <MenuItem
               icon={<MessageSquare className="h-4 w-4" />}
