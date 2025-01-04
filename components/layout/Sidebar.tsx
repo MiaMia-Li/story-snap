@@ -35,12 +35,12 @@ const navLinks = [
     label: "Image Story",
     icon: <Image className="w-5 h-5" />,
   },
-  {
-    href: "/generate-video",
-    label: "Video Story",
-    icon: <Video className="w-5 h-5" />,
-    isNew: true,
-  },
+  // {
+  //   href: "/generate-video",
+  //   label: "Video Story",
+  //   icon: <Video className="w-5 h-5" />,
+  //   isNew: true,
+  // },
   {
     href: "/mine",
     label: "Mine",

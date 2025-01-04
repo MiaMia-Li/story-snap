@@ -129,19 +129,14 @@ export default function Examples() {
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                       priority
                     />
-                    <Badge
-                      variant="secondary"
-                      className="absolute top-2 right-2 text-xs bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm">
-                      {story.category}
-                    </Badge>
                   </div>
 
-                  <CardContent className="p-4 space-y-3">
+                  <CardContent className="p-4">
                     <div className="space-y-2">
                       <h4 className="font-medium text-base leading-tight tracking-tight line-clamp-2">
                         {story.title}
                       </h4>
-                      <div className="flex items-center gap-x-2">
+                      {/* <div className="flex items-center gap-x-2">
                         <Avatar className="h-6 w-6">
                           <AvatarImage
                             src={story.authorAvatar}
@@ -168,7 +163,7 @@ export default function Examples() {
                             )}
                           </time>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
 
                     <p className="text-xs text-muted-foreground line-clamp-3">
