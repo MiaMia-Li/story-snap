@@ -11,6 +11,6 @@ const customAlphabet = (alphabet: string, defaultSize = 10) => {
   };
 };
 
-export const generateId = customAlphabet(
+export const randomUUID = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 );

@@ -34,9 +34,9 @@ export default function DownloadButton({
   return (
     <Button
       variant="secondary"
-      size="icon"
       onClick={handleDownload}
-      title={tooltip}>
+      title={tooltip}
+      size="iconSm">
       <Download className="h-4 w-4" />
     </Button>
   );

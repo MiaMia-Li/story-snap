@@ -8,12 +8,21 @@ import {
   LayoutDashboard,
   ArrowRightToLine,
   ArrowLeftFromLine,
+  Video,
+  Image,
 } from "lucide-react"; // Import icons for toggle
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { DiscordLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 import { useSidebarStore } from "@/hooks/useSidebarStore";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Badge } from "../ui/badge";
 
 interface SidebarProps {
   className?: string;
@@ -23,8 +32,14 @@ interface SidebarProps {
 const navLinks = [
   {
     href: "/generate-story",
-    label: "Create",
-    icon: <Sparkles className="w-5 h-5" />,
+    label: "Image Story",
+    icon: <Image className="w-5 h-5" />,
+  },
+  {
+    href: "/generate-video",
+    label: "Video Story",
+    icon: <Video className="w-5 h-5" />,
+    isNew: true,
   },
   {
     href: "/mine",
@@ -71,19 +86,16 @@ export function Sidebar({ className, onToggle }: SidebarProps) {
 
   const { expanded, setExpanded, toggleExpanded } = useSidebarStore();
 
-  // 处理客户端水合
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // 通知父组件状态变化
   useEffect(() => {
     if (mounted) {
       onToggle(expanded);
     }
   }, [expanded, onToggle, mounted]);
 
-  // 在客户端水合之前显示默认状态
   if (!mounted) {
     return (
       <aside className={cn("h-screen", className)}>
@@ -118,13 +130,25 @@ export function Sidebar({ className, onToggle }: SidebarProps) {
               "relative"
             )}>
             <div className="flex items-center gap-3 w-full">
-              <div className="min-w-[20px]">{item.icon}</div>
+              {expanded ? (
+                <div className="min-w-[20px]">{item.icon}</div>
+              ) : (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <div className="min-w-[20px]">{item.icon}</div>
+                    </TooltipTrigger>
+                    <TooltipContent>{item.label}</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
               <span
                 className={cn(
-                  "whitespace-nowrap opacity-0 transition-all duration-100 ease-in-out",
+                  "whitespace-nowrap opacity-0 transition-all duration-100 ease-in-out flex gap-2",
                   expanded && "opacity-100"
                 )}>
                 {item.label}
+                {item.isNew && <Badge> New</Badge>}
               </span>
             </div>
           </Link>

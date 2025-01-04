@@ -1,6 +1,5 @@
 "use client";
 
-import { useAuth } from "@/contexts/auth";
 import GenerationForm from "@/components/image-story/GenerationForm";
 import { useState } from "react";
 import { LoginDialog } from "@/components/header/LoginDialog";
@@ -16,18 +15,18 @@ export default function Home() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
 
-  const { predictions, story, object, isLoadingFrame, handleGenerate } =
-    useStoryGeneration({
-      onSuccess: () => setIsGenerating(false),
-      onError: (msg) => {
-        toast.error(msg);
-        setIsGenerating(false);
-      },
-    });
+  const { predictions, story, object, handleGenerate } = useStoryGeneration({
+    onSuccess: () => {
+      setIsGenerating(false);
+    },
+    onError: (errorMsg) => {
+      setIsGenerating(false);
+      toast.error(errorMsg);
+    },
+  });
 
   // Create a wrapper function that adheres to the AuthContextType interface
   const handleGenerateStory = (data: StoryFormData, type: string) => {
-    console.log("--data", data, type);
     if (!data.imageStyles || !data.imageStyles.length) {
       toast.info("Please select image style");
       return;
@@ -43,9 +42,8 @@ export default function Home() {
         return;
       }
     }
-
-    handleGenerate(data);
     setIsGenerating(true);
+    handleGenerate(data);
   };
 
   // Function to handle sidebar toggle

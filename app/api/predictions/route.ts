@@ -47,8 +47,8 @@ export async function POST(request: NextRequest) {
     };
 
     const options: any = {
-      // model: "stability-ai/stable-diffusion-3",
-      model: "stability-ai/stable-diffusion-3.5-large",
+      model: "stability-ai/stable-diffusion-3",
+      // model: "stability-ai/stable-diffusion-3.5-large",
       // version:
       //   "5599ed30703defd1d160a25a63321b4dec97101d98b4674bcc56e41f62f35637",
       input: input,

@@ -46,10 +46,7 @@ export function StoryCard({ story }: { story: any }) {
                   priority
                 />
                 <div className="absolute bottom-0 right-0 z-10">
-                  <DownloadButton
-                    imageUrl={images[0]}
-                    className="bg-black/50 hover:bg-black/70"
-                  />
+                  <DownloadButton imageUrl={images[0]} />
                 </div>
               </div>
             ) : (
@@ -80,7 +77,7 @@ export function StoryCard({ story }: { story: any }) {
         )}
 
         <div className="prose prose-sm max-w-none dark:prose-invert">
-          <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+          <p className="text-sm leading-relaxed text-muted-foreground">
             {story.content}
             <CopyButton content={story.content} />
           </p>
@@ -89,12 +86,6 @@ export function StoryCard({ story }: { story: any }) {
 
       <CardFooter className="flex justify-between items-center pt-4 border-t">
         <ShareButton story={story} />
-        {/* 如果有更多图片，显示查看全部按钮 */}
-        {story.image && story.image.split(",").filter(Boolean).length > 4 && (
-          <div className="text-sm text-muted-foreground">
-            +{story.image.split(",").filter(Boolean).length - 4} more images
-          </div>
-        )}
       </CardFooter>
     </Card>
   );

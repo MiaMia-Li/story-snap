@@ -12,41 +12,8 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { CopyButton } from "../story/CopyButton";
-
-const WelcomeState = () => (
-  <div className="flex flex-col items-center justify-center py-20 px-6 text-center space-y-6">
-    <div className="w-20 h-20 relative">
-      <Image
-        src="/penguin.png"
-        alt="Logo"
-        fill
-        className="object-contain"
-        priority
-      />
-    </div>
-    <div className="space-y-3 max-w-lg">
-      <h2 className="text-2xl font-semibold text-foreground">
-        Create Amazing Stories & Images
-      </h2>
-      <p className="text-muted-foreground">
-        Transform your ideas into captivating stories and stunning visuals.
-        Select a style to begin your creative journey.
-      </p>
-    </div>
-
-    <div className="flex flex-wrap gap-3 justify-center items-center mt-6">
-      <span className="px-4 py-1.5 rounded-full text-sm bg-primary/5 border border-primary/10">
-        🎯 Smart Composition
-      </span>
-      <span className="px-4 py-1.5 rounded-full text-sm bg-primary/5 border border-primary/10">
-        ⚡️ Instant Generation
-      </span>
-      <span className="px-4 py-1.5 rounded-full text-sm bg-primary/5 border border-primary/10">
-        🎭 Rich Storytelling
-      </span>
-    </div>
-  </div>
-);
+import Examples from "./Examples";
+import { Badge } from "../ui/badge";
 
 const StoryLoadingSkeleton = ({ message }: { message: string }) => (
   <div className="space-y-6">
@@ -54,32 +21,28 @@ const StoryLoadingSkeleton = ({ message }: { message: string }) => (
     <p className="text-sm text-muted-foreground italic">{message}</p>
 
     {/* Loading skeleton */}
-    <div className="space-y-6 animate-pulse">
+    <div className="space-y-4 animate-pulse">
       {/* Title skeleton */}
-      <div className="h-8 bg-muted rounded-md w-3/4" />
-
+      <div className="h-8 bg-muted rounded-md w-1/2" />
       {/* First paragraph */}
-      <div className="space-y-2">
-        <div className="h-4 bg-muted rounded-md w-full" />
-        <div className="h-4 bg-muted rounded-md w-5/6" />
-        <div className="h-4 bg-muted rounded-md w-4/6" />
-        <div className="h-4 bg-muted rounded-md w-5/6" />
-      </div>
-
-      {/* Second paragraph */}
       <div className="space-y-2">
         <div className="h-4 bg-muted rounded-md w-full" />
         <div className="h-4 bg-muted rounded-md w-4/5" />
         <div className="h-4 bg-muted rounded-md w-3/4" />
       </div>
-
+      {/* Second paragraph */}
+      {/* <div className="space-y-2">
+        <div className="h-4 bg-muted rounded-md w-full" />
+        <div className="h-4 bg-muted rounded-md w-4/5" />
+        <div className="h-4 bg-muted rounded-md w-3/4" />
+      </div> */}
       {/* Third paragraph */}
-      <div className="space-y-2">
+      {/* <div className="space-y-2">
         <div className="h-4 bg-muted rounded-md w-5/6" />
         <div className="h-4 bg-muted rounded-md w-full" />
         <div className="h-4 bg-muted rounded-md w-4/6" />
         <div className="h-4 bg-muted rounded-md w-3/4" />
-      </div>
+      </div> */}
     </div>
   </div>
 );
@@ -127,22 +90,20 @@ export default function StoryBox({
       case "starting":
       case "processing":
         return (
-          <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm">
-            <div className="text-center space-y-4 flex flex-col items-center">
-              <div className="w-8 h-8 relative animate-pulse">
-                <Image
-                  src="/penguin.png"
-                  alt="Logo"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <div className="flex items-center gap-2 px-4 py-2 rounded-full">
-                <Loader2 className="animate-spin h-4 w-4 text-primary" />
-                <span className="text-sm font-medium text-primary">
-                  {t("generateStory.waiting")}
-                </span>
-              </div>
+          <div className="text-center space-y-4 flex flex-col items-center">
+            <div className="w-8 h-8 relative animate-pulse">
+              <Image
+                src="/penguin.png"
+                alt="Logo"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full">
+              <Loader2 className="animate-spin h-4 w-4 text-primary" />
+              <span className="text-sm font-medium text-primary">
+                {t("generateStory.waiting")}
+              </span>
             </div>
           </div>
         );
@@ -188,19 +149,6 @@ export default function StoryBox({
         return <EmptyState message={t("generateStory.noImage")} />;
 
       case "failed":
-        return (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center space-y-2 p-4">
-              <AlertCircle className="w-8 h-8 text-destructive mx-auto" />
-              <p className="text-sm font-medium text-destructive">
-                {t("generateStory.generationFailed")}
-              </p>
-              <p className="text-xs text-muted-foreground">
-                {t("generateStory.tryAgain")}
-              </p>
-            </div>
-          </div>
-        );
 
       default:
         return (
@@ -213,13 +161,13 @@ export default function StoryBox({
 
   // If no predictions and no content, show welcome state
   if (!predictions?.length && !object?.content && !isLoading) {
-    return <WelcomeState />;
+    return <Examples />;
   }
 
   return (
-    <div className="w-full p-6 rounded-xl flex flex-col lg:flex-row bg-card shadow-lg border border-border">
+    <div className="w-full py-6 px-10 rounded-xl flex flex-col bg-card shadow-lg border border-border">
       {/* Story Section */}
-      <div className="flex-1 p-4">
+      <div className="flex-1">
         <div className="space-y-6">
           {!object?.content && (
             <StoryLoadingSkeleton message={t("generateStory.generateTip")} />
@@ -228,13 +176,13 @@ export default function StoryBox({
           {(object?.content || object?.title) && (
             <div className="space-y-4 bg-card rounded-lg">
               {object?.title && (
-                <h6 className="font-semibold text-xl text-foreground">
+                <h6 className="font-semibold text-lg text-foreground">
                   {object.title}
                 </h6>
               )}
-              <p className="text-muted-foreground leading-relaxed text-lg">
+              <p className="text-muted-foreground leading-relaxed text-base">
                 {object?.content}
-                {object?.content && <CopyButton content={object?.content} />}
+                {!isLoading && <CopyButton content={object?.content} />}
               </p>
             </div>
           )}
@@ -242,16 +190,20 @@ export default function StoryBox({
       </div>
 
       {/* Images Section */}
-      <div className="flex-1 p-4 border-t lg:border-t-0 lg:border-l border-border mt-4 lg:mt-0 lg:ml-4 pt-4 lg:pt-0">
-        <div className="grid grid-cols-1 gap-4">
+      <div className="flex-1 py-4">
+        <div className="grid md:grid-cols-2 grid-cols-1 gap-8">
           {predictions.map((prediction: any, index: number) => (
-            <div key={`${prediction.styleId}-${index}`} className="space-y-2">
-              <div className="aspect-square rounded-lg bg-muted flex items-center justify-center relative overflow-hidden border border-border">
+            <div
+              key={`${prediction.styleId}-${index}`}
+              className="space-y-2 relative">
+              <div className="aspect-square rounded-lg bg-muted flex items-center justify-center relative overflow-hidden">
                 {renderImageContent(prediction)}
               </div>
-              <p className="text-sm text-center text-muted-foreground">
+              <Badge
+                className="text-sm absolute top-0 left-2"
+                variant="secondary">
                 {getStyleName(prediction.styleId)}
-              </p>
+              </Badge>
             </div>
           ))}
         </div>

@@ -64,7 +64,7 @@ export default function ImageTheme({
             <span className="text-red-500">*</span>
             <span className="font-medium">{t("imageStyle")}</span>
             <span className="text-muted-foreground">
-              ({selectedStyles.length}/{MAX_SELECTIONS})
+              (Up to {MAX_SELECTIONS})
             </span>
           </div>
           <Dialog>

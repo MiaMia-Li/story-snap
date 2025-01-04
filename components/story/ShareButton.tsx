@@ -60,7 +60,7 @@ const ShareButton = ({ story, size = "default" }: ShareButtonProps) => {
   return (
     <div className="flex items-center gap-2">
       {/* View Story Button */}
-      <Link href={`/story/${story.storyId}`} passHref>
+      <Link href={`/story/${story.storyId}`} target="_blank">
         <Button variant="outline" size="sm" className="gap-2">
           <ExternalLinkIcon className="h-4 w-4" />
           View

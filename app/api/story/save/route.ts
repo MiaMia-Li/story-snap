@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
-import { generateId } from "@/utils/uuid";
+import { randomUUID } from "@/utils/uuid";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
         title,
         content,
         image,
-        storyId: generateId(),
+        storyId: randomUUID(),
       },
     });
 
