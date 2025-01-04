@@ -148,7 +148,7 @@ export function Sidebar({ className, onToggle }: SidebarProps) {
                   expanded && "opacity-100"
                 )}>
                 {item.label}
-                {item.isNew && <Badge> New</Badge>}
+                {/* {item.isNew && <Badge> New</Badge>} */}
               </span>
             </div>
           </Link>
