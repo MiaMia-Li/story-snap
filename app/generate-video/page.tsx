@@ -12,10 +12,12 @@ import { useVideoGeneration } from "@/hooks/useVideoGeneration";
 import { QueuePanel } from "@/components/common/QueuePanel";
 import { randomUUID } from "@/utils/uuid";
 import { useSession } from "next-auth/react";
+import { useQueueStore } from "@/hooks/useQueueStore";
 
 export default function Home() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
+  const { tasks } = useQueueStore();
 
   const { prediction, object, isLoadingFrame, handleGenerate } =
     useVideoGeneration({
@@ -38,6 +40,16 @@ export default function Home() {
         toast.info("Please input promot");
         return;
       }
+    }
+    const queueTasks =
+      tasks &&
+      tasks.length > 0 &&
+      tasks.filter(
+        (task) => task.status === "pending" || task.status === "processing"
+      );
+    if (queueTasks && queueTasks.length >= 3) {
+      toast.info("Maximum concurrent tasks reached");
+      return;
     }
 
     handleGenerate(data);

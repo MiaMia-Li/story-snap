@@ -43,7 +43,9 @@ export default function Examples() {
   useEffect(() => {
     const fetchStories = async () => {
       try {
-        const response = await fetch("/api/story/getExample");
+        const response = await fetch(
+          "/api/story/getExample?storyIds=N4fIZnNHrc,hcHptmVNpr,wEoqZABQ32,uXyfNIVTuc,Q1f4DJI5G2,EyY1m9J3hG"
+        );
         const data = await response.json();
         setStories(data.data);
       } catch (error) {

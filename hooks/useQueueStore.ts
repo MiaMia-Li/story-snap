@@ -28,13 +28,6 @@ export const useQueueStore = create<QueueStore>()((set, get) => ({
   maxConcurrentTasks: 3,
 
   addTask: async ({ type, id, userId, pollingId }) => {
-    const state = get();
-
-    if (state.tasks.length >= state.maxConcurrentTasks) {
-      console.warn("Maximum concurrent tasks reached");
-      return null;
-    }
-
     try {
       const response = await fetch("/api/queue", {
         method: "POST",
@@ -82,7 +75,7 @@ export const useQueueStore = create<QueueStore>()((set, get) => ({
         });
 
         if (!response.ok) {
-          throw new Error("Failed to create task");
+          throw new Error("Failed to update task");
         }
       } catch (error) {
         console.error("Error update task:", error);

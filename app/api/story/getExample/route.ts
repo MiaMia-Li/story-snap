@@ -6,17 +6,25 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   try {
+    // 从查询参数中获取 storyIds
+    const { searchParams } = new URL(request.url);
+    const storyIdsParam = searchParams.get("storyIds");
+
+    // 如果没有传入 storyIds，返回错误
+    if (!storyIdsParam) {
+      return NextResponse.json(
+        { error: "No story IDs provided" },
+        { status: 400 }
+      );
+    }
+
+    // 解析 storyIds
+    const storyIds = storyIdsParam.split(",");
+
     const stories = await prisma.story.findMany({
       where: {
         storyId: {
-          in: [
-            "N4fIZnNHrc",
-            "hcHptmVNpr",
-            "wEoqZABQ32",
-            "uXyfNIVTuc",
-            "Q1f4DJI5G2",
-            "EyY1m9J3hG",
-          ],
+          in: storyIds,
         },
       },
     });
@@ -25,8 +33,8 @@ export async function GET(request: NextRequest) {
       return {
         ...story,
         date: story.createdAt.toISOString(),
-        authorName: testimonials[ind].author,
-        authorAvatar: testimonials[ind].avatar,
+        authorName: testimonials[ind]?.author || "",
+        authorAvatar: testimonials[ind]?.avatar || "",
         likes: Math.floor(Math.random() * 8 + Math.random() * 10),
       };
     });

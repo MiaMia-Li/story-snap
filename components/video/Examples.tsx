@@ -4,8 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useEffect, useState } from "react";
-import { Badge } from "../ui/badge";
+// import { Badge } from "../ui/badge";
 import { motion } from "framer-motion";
+import { VideoPlayer } from "../common/FileWrapper";
 
 // 动画配置
 const containerVariants = {
@@ -43,7 +44,9 @@ export default function Examples() {
   useEffect(() => {
     const fetchStories = async () => {
       try {
-        const response = await fetch("/api/story/getExample");
+        const response = await fetch(
+          "/api/story/getExample?storyIds=ijHTNytPTz,UDGnd7jOU0,nB3JeX7piB"
+        );
         const data = await response.json();
         setStories(data.data);
       } catch (error) {
@@ -101,7 +104,7 @@ export default function Examples() {
         </motion.div>
       </motion.div>
 
-      {/* <motion.div
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.6 }}
@@ -122,13 +125,14 @@ export default function Examples() {
               <Link href={`/story/${story.storyId}`}>
                 <Card className="group hover:shadow-md transition-all duration-300 overflow-hidden h-full">
                   <div className="relative aspect-[16/9] overflow-hidden">
-                    <Image
+                    {/* <Image
                       src={story.image}
                       alt={story.title}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                       priority
-                    />
+                    /> */}
+                    <VideoPlayer src={story.image} />
                   </div>
 
                   <CardContent className="p-4">
@@ -136,7 +140,7 @@ export default function Examples() {
                       <h4 className="font-medium text-base leading-tight tracking-tight line-clamp-2">
                         {story.title}
                       </h4>
-                      <div className="flex items-center gap-x-2">
+                      {/* <div className="flex items-center gap-x-2">
                         <Avatar className="h-6 w-6">
                           <AvatarImage
                             src={story.authorAvatar}
@@ -163,7 +167,7 @@ export default function Examples() {
                             )}
                           </time>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
 
                     <p className="text-xs text-muted-foreground line-clamp-3">
@@ -175,7 +179,7 @@ export default function Examples() {
             </motion.div>
           ))}
         </motion.div>
-      </motion.div> */}
+      </motion.div>
     </>
   );
 }
