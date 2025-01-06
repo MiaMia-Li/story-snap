@@ -17,8 +17,13 @@ replicate.fetch = (url, options) => {
   return fetch(url, { cache: "no-store", ...options });
 };
 
+/**
+ * 从URL下载并上传视频到Worker
+ */
 const uploadVideoFromUrl = async (videoUrl: string) => {
   try {
+    console.log("Starting video download from:", videoUrl);
+
     // 1. 下载视频
     const videoResponse = await axios.get(videoUrl, {
       responseType: "arraybuffer",
@@ -28,91 +33,72 @@ const uploadVideoFromUrl = async (videoUrl: string) => {
     });
 
     const safeFileName = `${Date.now()}_output.mp4`;
-
-    // 2. 分片处理下载的视频数据
     const videoBuffer = videoResponse.data;
-    const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB chunks
-    const totalChunks = Math.ceil(videoBuffer.length / CHUNK_SIZE);
 
-    // 3. 创建用于分片上传的函数
-    const uploadChunk = async (
-      chunk: ArrayBuffer,
-      chunkIndex: number,
-      totalChunks: number
-    ) => {
-      const headers = new Headers({
-        "X-CF-Secret": AUTH_KEY_SECRET ?? "",
-        "Content-Type": "video/mp4",
-        "X-Chunk-Index": chunkIndex.toString(),
-        "X-Total-Chunks": totalChunks.toString(),
-        "X-File-Name": safeFileName,
-      });
+    // 2. 直接上传完整视频，不进行分片
+    const headers = new Headers({
+      "X-CF-Secret": AUTH_KEY_SECRET ?? "",
+      "Content-Type": "video/mp4",
+    });
 
-      const workerResponse = await fetch(
-        `${WORKER_URL}/video/${safeFileName}`,
-        {
-          method: "PUT",
-          headers: headers,
-          body: chunk,
-        }
-      );
+    // 3. 执行上传
+    const uploadResponse = await fetch(`${WORKER_URL}/upload/${safeFileName}`, {
+      method: "PUT",
+      headers: headers,
+      body: videoBuffer,
+    });
 
-      if (!workerResponse.ok) {
-        throw new Error(`Chunk upload failed: ${workerResponse.statusText}`);
-      }
-
-      return workerResponse;
-    };
-
-    // 4. 将视频数据分片并上传
-    console.log(`Starting upload of ${totalChunks} chunks...`);
-
-    const chunkPromises = [];
-    for (let i = 0; i < totalChunks; i++) {
-      const start = i * CHUNK_SIZE;
-      const end = Math.min(start + CHUNK_SIZE, videoBuffer.length);
-      const chunk = videoBuffer.slice(start, end);
-
-      chunkPromises.push(uploadChunk(chunk, i, totalChunks));
+    if (!uploadResponse.ok) {
+      throw new Error(`Upload failed: ${uploadResponse.statusText}`);
     }
 
-    // 5. 等待所有分片上传完成
-    const chunkResponses = await Promise.all(chunkPromises);
-
-    // 6. 验证所有分片是否上传成功
-    const allSuccessful = chunkResponses.every((response) => response.ok);
-
-    if (!allSuccessful) {
-      throw new Error("Some chunks failed to upload");
-    }
-
-    // 7. 返回最终的视频URL
-    return `${WORKER_URL}/video/${safeFileName}`;
+    // 4. 返回视频URL
+    console.log("Video upload completed successfully");
+    return `${WORKER_URL}/upload/${safeFileName}`;
   } catch (error) {
-    console.error("Error processing video:", error);
-    throw error;
+    console.error("Error in uploadVideoFromUrl:", error);
+    // throw new Error(`Video upload failed: ${error.message}`);
   }
 };
 
+/**
+ * 处理GET请求
+ */
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-  const { id } = params;
-  const prediction = await replicate.predictions.get(id);
+  try {
+    const { id } = params;
+    console.log("Processing prediction:", id);
 
-  if (prediction?.error) {
-    return NextResponse.json({ detail: prediction.error }, { status: 500 });
-  }
+    const prediction = await replicate.predictions.get(id);
 
-  if (prediction.output) {
-    const uploadResponses = uploadVideoFromUrl(prediction.output);
+    if (prediction?.error) {
+      console.error("Prediction error:", prediction.error);
+      return NextResponse.json({ detail: prediction.error }, { status: 500 });
+    }
 
+    if (prediction.output) {
+      console.log("Starting video processing");
+
+      // 处理视频上传
+      const videoUrl = await uploadVideoFromUrl(prediction.output);
+
+      return NextResponse.json({
+        ...prediction,
+        video: videoUrl,
+        status: "success",
+      });
+    }
+
+    // 如果还没有输出，返回当前状态
     return NextResponse.json({
       ...prediction,
-      video: uploadResponses,
+      status: "processing",
     });
+  } catch (error) {
+    console.error("Request handling error:", error);
+    return NextResponse.json({ status: 500 });
   }
-
-  return NextResponse.json(prediction);
 }

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { experimental_useObject as useObject } from "ai/react";
 import { z } from "zod";
-import { uploadFile } from "@/utils/image";
+import { sleep, uploadFile } from "@/utils";
 import { STYLE_PROMOT, TEMPLATE_IMAGES, TONE_PROMPTS } from "@/config/story";
 import { FrameResponse, Prediction, StoryPayload } from "@/types";
 import { useAuth } from "@/contexts/auth";
@@ -27,9 +27,6 @@ export function useStoryGeneration({
   const [predictions, setPredictions] = useState<Prediction[]>([]);
   const { credits, refreshCredits } = useAuth();
   const { styleIds } = useStyleStore();
-
-  // 工具函数
-  const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
   const getTemplateImage = (styleId: string) => {
     const templates = TEMPLATE_IMAGES.get(styleId)?.images || [];
@@ -259,7 +256,6 @@ export function useStoryGeneration({
         return;
       }
       try {
-        console.log(result.object, "--result.object");
         await handleFrameGeneration(result.object as FrameResponse);
       } catch (error) {
         onError?.("Failed to generate story");

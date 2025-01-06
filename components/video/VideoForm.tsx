@@ -9,7 +9,7 @@ import { Textarea } from "../ui/textarea";
 import { useLocale, useTranslations } from "next-intl";
 import { Locale } from "@/i18n/config";
 import { ImageUploadSingle } from "../story/ImageUploadSingle";
-import { uploadFile } from "@/utils/image";
+import { uploadFile } from "@/utils";
 
 // Types
 interface UploadedImage {

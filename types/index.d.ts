@@ -122,16 +122,18 @@ export interface AuthContextType {
 
 export interface Prediction {
   status?: "starting" | "processing" | "succeeded" | "failed";
-  output: string[];
+  output: string[] | any;
   error?: string;
-  styleId: string;
+  styleId?: string;
   [key: string]: any;
+  id: string;
 }
 
 export interface StoryPayload {
   title: string;
   content: string;
-  image: string;
+  image?: string;
+  video?: string;
   count: number;
   additionalImages?: string[];
   styleIds?: string[];
@@ -155,4 +157,30 @@ export interface StoryFormData {
   imageStyles: string[];
   language: Locale;
   tone: string;
+}
+
+// types/queue.ts
+export type TaskStatus = "pending" | "processing" | "completed" | "failed";
+export type TaskType = "video" | "image";
+
+export interface QueueTask {
+  id: string;
+  type: TaskType;
+  status: TaskStatus;
+  progress: number;
+  createdAt: Date;
+  userId?: string;
+  pollingId: string;
+}
+
+// types/queue.ts
+export interface QueueData {
+  id: string;
+  userId: string;
+  status: TaskStatus;
+  pollingId: string;
+  type: TaskType;
+  createdAt: Date;
+  completedAt?: Date;
+  retryCount: number;
 }

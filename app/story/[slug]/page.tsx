@@ -9,6 +9,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getStory } from "@/actions";
 import { cn } from "@/lib/utils";
 import { redirect } from "next/navigation";
+import { ImageComponent, VideoPlayer } from "@/components/common/FileWrapper";
+import { parseMediaUrls } from "@/utils";
 
 export async function generateMetadata({
   params,
@@ -20,8 +22,7 @@ export async function generateMetadata({
     redirect("/404");
   }
 
-  const images = story.image.split(",").filter(Boolean);
-  // const firstImage = images[0];
+  const { videos, images } = parseMediaUrls(story.image);
 
   return {
     title: `${story.title} | SnapyStory`,
@@ -30,15 +31,17 @@ export async function generateMetadata({
       title: story.title,
       description: story.content.substring(0, 155),
       images: images,
+      videos: videos,
       type: "article",
       publishedTime: story.createdAt,
       authors: [story.author.name],
     },
     twitter: {
+      images: images,
+      // videos: videos,
       card: "summary_large_image",
       title: story.title,
       description: story.content.substring(0, 155),
-      images: images,
     },
   };
 }
@@ -128,8 +131,11 @@ export default async function StoryPage({
   if (!story) {
     redirect("/404");
   }
-  const images = story.image.split(",").filter(Boolean);
-  const firstImage = images[0];
+  // const images = story.image.split(",").filter(Boolean);
+  const { videos, images } = parseMediaUrls(story.image);
+  const firstImage = images[0] || "";
+  const firstVideo = videos[0] || "";
+  const hasMedia = videos.length > 0 || images.length > 0;
 
   return (
     <>
@@ -142,6 +148,7 @@ export default async function StoryPage({
             "@type": "Article",
             headline: story.title,
             image: firstImage,
+            video: firstVideo,
             datePublished: story.createdAt,
             author: {
               "@type": "Person",
@@ -154,7 +161,38 @@ export default async function StoryPage({
       <main className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Hero Section */}
         <div className="space-y-12">
-          <ImageGallery imageString={story.image} />
+          {hasMedia && (
+            <div className="space-y-4">
+              {/* 视频展示区域 */}
+              {videos.length > 0 && (
+                <div className="space-y-2">
+                  {videos.map((video, index) => (
+                    <VideoPlayer key={`video-${index}`} src={video} />
+                  ))}
+                </div>
+              )}
+
+              {/* 图片展示区域 */}
+              {images.length > 0 && (
+                <div
+                  className={`grid gap-2 ${
+                    images.length === 1
+                      ? "grid-cols-1"
+                      : images.length === 2
+                      ? "grid-cols-2"
+                      : "grid-cols-2 md:grid-cols-3"
+                  }`}>
+                  {images.slice(0, 6).map((image, index) => (
+                    <ImageComponent
+                      key={`image-${index}`}
+                      src={image}
+                      alt={story.title}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="space-y-4">
             <h1 className="text-2xl md:text-4xl font-bold tracking-tight">

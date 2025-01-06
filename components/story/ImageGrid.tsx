@@ -139,7 +139,9 @@ export function ImageGrid({ predictions, isLoading }: ImageGridProps) {
             {renderImageContent(prediction, index)}
           </div>
           <div className="text-center">
-            <h3>{getStyleName(prediction.styleId)}</h3>
+            <h3>
+              {!prediction.styleId ? "" : getStyleName(prediction.styleId)}
+            </h3>
           </div>
         </div>
       ))}

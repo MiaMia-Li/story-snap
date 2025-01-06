@@ -23,6 +23,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Badge } from "../ui/badge";
+import { QueuePanel } from "../common/QueuePanel";
 
 interface SidebarProps {
   className?: string;
@@ -35,12 +36,12 @@ const navLinks = [
     label: "Image Story",
     icon: <Image className="w-5 h-5" />,
   },
-  // {
-  //   href: "/generate-video",
-  //   label: "Video Story",
-  //   icon: <Video className="w-5 h-5" />,
-  //   isNew: true,
-  // },
+  {
+    href: "/generate-video",
+    label: "Video Story",
+    icon: <Video className="w-5 h-5" />,
+    isNew: true,
+  },
   {
     href: "/mine",
     label: "Mine",
@@ -104,118 +105,125 @@ export function Sidebar({ className, onToggle }: SidebarProps) {
     );
   }
   return (
-    <div
-      className={cn(
-        "fixed inset-y-0 left-0 z-50 flex flex-col top-[65px]",
-        "border-r border-border bg-background/80 backdrop-blur-xl",
-        "w-16 transition-all duration-300 ease-in-out py-6",
-        expanded ? "w-64" : "",
-        className
-      )}>
-      {/* Menu Area */}
-      <nav className="flex-1 space-y-1 p-2 overflow-hidden">
-        {navLinks.map((item) => (
-          <Link
-            key={item.label}
-            href={item.href}
-            className={cn(
-              "group flex items-center",
-              "rounded-lg px-3 py-2",
-              "text-sm font-medium",
-              "transition-all duration-100 ease-in-out",
-              "hover:bg-accent hover:text-accent-foreground",
-              "focus-visible:outline-none focus-visible:ring-1",
-              "focus-visible:ring-ring focus-visible:ring-offset-2",
-              pathname === item.href && "bg-accent/50 text-primary",
-              "relative"
-            )}>
-            <div className="flex items-center gap-3 w-full">
-              {expanded ? (
-                <div className="min-w-[20px]">{item.icon}</div>
-              ) : (
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <div className="min-w-[20px]">{item.icon}</div>
-                    </TooltipTrigger>
-                    <TooltipContent>{item.label}</TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              )}
-              <span
-                className={cn(
-                  "whitespace-nowrap opacity-0 transition-all duration-100 ease-in-out flex gap-2",
-                  expanded && "opacity-100"
-                )}>
-                {item.label}
-                {/* {item.isNew && <Badge> New</Badge>} */}
-              </span>
-            </div>
-          </Link>
-        ))}
-      </nav>
+    <>
+      <QueuePanel />
 
-      {/* Social Media Buttons */}
       <div
-        className={cn("px-2 py-4", "transition-all duration-100 ease-in-out")}>
+        className={cn(
+          "fixed inset-y-0 left-0 z-50 flex flex-col top-[65px]",
+          "border-r border-border bg-background/80 backdrop-blur-xl",
+          "w-16 transition-all duration-300 ease-in-out py-6",
+          expanded ? "w-64" : "",
+          className
+        )}>
+        {/* Menu Area */}
+        <nav className="flex-1 space-y-1 p-2 overflow-hidden">
+          {navLinks.map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              className={cn(
+                "group flex items-center",
+                "rounded-lg px-3 py-2",
+                "text-sm font-medium",
+                "transition-all duration-100 ease-in-out",
+                "hover:bg-accent hover:text-accent-foreground",
+                "focus-visible:outline-none focus-visible:ring-1",
+                "focus-visible:ring-ring focus-visible:ring-offset-2",
+                pathname === item.href && "bg-accent/50 text-primary",
+                "relative"
+              )}>
+              <div className="flex items-center gap-3 w-full">
+                {expanded ? (
+                  <div className="min-w-[20px]">{item.icon}</div>
+                ) : (
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <div className="min-w-[20px]">{item.icon}</div>
+                      </TooltipTrigger>
+                      <TooltipContent>{item.label}</TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                )}
+                <span
+                  className={cn(
+                    "whitespace-nowrap opacity-0 transition-all duration-100 ease-in-out flex gap-2",
+                    expanded && "opacity-100"
+                  )}>
+                  {item.label}
+                  {/* {item.isNew && <Badge> New</Badge>} */}
+                </span>
+              </div>
+            </Link>
+          ))}
+        </nav>
+
+        {/* Social Media Buttons */}
         <div
           className={cn(
-            "flex gap-2",
-            "transition-all duration-100 ease-in-out",
-            expanded ? "flex-row justify-center" : "flex-col items-center"
+            "px-2 py-4",
+            "transition-all duration-100 ease-in-out"
           )}>
-          {socialLinks.map((social) => (
-            <Link
-              key={social.href}
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
+          <div
+            className={cn(
+              "flex gap-2",
+              "transition-all duration-100 ease-in-out",
+              expanded ? "flex-row justify-center" : "flex-col items-center"
+            )}>
+            {socialLinks.map((social) => (
+              <Link
+                key={social.href}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  "p-2 rounded-lg",
+                  "hover:bg-accent hover:text-accent-foreground",
+                  "transition-colors duration-100",
+                  "group relative rounded-full border border-border"
+                )}>
+                {social.icon}
+              </Link>
+            ))}
+            <button
+              onClick={toggleExpanded}
               className={cn(
                 "p-2 rounded-lg",
                 "hover:bg-accent hover:text-accent-foreground",
                 "transition-colors duration-100",
                 "group relative rounded-full border border-border"
               )}>
-              {social.icon}
-            </Link>
-          ))}
-          <button
-            onClick={toggleExpanded}
-            className={cn(
-              "p-2 rounded-lg",
-              "hover:bg-accent hover:text-accent-foreground",
-              "transition-colors duration-100",
-              "group relative rounded-full border border-border"
-            )}>
-            {expanded ? (
-              <ArrowLeftFromLine className="w-4 h-4" />
-            ) : (
-              <ArrowRightToLine className="w-4 h-4" />
-            )}
-          </button>
-        </div>
-      </div>
-
-      {/* Footer Links - Only show when expanded */}
-      {expanded && (
-        <div
-          className={cn(
-            "px-3 py-4 border-t border-border",
-            "text-xs text-muted-foreground",
-            "transition-all duration-100 ease-in-out"
-          )}>
-          <div className="grid grid-cols-2 gap-2">
-            {footerLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="hover:text-foreground transition-colors duration-100 text-center">
-                {link.label}
-              </Link>
-            ))}
+              {expanded ? (
+                <ArrowLeftFromLine className="w-4 h-4" />
+              ) : (
+                <ArrowRightToLine className="w-4 h-4" />
+              )}
+            </button>
           </div>
         </div>
-      )}
-    </div>
+
+        {/* Footer Links - Only show when expanded */}
+        {expanded && (
+          <div
+            className={cn(
+              "px-3 py-4 border-t border-border",
+              "text-xs text-muted-foreground",
+              "transition-all duration-100 ease-in-out"
+            )}>
+            <div className="grid grid-cols-2 gap-2">
+              {footerLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="hover:text-foreground transition-colors duration-100 text-center">
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </>
   );
 }

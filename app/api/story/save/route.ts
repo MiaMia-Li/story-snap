@@ -11,10 +11,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    console.log(body, "body");
-    const { title, content, image, count } = body;
-
-    console.log("Received body:", body);
+    const { title, content, image = "", count } = body;
 
     const story = await prisma.story.create({
       data: {

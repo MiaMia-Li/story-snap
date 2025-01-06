@@ -10,12 +10,12 @@ import { CopyButton } from "./CopyButton";
 import DownloadButton from "./DownloadButton";
 import ShareButton from "./ShareButton";
 import Image from "next/image";
+import { parseMediaUrls } from "@/utils";
+import { ImageComponent, VideoPlayer } from "../common/FileWrapper";
 
 export function StoryCard({ story }: { story: any }) {
-  // 将图片字符串分割成数组，最多取4张图片
-  const images = story.image
-    ? story.image.split(",").filter(Boolean).slice(0, 4)
-    : [];
+  const { videos, images } = parseMediaUrls(story.image);
+  const hasMedia = videos.length > 0 || images.length > 0;
 
   return (
     <Card className="group hover:shadow-lg transition-all duration-200 flex flex-col">
@@ -32,44 +32,33 @@ export function StoryCard({ story }: { story: any }) {
       </CardHeader>
 
       <CardContent className="flex-grow space-y-4">
-        {images.length > 0 && (
-          <div className="relative">
-            {images.length === 1 ? (
-              // 单张图片展示
-              <div className="relative aspect-[3/2] overflow-hidden rounded-lg">
-                <Image
-                  src={images[0]}
-                  alt={`Image for ${story.title}`}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  priority
-                />
-                <div className="absolute bottom-0 right-0 z-10">
-                  <DownloadButton imageUrl={images[0]} />
-                </div>
+        {hasMedia && (
+          <div className="space-y-4">
+            {/* 视频展示区域 */}
+            {videos.length > 0 && (
+              <div className="space-y-2">
+                {videos.map((video, index) => (
+                  <VideoPlayer key={`video-${index}`} src={video} />
+                ))}
               </div>
-            ) : (
-              // 多张图片网格展示
+            )}
+
+            {/* 图片展示区域 */}
+            {images.length > 0 && (
               <div
                 className={`grid gap-2 ${
-                  images.length === 2 ? "grid-cols-2" : "grid-cols-2"
+                  images.length === 1
+                    ? "grid-cols-1"
+                    : images.length === 2
+                    ? "grid-cols-2"
+                    : "grid-cols-2 md:grid-cols-3"
                 }`}>
-                {images.map((image: string, index: number) => (
-                  <div
-                    key={index}
-                    className="relative aspect-square overflow-hidden rounded-lg">
-                    <Image
-                      src={image}
-                      alt={`Image ${index + 1} for ${story.title}`}
-                      fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      sizes="(max-width: 768px) 33vw, 25vw"
-                    />
-                    <div className="absolute bottom-0 right-0 z-10">
-                      <DownloadButton imageUrl={image} />
-                    </div>
-                  </div>
+                {images.slice(0, 6).map((image, index) => (
+                  <ImageComponent
+                    key={`image-${index}`}
+                    src={image}
+                    alt={story.title}
+                  />
                 ))}
               </div>
             )}

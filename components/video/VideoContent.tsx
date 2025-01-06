@@ -9,7 +9,7 @@ export function VideoContent() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { credits } = useAuth();
 
-  const { prediction, video, object, isLoadingFrame, handleGenerate } =
+  const { prediction, object, isLoadingFrame, handleGenerate } =
     useVideoGeneration({
       onSuccess: () => setIsLoading(false),
       onError: (msg) => {

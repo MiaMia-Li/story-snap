@@ -26,17 +26,23 @@ export async function POST(request: NextRequest) {
   try {
     const { prompt, image } = await request.json();
 
-    if (!prompt || !image) {
-      return NextResponse.json(
-        { error: "Missing required 'prompt' or 'image' in request body." },
-        { status: 400 }
-      );
-    }
+    // if (!prompt || !image) {
+    //   return NextResponse.json(
+    //     { error: "Missing required 'prompt' or 'image' in request body." },
+    //     { status: 400 }
+    //   );
+    // }
 
-    const input = {
+    let input = {
       prompt: prompt,
-      first_frame_image: image,
-    };
+    } as any;
+
+    if (image) {
+      input = {
+        prompt: prompt,
+        first_frame_image: image,
+      };
+    }
 
     const options: any = {
       model: "minimax/video-01",
@@ -46,7 +52,6 @@ export async function POST(request: NextRequest) {
     // Run the prediction
     // const prediction = await replicate.run("minimax/video-01", { input });
     const prediction = await replicate.predictions.create(options);
-    console.log("--prediction", prediction);
     if (prediction.error) {
       return NextResponse.json({ detail: prediction?.error }, { status: 500 });
     }
