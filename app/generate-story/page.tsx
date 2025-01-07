@@ -64,7 +64,7 @@ export default function Home() {
           <div className="flex flex-col lg:flex-row relative">
             <div
               className={cn(
-                "w-full lg:w-[400px] lg:fixed lg:top-[65px] lg:bottom-0 border-r border-border overflow-hidden bg-background"
+                "w-full lg:w-[350px] lg:fixed lg:top-[65px] lg:bottom-0 border-r border-border overflow-hidden bg-background"
               )}>
               <GenerationForm
                 isLoading={isGenerating}
@@ -73,7 +73,7 @@ export default function Home() {
             </div>
 
             {/* Right Side - Gallery/Result */}
-            <div className={cn("w-full p-6", "lg:ml-[400px]")}>
+            <div className={cn("w-full p-6", "lg:ml-[350px]")}>
               <StoryBox
                 predictions={predictions}
                 isLoading={isGenerating}

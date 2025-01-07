@@ -72,13 +72,13 @@ export default function GenerationForm({
             <TabsList className="w-full h-11 grid grid-cols-2 bg-muted">
               <TabsTrigger value="text-to-image">
                 <div className="flex items-center gap-2">
-                  <Wand2 className="w-4 h-4" />
+                  {/* <Wand2 className="w-4 h-4" /> */}
                   <span>Text to Image</span>
                 </div>
               </TabsTrigger>
               <TabsTrigger value="image-to-image">
                 <div className="flex items-center gap-2">
-                  <ImageIcon className="w-4 h-4" />
+                  {/* <ImageIcon className="w-4 h-4" /> */}
                   <span>Image to Image</span>
                 </div>
               </TabsTrigger>

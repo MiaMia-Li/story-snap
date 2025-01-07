@@ -148,11 +148,11 @@ export function Sidebar({ className, onToggle }: SidebarProps) {
                 )}
                 <span
                   className={cn(
-                    "whitespace-nowrap opacity-0 transition-all duration-100 ease-in-out flex gap-2",
+                    "whitespace-nowrap opacity-0 transition-all duration-100 ease-in-out flex gap-6",
                     expanded && "opacity-100"
                   )}>
-                  {item.label}
-                  {/* {item.isNew && <Badge> New</Badge>} */}
+                  <span>{item.label}</span>
+                  {item.isNew && <Badge> New</Badge>}
                 </span>
               </div>
             </Link>

@@ -1,4 +1,4 @@
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Video } from "lucide-react";
 import {
   Card,
   CardHeader,
@@ -7,15 +7,22 @@ import {
   CardFooter,
 } from "../ui/card";
 import { CopyButton } from "./CopyButton";
-import DownloadButton from "./DownloadButton";
 import ShareButton from "./ShareButton";
-import Image from "next/image";
 import { parseMediaUrls } from "@/utils";
 import { ImageComponent, VideoPlayer } from "../common/FileWrapper";
+import { Skeleton } from "../ui/skeleton";
 
 export function StoryCard({ story }: { story: any }) {
-  const { videos, images } = parseMediaUrls(story.image);
+  const { videos, images } = parseMediaUrls(story.image || "");
   const hasMedia = videos.length > 0 || images.length > 0;
+
+  const MediaPlaceholder = () => (
+    <div className="">
+      <Skeleton className="w-full h-40 bg-muted animate-pulse flex items-center justify-center">
+        <Video />
+      </Skeleton>
+    </div>
+  );
 
   return (
     <Card className="group hover:shadow-lg transition-all duration-200 flex flex-col">
@@ -32,7 +39,8 @@ export function StoryCard({ story }: { story: any }) {
       </CardHeader>
 
       <CardContent className="flex-grow space-y-4">
-        {hasMedia && (
+        {/* 媒体内容区域 */}
+        {hasMedia ? (
           <div className="space-y-4">
             {/* 视频展示区域 */}
             {videos.length > 0 && (
@@ -63,6 +71,9 @@ export function StoryCard({ story }: { story: any }) {
               </div>
             )}
           </div>
+        ) : (
+          // 当没有媒体内容时显示占位符
+          <MediaPlaceholder />
         )}
 
         <div className="prose prose-sm max-w-none dark:prose-invert">

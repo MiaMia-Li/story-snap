@@ -140,6 +140,7 @@ export function useVideoGeneration({
       });
       updateStory(story.current.storyId, prediction.video);
       updateTaskStatus(prediction.id, "completed");
+      await refreshCredits();
       onSuccess?.();
     } catch (error) {
       onError?.("Failed to generate images, please try again.");

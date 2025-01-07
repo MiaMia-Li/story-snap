@@ -1,20 +1,12 @@
 // app/stories/page.tsx
-"use client";
-
-import { cn } from "@/lib/utils";
-import { Sidebar } from "@/components/layout/Sidebar";
-import { useState } from "react";
-import StoriesPage from "./StoriesPage";
-import { useSession } from "next-auth/react";
 import { BookOpenIcon } from "lucide-react";
 import UserLogin from "@/components/header/UserLogin";
+import StoriesPage from "./StoriesPage";
+import { auth } from "@/auth";
 
-export default function Page() {
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
-  const handleSidebarToggle = (expanded: boolean) => {
-    setIsSidebarExpanded(expanded);
-  };
-  const session = useSession();
+export default async function Page() {
+  const session = await auth();
+
   const LoginPrompt = () => (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-65px)] p-6">
       <div className="text-center max-w-md">
@@ -37,17 +29,5 @@ export default function Page() {
     </div>
   );
 
-  return (
-    <div className="flex">
-      <Sidebar onToggle={handleSidebarToggle} className="hidden lg:flex" />
-      <main
-        className={cn(
-          "flex-1 transition-all duration-200 w-full h-full",
-          isSidebarExpanded ? "lg:ml-64" : "lg:ml-16"
-        )}>
-        {/* <StoriesPage /> */}
-        {!session.data ? <LoginPrompt /> : <StoriesPage />}
-      </main>
-    </div>
-  );
+  return !session ? <LoginPrompt /> : <StoriesPage />;
 }
