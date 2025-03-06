@@ -1,13 +1,18 @@
 {
   "PageLayout": {
     "hero": {
-      "title": "将您的图片转化为",
-      "title2": "引人入胜的故事",
-      "description": "上传任何图片，观看我们的AI如何将其转化为一个引人入胜的故事。完美适合内容创作者、教育工作者和讲故事的人。",
-      "badge": "✨ 用AI将图片转化为故事",
-      "startButton": "立即开始",
-      "examplesButton": "查看示例"
+      "title": "将您的创意转化为",
+      "title2": "沉浸式数字故事",
+      "description": "我们的AI平台将图片和文字转化为引人入胜的故事和视频。为内容创作者、教育工作者、营销人员和讲故事的人提供全新的受众互动方式。",
+      "badge": "✨ 四合一：图片转故事、文字转故事、文字转视频、图片转视频",
+      "startButton": "立即创建您的故事",
+      "examplesButton": "查看示例",
+      "imageToStory": "图片转故事",
+      "textToStory": "文字转故事",
+      "textToVideo": "文字转视频",
+      "imageToVideo": "图片转视频"
     },
+
     "gallery": {
       "title": "AI故事画廊",
       "description": "探索由我们的AI生成的引人入胜的故事"

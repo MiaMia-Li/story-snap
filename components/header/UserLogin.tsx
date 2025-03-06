@@ -98,8 +98,8 @@ export default function UserLogin({
                 className={cn(
                   "w-5 h-5",
                   isLoading === "google"
-                    ? "text-primary/40"
-                    : "text-primary dark:text-primary/90"
+                    ? "text-foreground/40"
+                    : "text-foreground dark:text-foreground/90"
                 )}
               />
               <span className="text-sm font-medium">

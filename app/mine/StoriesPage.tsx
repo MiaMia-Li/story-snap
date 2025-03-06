@@ -110,7 +110,6 @@ export default function StoriesPage() {
             </Button>
           </Link>
         </div>
-        <div className="border-b border-border" />
       </div>
 
       {/* Error Message */}

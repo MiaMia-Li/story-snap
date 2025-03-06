@@ -13,6 +13,7 @@ import { useState } from "react";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 import { signIn } from "next-auth/react";
 import EmailSign from "./EmailSign";
+import { cn } from "@/lib/utils";
 
 export function LoginDialog() {
   const { showLoginDialog, closeLoginDialog } = useAuth();
@@ -31,9 +32,9 @@ export function LoginDialog() {
 
   return (
     <Dialog open={showLoginDialog} onOpenChange={closeLoginDialog}>
-      <DialogContent className="sm:max-w-[420px] border-blue-100/20 dark:border-blue-900/20">
+      <DialogContent className="sm:max-w-[420px]">
         <DialogHeader className="text-center space-y-2">
-          <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent dark:from-blue-400 dark:to-indigo-400">
+          <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent dark:from-primary/90 dark:to-primary/70">
             Welcome Back
           </DialogTitle>
           <p className="text-sm text-muted-foreground">
@@ -47,14 +48,22 @@ export function LoginDialog() {
             variant="outline"
             disabled={isLoading !== null}
             onClick={() => handleSignIn("google")}
-            className="h-11 rounded-lg border-blue-100 bg-white/50 hover:bg-blue-50/50 hover:border-blue-200 dark:border-blue-900/50 dark:bg-white/5 dark:hover:bg-blue-900/20 dark:hover:border-blue-800 transition-all duration-200">
+            className={cn(
+              "h-11 rounded-lg border-border",
+              "bg-background/50 hover:bg-accent/50",
+              "hover:border-border/80",
+              "dark:border-border/50 dark:bg-background/5",
+              "dark:hover:bg-accent/20 dark:hover:border-border/80",
+              "transition-all duration-200"
+            )}>
             <div className="flex items-center justify-center gap-3">
               <FaGoogle
-                className={`w-5 h-5 ${
+                className={cn(
+                  "w-5 h-5",
                   isLoading === "google"
-                    ? "text-blue-400"
-                    : "text-blue-600 dark:text-blue-400"
-                }`}
+                    ? "text-foreground/40"
+                    : "text-foreground dark:text-foreground/90"
+                )}
               />
               <span className="text-sm font-medium">
                 {isLoading === "google"
@@ -69,14 +78,22 @@ export function LoginDialog() {
             variant="outline"
             disabled={isLoading !== null}
             onClick={() => handleSignIn("github")}
-            className="h-11 rounded-lg border-blue-100 bg-white/50 hover:bg-blue-50/50 hover:border-blue-200 dark:border-blue-900/50 dark:bg-white/5 dark:hover:bg-blue-900/20 dark:hover:border-blue-800 transition-all duration-200">
+            className={cn(
+              "h-11 rounded-lg border-border",
+              "bg-background/50 hover:bg-accent/50",
+              "hover:border-border/80",
+              "dark:border-border/50 dark:bg-background/5",
+              "dark:hover:bg-accent/20 dark:hover:border-border/80",
+              "transition-all duration-200"
+            )}>
             <div className="flex items-center justify-center gap-3">
               <FaGithub
-                className={`w-5 h-5 ${
+                className={cn(
+                  "w-5 h-5",
                   isLoading === "github"
-                    ? "text-gray-400"
-                    : "text-gray-900 dark:text-white"
-                }`}
+                    ? "text-foreground/40"
+                    : "text-foreground dark:text-foreground/90"
+                )}
               />
               <span className="text-sm font-medium">
                 {isLoading === "github"
@@ -97,13 +114,13 @@ export function LoginDialog() {
             By continuing, you agree to our{" "}
             <button
               onClick={() => window.open("/terms-of-service", "_blank")}
-              className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors">
+              className="text-primary hover:text-primary/90 dark:text-primary/90 dark:hover:text-primary/80 transition-colors">
               Terms of Service
             </button>{" "}
             and{" "}
             <button
               onClick={() => window.open("/privacy-policy", "_blank")}
-              className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors">
+              className="text-primary hover:text-primary/90 dark:text-primary/90 dark:hover:text-primary/80 transition-colors">
               Privacy Policy
             </button>
           </p>

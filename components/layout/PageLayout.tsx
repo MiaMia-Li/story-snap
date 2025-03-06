@@ -198,6 +198,13 @@ export default function HomePage() {
     },
   ];
 
+  const features = [
+    { emoji: "🖼️", titleKey: "hero.imageToStory", path: "generate-story" },
+    { emoji: "📝", titleKey: "hero.textToStory", path: "generate-story" },
+    { emoji: "📹", titleKey: "hero.textToVideo", path: "generate-video" },
+    { emoji: "🎬", titleKey: "hero.imageToVideo", path: "generate-video" },
+  ];
+
   return (
     <main className="min-h-screen relative bg-gradient-to-b from-primary/5 via-background to-background">
       <div className="relative">
@@ -221,7 +228,7 @@ export default function HomePage() {
                 </Badge>
               </motion.div>
 
-              <div className="text-center space-y-6">
+              {/* <div className="text-center space-y-6">
                 <motion.h1
                   className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight"
                   initial={{ opacity: 0, y: 20 }}
@@ -255,6 +262,96 @@ export default function HomePage() {
                         </Button>
                       </Link>
                     </motion.div>
+                  </div>
+                </FadeIn>
+              </div> */}
+              <div className="text-center space-y-6">
+                <motion.h1
+                  className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.2 }}>
+                  {t("hero.title")}
+                  <motion.span
+                    className="text-primary block mt-2"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.7, delay: 0.4 }}>
+                    {t("hero.title2")}
+                  </motion.span>
+                </motion.h1>
+                <FadeIn delay={0.3}>
+                  {/* <div className="inline-block bg-primary/10 rounded-full px-4 py-1.5 mb-4">
+                    <span className="text-sm font-medium text-primary">
+                      {t("hero.badge")}
+                    </span>
+                  </div> */}
+                  <p className="text-lg text-muted-foreground max-w-5xl mx-auto">
+                    {t("hero.description")}
+                  </p>
+                </FadeIn>
+
+                {/* Feature Icons - Highlighted Section */}
+                <FadeIn delay={0.3}>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-5 max-w-3xl mx-auto">
+                    {features.map((feature, index) => (
+                      <Link
+                        key={index}
+                        href={`/${feature.path}`}
+                        className="group flex flex-col items-center text-center cursor-pointer">
+                        <motion.div
+                          className="text-4xl mb-3 
+          transition-all duration-300 
+          group-hover:rotate-12 
+          group-hover:scale-110 
+          group-hover:text-primary"
+                          whileHover={{
+                            rotate: 12,
+                            scale: 1.1,
+                            transition: { duration: 0.3 },
+                          }}
+                          whileTap={{
+                            scale: 0.9,
+                            transition: { duration: 0.2 },
+                          }}>
+                          {feature.emoji}
+                        </motion.div>
+                        <span
+                          className="text-base sm:text-lg font-medium 
+          transition-colors duration-300 
+          group-hover:text-primary">
+                          {t(feature.titleKey)}
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                </FadeIn>
+
+                <FadeIn delay={0.6} className="pt-6">
+                  <div className="flex flex-wrap items-center justify-center gap-4">
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}>
+                      <Link href="/generate-story">
+                        <Button size="lg" className="rounded-full px-8">
+                          {t("hero.startButton")}
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Button>
+                      </Link>
+                    </motion.div>
+                    {/* <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}>
+                      <Link href="/examples">
+                        <Button
+                          size="lg"
+                          variant="outline"
+                          className="rounded-full px-8">
+                          {t("hero.examplesButton")}
+                          <ExternalLink className="ml-2 h-4 w-4" />
+                        </Button>
+                      </Link>
+                    </motion.div> */}
                   </div>
                 </FadeIn>
               </div>

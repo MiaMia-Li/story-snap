@@ -48,7 +48,7 @@ const navLinks = [
     icon: <LayoutDashboard className="w-5 h-5" />,
   },
   {
-    href: "/pricing",
+    href: "/credits",
     label: "Subscribe",
     icon: <Crown className="w-5 h-5" />,
   },
@@ -62,7 +62,7 @@ const socialLinks = [
   },
   {
     icon: <DiscordLogoIcon className="h-4 w-4" />,
-    href: "https://discord.gg/z5NbSzm9",
+    href: "https://discord.gg/3pu9Vkx2kf",
     label: "Discord",
   },
   {
