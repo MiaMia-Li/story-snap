@@ -82,13 +82,13 @@ export default function StoryBox({
           const latestOutput = prediction.output?.[0];
           return (
             <div className="relative w-full h-full">
-              <Image
+              <img
                 src={latestOutput}
                 alt="Generated image"
-                fill
+                // fill
                 sizes="(max-width: 600px) 100vw, 50vw"
                 className="object-cover" // 修改这里，使用 object-cover 确保图片填充
-                priority
+                // priority
                 loading="eager"
                 onError={(e) => {
                   console.error("Image load error:", e);
