@@ -59,10 +59,10 @@ export default function StoryBox({
           <div className="absolute inset-0 flex items-center justify-center">
             {prediction?.input?.first_frame_image ? (
               <div className="absolute inset-0">
-                <Image
+                <img
                   src={prediction.input.first_frame_image}
                   alt="Background"
-                  fill
+                  // fill
                   className="opacity-50 object-scale-down"
                 />
               </div>
