@@ -124,8 +124,8 @@ export default async function BaseLayout({
         </NextIntlClientProvider>
         <Script
           defer
-          src="https://umami-memfree.fly.dev/script.js"
-          data-website-id="9278ab73-50d8-4f61-89ea-82caad7bcf36"
+          src="https://cloud.umami.is/script.js"
+          data-website-id="058cf91e-c9b8-4e9a-b189-d49dcd1ff4d2"
           data-domains="snapstoryai.com,www.snapstoryai.com"></Script>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-MJT6974BC1"
